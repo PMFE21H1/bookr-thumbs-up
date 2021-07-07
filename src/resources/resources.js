@@ -20,12 +20,15 @@ export function createResource(resource){
     })
 }
 
-
-
 export class Resource {
     constructor(name, id) {
         if(!name) throw new Error('Name can not be empty')
         this.name = name;
         this.id = id;
     }
+}
+
+export function listResources(){
+    return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources.json")
+    .then(resp => resp.json())
 }
