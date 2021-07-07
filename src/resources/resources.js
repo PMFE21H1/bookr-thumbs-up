@@ -1,4 +1,4 @@
-import { initializeApp } from 'firebase/app';
+import {initializeApp} from 'firebase/app';
 
 const firebaseConfig = {
     apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",
@@ -13,18 +13,20 @@ const firebaseConfig = {
 
 const firebaseApp = initializeApp(firebaseConfig);
 
-export function createResource(resource){
+export function createResource(resource) {
     return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources.json", {
         body: JSON.stringify(resource),
         method: "POST"
+    }).then(response => response.json()).then(data => {
+        resource.id = data.name
+        return resource
     })
 }
 
 
-
 export class Resource {
     constructor(name, id) {
-        if(!name) throw new Error('Name can not be empty')
+        if (!name) throw new Error('Name can not be empty')
         this.name = name;
         this.id = id;
     }
