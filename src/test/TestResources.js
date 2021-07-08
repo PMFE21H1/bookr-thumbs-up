@@ -1,6 +1,6 @@
 import { createResource, Resource, listResources } from "../resources/resources";
 
-function App() {
+function TestResources() {
     return (
       <div>
           <button onClick={() => listResources().then(resources =>console.log(resources))}>list resources</button>
@@ -8,4 +8,4 @@ function App() {
     );
   }
   
-  export default App;
+  export default TestResources;

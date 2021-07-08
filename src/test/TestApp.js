@@ -1,6 +1,6 @@
-import TestResources from "./test/TestResources"
+import TestResources from "./TestResources"
 
-function App() {
+function TestApp() {
   return (
       <div>
         <TestResources/>
