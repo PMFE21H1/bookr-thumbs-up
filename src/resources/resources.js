@@ -29,3 +29,10 @@ export class Resource {
         this.id = id;
     }
 }
+
+
+export function deleteResource(id){
+    return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${id}.json`, {
+        method: "DELETE"
+    })
+}
