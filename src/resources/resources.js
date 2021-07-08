@@ -31,8 +31,15 @@ export class Resource {
 }
 
 
-export function deleteResource(id){
-    return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${id}.json`, {
+
+export function deleteResource(resource){
+    let reservations;
+    fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json`)
+        .then(response=>response.json())
+        .then(data=>reservations=data)
+
+    return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${resource.id}.json`, {
         method: "DELETE"
     })
+
 }
