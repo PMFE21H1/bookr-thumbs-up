@@ -1,5 +1,4 @@
-import React, { Route } from 'react'
-import { listReservations } from "./reservations";
+import React, { Route, Link } from 'react'
 export default class ListReservationsPage extends React.Component {
     constructor(props){
         super(props)
@@ -9,8 +8,8 @@ export default class ListReservationsPage extends React.Component {
             <>
             <Route path='/admin/reservations'/>
             <p>{listReservations}</p>
-            <button><Link to={"/delete/" + this.props.reservations.id}>Delete</Link></button>
-            <button><Link to={"/edit/" + this.props.reservations.id}>Edit</Link></button>
+            <button><Link to={"/admin/reservations/:reservationID/delete/"}>Delete</Link></button>
+            <button><Link to={"/admin/reservations/:reservationID/edit/" + this.props.reservations.id}>Edit</Link></button>
             </>
         )
     }
