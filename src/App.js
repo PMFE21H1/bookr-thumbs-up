@@ -1,8 +1,9 @@
-import { listReservations } from "./reservations/reservations";
 import React from "react";
+import TestListReservations from "./test/TestListReservations";
 
 function App() {
-  return <div></div>;
+  return <div>
+  </div>;
 }
 
 export default App;
