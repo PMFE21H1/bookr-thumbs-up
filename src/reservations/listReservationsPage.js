@@ -5,7 +5,7 @@ export default class ListReservationsPage extends React.Component {
     }
     render(){
         return(
-            <>
+          < >
             <Route path='/admin/reservations'/>
             <p>{listReservations}</p>
             <button><Link to={"/admin/reservations/:reservationID/delete/"}>Delete</Link></button>
@@ -14,3 +14,4 @@ export default class ListReservationsPage extends React.Component {
         )
     }
 }
+// nem vagyok meg biztos benne, hogy melyik verzio fog nekunk kelleni(a url-es vagy a props alapu id kereses)
