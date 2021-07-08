@@ -38,7 +38,6 @@ export function listResources(){
         
        return Object.keys(resources).map((key) => {
             resources[key].id = key
-
         return resources[key]
     })
     }
