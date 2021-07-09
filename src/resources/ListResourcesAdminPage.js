@@ -19,7 +19,9 @@ class listResourceAdminPage extends React.Component{
     }
 
 render(){
-    return(<Route path="/admin/resources">
+    return(
+        <>
+    
         <table>
             <tr>
                 <th>Resource Name</th><th>Resource ID</th><th></th>
@@ -48,7 +50,8 @@ render(){
             
         </table>
         <button>Add resource</button>
-        </Route>
+        </>
+        
         )
     }
 }

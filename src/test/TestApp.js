@@ -1,9 +1,11 @@
 import TestResources from "./TestResources"
+import ListResourceAdminPage from "../resources/ListResourcesAdminPage";
+
 
 function TestApp() {
   return (
       <div>
-        <TestResources/>
+        <ListResourceAdminPage/>
       </div>
   );
 }
