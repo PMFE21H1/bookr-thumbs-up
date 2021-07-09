@@ -40,7 +40,8 @@ render(){
                             
                         </td>
 
-                        {/* <td><Link to="/admin/resource/:resourceID">{resource.name}</Link></td>
+                        {/* <td><Link
+                         to="/admin/resource/:resourceID">{resource.name}</Link></td>
                         <td><Link to="/admin/resource/:resourceID">{resource.id}</Link></td> */}
                     </tr>)
                 })
