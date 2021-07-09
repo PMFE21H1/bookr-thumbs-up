@@ -50,7 +50,7 @@ function App() {
 
                 {/* HOME PAGE */}
 
-          <Route path="/">
+          <Route path="/admin">
               <HomePage/>
           </Route>
 
