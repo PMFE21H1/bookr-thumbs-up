@@ -1,3 +1,4 @@
+
 import ListReservationsPage from "./reservations/listReservationsPage";
 import { createResource, Resource } from "./resources/resources";
 
@@ -6,11 +7,12 @@ let promise = createResource(resource);
 promise.then(created => console.log(created));
 
 
+
 function App() {
   return (
-    <div>
-      <ListReservationsPage />
-    </div>
+      <div>
+      </div>
+
   );
 }
 
