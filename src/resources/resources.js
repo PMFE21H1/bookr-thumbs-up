@@ -33,11 +33,13 @@ export class Resource {
 
 
 
-export async function deleteResource(resource){
+export function deleteResource(resource){
+    if (!resource.id) {
+        throw new Error("invalid ID")
+    }
 
     let deleteReservations=[];
 
-    //lekérem az összes reservationt
     fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json`)
         .then(response=>response.json())
         .then(reservations=>{
@@ -52,10 +54,9 @@ export async function deleteResource(resource){
                 method: "DELETE"
             })
         }})
-
-    // resource törlése
-    return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${resource.id}.json`, {
-        method: "DELETE"
-    })
+        .then(()=> fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${resource.id}.json`, {
+            method: "DELETE"
+        }))
+        .then(response=>{if(response===null){return true}})
 
 }
