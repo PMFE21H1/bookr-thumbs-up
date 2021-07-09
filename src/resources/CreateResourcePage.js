@@ -19,7 +19,7 @@ export default class CreateResourcePage extends React.Component {
 
     render() {
         return (
-            <Route path="/admin/resources/create">
+            <>
                     <p> Resource Name </p>
                     <input type="text" onChange={this.upDateName} value={this.state.resourceName}/>
 
@@ -27,9 +27,9 @@ export default class CreateResourcePage extends React.Component {
                     }> Create </button>
                     <button> Cancel</button>
 
-            </Route>
+            </>
         )
     }
 }
 
-//<Route path="/admin/resources/create"> <CreateResourcePage/> </Route>
+
