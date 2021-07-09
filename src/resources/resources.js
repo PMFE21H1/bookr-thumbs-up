@@ -34,25 +34,25 @@ export class Resource {
 
 
 export async function deleteResource(resource){
-    let reservations;
+
     let deleteReservations=[];
+
     //lekérem az összes reservationt
     fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json`)
         .then(response=>response.json())
-        .then(data=>{
-            reservations=data;
+        .then(reservations=>{
             Object.keys(reservations).forEach(reservation=>{
                 if(reservations[reservation].resource === resource.id){
+                    reservations[reservation].id=reservation;
                     deleteReservations=[...deleteReservations,reservations[reservation]]
                 }
-            })})
+            })}).then(()=>console.log(deleteReservations))
+        .then(()=>{for(let i=0; i<deleteReservations.length; i++) {
+            fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${deleteReservations[i].id}.json`, {
+                method: "DELETE"
+            })
+        }})
 
-
-    for(let i=0; i<deleteReservations.length; i++) {
-        await fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${deleteReservations[i].id}.json`, {
-            method: "DELETE"
-        })
-    }
     // resource törlése
     return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${resource.id}.json`, {
         method: "DELETE"

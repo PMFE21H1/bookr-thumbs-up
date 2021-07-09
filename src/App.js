@@ -1,6 +1,6 @@
 import { createResource, Resource, deleteResource } from "./resources/resources";
 
-deleteResource({id:"-Me1Wfn5iPI3JIkn38IK", name: "Room 303"})
+deleteResource({id:"-Me4-u_eL46RZwMgEiCJ", name: "Room 303"})
 
 function App() {
   return (
