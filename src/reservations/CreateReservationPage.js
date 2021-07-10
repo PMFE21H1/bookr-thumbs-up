@@ -5,11 +5,11 @@ export default class CreateReservationPage extends Component {
         super(props)
         this.state = {
             resource: "",
-            name:"",
+            customer:"",
             date:"",
             time:"",
             newReservation:{
-
+                
             }
             
         }
@@ -40,7 +40,7 @@ export default class CreateReservationPage extends Component {
                 </div>
 
                 <div>
-                    <label>Name:</label>
+                    <label>Customer:</label>
                     <input onChange={(e)=>this.changeName(e)} value={this.state.name}></input>
                 </div>
 
