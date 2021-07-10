@@ -20,12 +20,24 @@ export default class CreateResourcePage extends React.Component {
     render() {
         return (
             <>
+                <form>
                     <p> Resource Name </p>
                     <input type="text" onChange={this.upDateName} value={this.state.resourceName}/>
 
-                    <button onClick={() =>{try{createResource(new Resource(this.state.resourceName))}catch(e){alert(e.message)}}
-                    }> Create </button>
+                    <button onClick={
+                        (e) => {
+
+                            e.preventDefault()
+                            try {
+                                createResource(new Resource(this.state.resourceName))
+                            } catch (e) {
+                                alert(e.message)
+                            }
+                        }
+                    }> Create
+                    </button>
                     <button> Cancel</button>
+                </form>
 
             </>
         )
