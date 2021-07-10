@@ -15,14 +15,22 @@ import {initializeApp} from 'firebase/app';
  const firebaseApp = initializeApp(firebaseConfig);
 
 export function createResource(resource) {
-    return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources.json", {
-        body: JSON.stringify(resource),
-        method: "POST"
-    }).then(response => response.json()).then(data => {
-        resource.id = data.name
-        return resource
-    })
-}
+        return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources.json", {
+            body: JSON.stringify(resource),
+            method: "POST"
+        }).then(response => {
+            if(response.status === 200){
+                alert("Successful resource creation!")
+            } else {
+                alert("Unsuccessful!")
+            }
+
+            return response.json()})
+            .then(data => {
+            resource.id = data.name
+            return resource
+        })
+    }
 
 
 export class Resource {
