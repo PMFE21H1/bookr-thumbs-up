@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { listResources } from '../resources/resources'
+// import { createReservation } from './reservations'
 
 export default class CreateReservationPage extends Component {
     constructor(props){
@@ -25,8 +26,8 @@ export default class CreateReservationPage extends Component {
         ))   
     }
 
-    changeName = (e) => {
-        this.setState({name: e.target.value})
+    changeCustomer = (e) => {
+        this.setState({customer: e.target.value})
     }
 
     changeDate = (e) => {
@@ -65,20 +66,27 @@ export default class CreateReservationPage extends Component {
 
                 <div>
                     <label>Customer:</label>
-                    <input onChange={(e)=>this.changeName(e)} value={this.state.name}></input>
+                    <input onChange={(e)=>this.changeCustomer(e)} value={this.state.customer}></input>
                 </div>
 
                 <div>
                     <label>Date:</label>
-                    <input type="date" onChange={(e)=>this.changeDate(e)} value={this.state.name}></input>
+                    <input type="date" onChange={(e)=>this.changeDate(e)} value={this.state.date}></input>
                 </div>
 
                 <div>
                     <label>Time:</label>
-                    <input type="time" onChange={(e)=>this.changeTime(e)} value={this.state.name}></input>
+                    <input type="time" onChange={(e)=>this.changeTime(e)} value={this.state.time}></input>
                 </div>
 
-                <button>Create</button>
+                <button onClick={
+                    () => {
+                    console.log(this.state.resource)
+                    console.log(`${this.state.date}T${this.state.time}`)
+                    console.log(this.state.customer)
+                    // createReservation(this.state.resource, `${this.state.date}T${this.state.time}`, this.state.customer)
+                }
+            }>Create</button>
                 <button>Cancel</button>
 
             </>
