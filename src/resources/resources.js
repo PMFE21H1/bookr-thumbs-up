@@ -1,6 +1,5 @@
 import {initializeApp} from 'firebase/app';
 
-
  const firebaseConfig = {
      apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",
      authDomain: "bookr-thumbs-up.firebaseapp.com",
@@ -12,7 +11,7 @@ import {initializeApp} from 'firebase/app';
      measurementId: "G-CCWPS19RXP"
  }
 
- const firebaseApp = initializeApp(firebaseConfig);
+ // const firebaseApp = initializeApp(firebaseConfig);
 
 export function createResource(resource) {
     if(resource instanceof  Resource){
@@ -57,7 +56,8 @@ export function listResources(){
        return Object.keys(resources).map((key) => {
             resources[key].id = key
         return resources[key]
-    })
-    }
+            })
+        }
     )
 }
+

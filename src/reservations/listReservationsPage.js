@@ -37,16 +37,14 @@ export default class ListReservationsPage extends React.Component {
                   <td>{reservation.slot}</td>
                   <td>{reservation.resource}</td>
                   <td>
-                    <button>Edit</button>
-                    <button>Delete</button>
-                    {/* <Link to={"/admin/reservations/:reservationID/delete/"}>
+                     <Link to={`/admin/reservations/${reservation.id}/delete`}>
                         Delete
                       </Link>
                     </td>
                     <td>
-                      <Link to={"/admin/reservations/:reservationID/edit/"}>
+                      <Link to={`/admin/reservations/${reservation.id}/edit`}>
                         Edit
-                      </Link> */}
+                      </Link>
                   </td>
                 </tr>
               );
