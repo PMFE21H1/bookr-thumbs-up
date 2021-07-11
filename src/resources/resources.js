@@ -15,6 +15,8 @@ import {initializeApp} from 'firebase/app';
  const firebaseApp = initializeApp(firebaseConfig);
 
 export function createResource(resource) {
+    if(resource instanceof  Resource){
+        if(!resource.id){
         return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources.json", {
             body: JSON.stringify(resource),
             method: "POST"
@@ -30,6 +32,13 @@ export function createResource(resource) {
             resource.id = data.name
             return resource
         })
+        }else{
+            throw new Error("Id already exists!");
+        }
+
+    }else{
+        throw new Error("The parameter is not a Resource!");
+    }
     }
 
 export class Resource {
