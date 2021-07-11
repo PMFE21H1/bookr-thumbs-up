@@ -8,9 +8,7 @@ export default class CreateReservationPage extends Component {
             customer:"",
             date:"",
             time:"",
-            newReservation:{
-                
-            }
+
             
         }
     }
