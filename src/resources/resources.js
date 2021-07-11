@@ -62,22 +62,3 @@ export function listResources(){
     )
 }
 
-export function updateResource(patch, id){
-    if(!patch){
-        throw new Error("No update was given")
-    }
-
-
-    return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${id}.json`, {
-        body: JSON.stringify(patch) ,
-        method: "PATCH"
-    }).then(response => response.json()).then(() =>
-        fetch(
-            `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${id}.json`,{
-                method: "GET"
-            } ).then(
-            response => response.json()).then(patchedObject => console.log(patchedObject)))
-
-
-
-}
