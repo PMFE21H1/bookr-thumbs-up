@@ -46,7 +46,12 @@ export default class CreateReservationPage extends Component {
 
         return (
             <>
+            <form>
+
+                <h3>Create Reservation</h3>
+
                 <div>
+                    
                     <label>Resource:</label>
                     <select onChange={e =>this.changeResource(e)} value={this.state.resource}>
                         <option value={null}>Select a resource</option>
@@ -80,15 +85,18 @@ export default class CreateReservationPage extends Component {
                 </div>
 
                 <button onClick={
-                    () => {
+                    (e) => {
+                    e.preventDefault();
                     console.log(this.state.resource)
                     console.log(`${this.state.date}T${this.state.time}`)
                     console.log(this.state.customer)
                     // createReservation(this.state.resource, `${this.state.date}T${this.state.time}`, this.state.customer)
-                }
-            }>Create</button>
+                            }
+                }>Create</button>
+
                 <button>Cancel</button>
 
+                </form>
             </>
         )
     }
