@@ -6,7 +6,9 @@ export class UpdateResourcePage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            newResourcename: ""
+            newResourceName: "",
+            resourceID: this.props.match.params.resourceID,
+            oldResourceName: ""
 
         }
 
@@ -14,12 +16,14 @@ export class UpdateResourcePage extends React.Component {
     }
 
     componentDidMount() {
-        fetch("")
-    }
+        fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${this.state.resourceID}.json`).then(response => response.json())
+            .then( resource => this.setState({oldResourceName: resource.name}) )
+            }
+
 
     updateResourceName = (e) => {
         this.setState({
-            newResourcename: e.target.value
+            newResourceName: e.target.value
         })
     }
 
@@ -27,9 +31,21 @@ export class UpdateResourcePage extends React.Component {
     render() {
         return (
             <>
-                <input type="text" onChange={this.updateResourceName} value={}/>
-                <button onClick={updateResource()}>Apply</button>
-                <Link to="/admin/resource">Cancel</Link>
+                {this.state.oldResourceName ?
+                    <div>
+                        <input type="text" placeholder={this.state.oldResourceName} onChange={this.updateResourceName}
+                               value={this.state.newResourceName}/>
+                        <button
+                            onClick={() => updateResource(this.state.resourceID, {name: this.state.newResourceName})}>Apply
+                        </button>
+                        <Link to="/admin/resource">Cancel</Link>
+                    </div>
+                    :
+                    <p></p>
+
+
+                }
+
             </>
         )
 

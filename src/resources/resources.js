@@ -13,7 +13,7 @@ import {initializeApp} from 'firebase/app';
 }
 
 
- const firebaseApp = initializeApp(firebaseConfig);
+ // const firebaseApp = initializeApp(firebaseConfig);
 
 
 export function createResource(resource) {
