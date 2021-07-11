@@ -32,7 +32,7 @@ export default class DeleteReservationPage extends React.Component {
                         <tr>
                             <td>{this.state.reservation.customer}</td>
                             <td>{this.state.reservation.slot}</td>
-                            <td>{this.stata.reservation.resource}</td>
+                            <td>{this.state.reservation.resource}</td>
 
                         </tr>
 
