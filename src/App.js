@@ -3,6 +3,7 @@ import CreateResourcePage from "./resources/CreateResourcePage";
 import ListReservationsPage from "./reservations/listReservationsPage";
 import ListResourcesAdminPage from "./resources/ListResourcesAdminPage";
 import DeleteReservationPage from "./reservations/DeleteReservationPage";
+import UpdateReservationPage from "./reservations/UpdateReservationPage";
 
 function App() {
     return (
@@ -18,6 +19,8 @@ function App() {
                 {/*</Route>*/}
                 {/*<Route path="/admin/reservations/create" exact><ReservationPage/></Route>*/}
                 <Route path="/admin/reservations/:reservationID/delete" render={(props)=>(<DeleteReservationPage {...props}/>)}>
+                </Route>
+                <Route path="/admin/reservations/:reservationID/edit" render={(props)=>(<UpdateReservationPage {...props}/>)}>
                 </Route>
                 <Route path="/admin/reservations" exact><ListReservationsPage/></Route>
             </Switch>

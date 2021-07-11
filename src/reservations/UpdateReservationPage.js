@@ -2,18 +2,19 @@ import React from "react";
 import { getAuth } from "firebase/auth";
 import { createResource } from "../resources/resources";
 import { Route, Link } from "react-router-dom";
+import { updateReservation } from './reservations'
 
 export default class UpdateReservationPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      reservationId: "",
+      reservationID: this.props.match.params.reservationID,
       reservationData: {},
     };
   }
   componentDidMount = () => {
     return fetch(
-      `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${this.state.reservationId}.json`,
+      `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${this.state.reservationID}.json`,
       {
         method: "GET",
       }
@@ -31,21 +32,18 @@ export default class UpdateReservationPage extends React.Component {
   };
   handleName = (e) => {
     this.setState({
-      ...this.state.reservationData,
       name: e.target.value,
     });
     console.log(e);
   };
   handleDate = (e) => {
     this.setState({
-      ...this.state.reservationData,
       date: e.target.value,
     });
     console.log(e);
   };
   handleTime = (e) => {
     this.setState({
-      ...this.state.reservationData,
       time: e.target.value,
     });
     console.log(e);
@@ -86,7 +84,8 @@ export default class UpdateReservationPage extends React.Component {
             onClick={(e) => {
               e.preventDefault();
               try {
-                // updatedReservation(this.state.reservationId, {customer: this.state.reservationData.name, slot: this.state.reservationData.date + 'T' + this.state.reservationData.time})
+                updateReservation(this.state.reservationID, 
+                  {customer: this.state.reservationData.name, slot: this.state.reservationData.date + 'T' + this.state.reservationData.time})
               } catch (e) {
                 alert(e.message);
               }
@@ -94,7 +93,8 @@ export default class UpdateReservationPage extends React.Component {
           >
             Apply
           </button>
-          {/* <Link to='/admin/reservations'>Cancel</Link> */}
+          <button onClick={()=>console.log(this.state)}>state</button>
+          <Link to='/admin/reservations'>Cancel</Link>
         </div>
       </div>
     );
