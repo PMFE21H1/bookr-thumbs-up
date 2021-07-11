@@ -13,7 +13,7 @@ export default class UpdateReservationPage extends React.Component {
   }
   componentDidMount = () => {
     return fetch(
-      `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/-Me6TAh_EzgldyUnWuRM.json`,
+      `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${this.state.reservationId}.json`,
       {
         method: "GET",
       }
