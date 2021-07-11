@@ -1,10 +1,10 @@
 import {initializeApp} from 'firebase/app';
 
 
-const firebaseConfig = {
-    apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",
-    authDomain: "bookr-thumbs-up.firebaseapp.com",
-    databaseURL: "https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app",
+ const firebaseConfig = {
+     apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",
+     authDomain: "bookr-thumbs-up.firebaseapp.com",
+     databaseURL: "https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app",
     projectId: "bookr-thumbs-up",
     storageBucket: "bookr-thumbs-up.appspot.com",
     messagingSenderId: "867285693313",
@@ -12,7 +12,9 @@ const firebaseConfig = {
     measurementId: "G-CCWPS19RXP"
 }
 
-const firebaseApp = initializeApp(firebaseConfig);
+
+ const firebaseApp = initializeApp(firebaseConfig);
+
 
 export function createResource(resource) {
     if (resource instanceof Resource) {
@@ -52,6 +54,7 @@ export class Resource {
 
 export function listResources() {
     return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources.json")
+
         .then(resp => resp.json())
         .then(resources => {
 
@@ -80,6 +83,7 @@ export function updateResource(id, patch) {
                     }
                 }
             )
+
         }
     )
 }
