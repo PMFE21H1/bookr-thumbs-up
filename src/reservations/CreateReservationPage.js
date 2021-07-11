@@ -13,6 +13,10 @@ export default class CreateReservationPage extends Component {
         }
     }
 
+    componentDidMount(){
+        
+    }
+
     changeName = (e) => {
         this.setState({name: e.target.value})
     }
@@ -34,7 +38,9 @@ export default class CreateReservationPage extends Component {
             <>
                 <div>
                     <label>Resource:</label>
-                    <select onChange={e =>this.changeResource(e)} value={this.state.resource}></select>
+                    <select onChange={e =>this.changeResource(e)} value={this.state.resource}>
+
+                    </select>
                 </div>
 
                 <div>
