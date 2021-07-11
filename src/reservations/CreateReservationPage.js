@@ -57,8 +57,8 @@ export default class CreateReservationPage extends Component {
                         <option value={null}>Select a resource</option>
 
                         {this.state.resources ?
-                    this.state.resources.map((resource, i) => {
-                        return <option key={i} value={resource}>{resource}</option>
+                    this.state.resources.map((resource) => {
+                        return <option key={resource} value={resource}>{resource}</option>
                     })    
                     :
                     ""
