@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { listResources } from '../resources/resources'
+import { listResources, Resource } from '../resources/resources'
 // import { createReservation } from './reservations'
 
 export default class CreateReservationPage extends Component {
     constructor(props){
         super(props)
         this.state = {
-            resource: "",
+            resourceToSubmit: {},
+            resource:"",
             customer:"",
             date:"",
             time:"",
@@ -20,7 +21,7 @@ export default class CreateReservationPage extends Component {
         listResources().then(resourcesArr => resourcesArr.map(
             resource => {
                 this.setState(() => {
-                    return {resources: [...this.state.resources, resource.name]}
+                    return {resources: [...this.state.resources, resource]}
                 })
             }
         ))   
@@ -39,7 +40,20 @@ export default class CreateReservationPage extends Component {
     }
 
     changeResource = (e) => {
-        this.setState({resource: e.target.value})
+        this.state.resources.forEach(resource => {
+           if (resource.id === e.target.value){
+            this.setState({resourceToSubmit: resource, resource:resource.id})
+           } 
+        })
+    }
+
+    changeToDefault = () => {
+        this.setState({
+            resource:"",
+            customer:"",
+            date:"",
+            time:"",
+        })
     }
  
     render() {
@@ -56,15 +70,19 @@ export default class CreateReservationPage extends Component {
                     <select onChange={e =>this.changeResource(e)} value={this.state.resource}>
                         <option value={null}>Select a resource</option>
 
-                        {this.state.resources ?
-                    this.state.resources.map((resource) => {
-                        return <option key={resource} value={resource}>{resource}</option>
-                    })    
+                        {(this.state.resources!==[]) ?
+
+                            this.state.resources.map(resource => 
+                                <option key={resource.id} value={resource.id}>{resource.name}</option>
+                            )
+                      
                     :
-                    ""
+
+                        ""
+                        }
                     
                     
-                    }
+                    
                     
                     </select>
                 </div>
@@ -87,11 +105,16 @@ export default class CreateReservationPage extends Component {
                 <button onClick={
                     (e) => {
                     e.preventDefault();
-                    console.log(this.state.resource)
+                    
+                    console.log(this.state.resourceToSubmit)
                     console.log(`${this.state.date}T${this.state.time}`)
                     console.log(this.state.customer)
-                    // createReservation(this.state.resource, `${this.state.date}T${this.state.time}`, this.state.customer)
-                            }
+
+                    // try {createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit)
+                    // } catch(e) {console.error(e.message)}
+                    
+                    this.changeToDefault()
+                }
                 }>Create</button>
 
                 <button>Cancel</button>
