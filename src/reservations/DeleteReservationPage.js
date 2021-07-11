@@ -11,7 +11,7 @@ export default class DeleteReservationPage extends React.Component {
     }
 
     componentDidMount() {
-        fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${URLid}.json`)
+        fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${this.props.match.params.reservationID}.json`)
             .then(resp => resp.json())
             .then(reservation => {
                 this.setState({reservation: reservation})
@@ -42,7 +42,7 @@ export default class DeleteReservationPage extends React.Component {
                         }
                 </table>
 
-                <button onClick={() => deleteReservation({/*url-ből kiolvasott id*/})}>Delete Reservation</button>
+                <button onClick={() => deleteReservation(this.props.match.params.reservationID)}>Delete Reservation</button>
                 <Link to="/admin/reservation">Cancel</Link>
             </div>
         )
