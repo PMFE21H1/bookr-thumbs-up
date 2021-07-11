@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { listResources } from '../resources/resources'
 
 export default class CreateReservationPage extends Component {
     constructor(props){
@@ -8,13 +9,20 @@ export default class CreateReservationPage extends Component {
             customer:"",
             date:"",
             time:"",
+            resources:[]
 
             
         }
     }
 
     componentDidMount(){
-        
+        listResources().then(resourcesArr => resourcesArr.map(
+            resource => {
+                this.setState(() => {
+                    return {resources: [...this.state.resources, resource.name]}
+                })
+            }
+        ))   
     }
 
     changeName = (e) => {
@@ -34,12 +42,24 @@ export default class CreateReservationPage extends Component {
     }
  
     render() {
+
         return (
             <>
                 <div>
                     <label>Resource:</label>
                     <select onChange={e =>this.changeResource(e)} value={this.state.resource}>
+                        <option value={null}>Select a resource</option>
 
+                        {this.state.resources ?
+                    this.state.resources.map((resource, i) => {
+                        return <option key={i} value={resource}>{resource}</option>
+                    })    
+                    :
+                    ""
+                    
+                    
+                    }
+                    
                     </select>
                 </div>
 
