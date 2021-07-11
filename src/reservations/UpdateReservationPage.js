@@ -94,7 +94,6 @@ export default class UpdateReservationPage extends React.Component {
           >
             Apply
           </button>
-          <button>Cancel</button>
           {/* <Link to='/admin/reservations'>Cancel</Link> */}
         </div>
       </div>
