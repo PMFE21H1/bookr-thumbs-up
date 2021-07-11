@@ -33,14 +33,14 @@ export function listReservations() {
 export function createReservation(customer, slot, resource) {
     if (!customer) throw new Error('Customer can not be empty')
 
-    if (resource instanceof Resource) {
+
         return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json")
             .then(response => response.json())
             .then(reservations => {
                 let exists = false
-                for (let key in reservations) {
+                for (let k in reservations) {
 
-                    if (reservations[key].resource === resource.id && reservations[key].slot === slot) {
+                    if (reservations[k].resource === resource.id && reservations[k].slot === slot) {
                         exists = true
                         throw new Error("No available slot for this spot!")
                     }
@@ -50,22 +50,22 @@ export function createReservation(customer, slot, resource) {
                         body: JSON.stringify({customer: customer, slot: slot, resource: resource.id}),
                         method: "POST"
                     }).then(response => {
-                        if(response.status === 200){
+                        if (response.status === 200) {
                             alert("Successful reservation creation!")
                         } else {
                             alert("Unsuccessful!")
                         }
 
-                        return response.json()})
-                        .then(data => {
-
-                        return new Reservation(customer, slot, resource, data.name)
+                        return response.json()
                     })
+                        .then(data => {
+                            let reservation;
+                            try {reservation = new Reservation(customer, resource, slot, data.name)} catch (e){alert(e.message)}
+                            return reservation
+                        })
                 }
             })
-    } else {
-        throw new Error("The parameter is not a Resource!");
-    }
+
 
 }
 
