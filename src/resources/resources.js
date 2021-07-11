@@ -12,7 +12,7 @@ import {initializeApp} from 'firebase/app';
      measurementId: "G-CCWPS19RXP"
  }
 
- const firebaseApp = initializeApp(firebaseConfig);
+ // const firebaseApp = initializeApp(firebaseConfig);
 
 export function createResource(resource) {
     if(resource instanceof  Resource){
@@ -61,3 +61,4 @@ export function listResources(){
     }
     )
 }
+
