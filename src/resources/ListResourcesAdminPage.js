@@ -35,14 +35,12 @@ render(){
                         <td>{resource.id}</td>
                         <td>
 
-                            <button>edit</button>
-                            <button>delete</button>
-                            
+
                         </td>
 
-                        {/* <td><Link
-                         to="/admin/resource/:resourceID">{resource.name}</Link></td>
-                        <td><Link to="/admin/resource/:resourceID">{resource.id}</Link></td> */}
+                         <td><Link
+                         to={`/admin/resource/${resource.id}/edit`}>EDIT</Link></td>
+                        <td><Link to={`/admin/resource/${resource.id}/delete`}>DELETE</Link></td>
                     </tr>)
                 })
             :
