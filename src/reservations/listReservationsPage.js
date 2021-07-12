@@ -26,7 +26,7 @@ export default class ListReservationsPage extends React.Component {
             <th>Reservations customer</th>
             <th>Reservations id</th>
             <th>Reservations time</th>
-            <th>Resource-name</th>
+            <th>Reservation resource-id</th>
           </tr>
           {this.state.reservations ? (
             this.state.reservations.map((reservation) => {

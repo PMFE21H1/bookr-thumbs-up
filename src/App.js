@@ -14,21 +14,25 @@ function App() {
     return (
         <Router>
             <Switch>
+
+
                 <Route path="/admin/resources/create">
                     <CreateResourcePage/>
                 </Route>
                 <Route path="/admin/resources">
                     <ListResourcesAdminPage/>
                 </Route>
-                <Route path="/admin/resource/:resourceID/edit" render={(props)=>(<UpdateResourcePage {...props}/>)}>
-                </Route>
+
+
+                <Route path="/admin/resource/:resourceID/edit" render={(props)=>(<UpdateResourcePage {...props}/>)}></Route>
+
                 <Route path="/admin/reservations/create" exact><CreateReservationPage/></Route>
 
-                <Route path="/admin/resources/:resourceID/delete" render={(props)=>(<DeleteResourcePage {...props}/>)}> </Route>
-                <Route path="/admin/reservations/:reservationID/delete" render={(props)=>(<DeleteReservationPage {...props}/>)}> </Route>
+                <Route path="/admin/resources/:resourceID/delete" render={(props)=>(<DeleteResourcePage {...props}/>)}></Route>
 
-                <Route path="/admin/reservations/:reservationID/edit" render={(props)=>(<UpdateReservationPage {...props}/>)}>
-                </Route>
+                <Route path="/admin/reservations/:reservationID/delete" render={(props)=>(<DeleteReservationPage {...props}/>)}></Route>
+
+                <Route path="/admin/reservations/:reservationID/edit" render={(props)=>(<UpdateReservationPage {...props}/>)}></Route>
 
                 <Route path="/admin/reservations" exact><ListReservationsPage/></Route>
             </Switch>
