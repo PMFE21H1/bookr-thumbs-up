@@ -71,6 +71,12 @@ export function createReservation(customer, slot, resource) {
 
 
 export function updateReservation(id, newData) {
+    if (!newData.customer) {
+        throw new Error('Customer can not be empty')
+    }
+    if (!newData.slot.match("^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2})$")) {
+        throw new Error('Slot is invalid')
+    }
     if (id == undefined) {
         throw new Error("Id was invalid")
     }
@@ -93,7 +99,7 @@ export function updateReservation(id, newData) {
             `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${id}.json`, {
                 method: "GET"
             }).then(
-            response => response.json()).then(updatedObject => console.log(updatedObject)))
+            response => response.json()).then(updatedObject => alert('successful update: ' + updatedObject.customer)))
 
 
 }

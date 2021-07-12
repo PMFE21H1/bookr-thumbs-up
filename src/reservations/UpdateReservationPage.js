@@ -85,7 +85,9 @@ export default class UpdateReservationPage extends React.Component {
               e.preventDefault();
               try {
                 updateReservation(this.state.reservationID, 
-                  {customer: this.state.reservationData.name, slot: this.state.reservationData.date + 'T' + this.state.reservationData.time})
+                  {customer: this.state.reservationData.name,
+                     slot: this.state.reservationData.date + 'T' + this.state.reservationData.time})
+                     .then(()=>this.props.history.push('/admin/reservations'))
               } catch (e) {
                 alert(e.message);
               }
@@ -93,7 +95,6 @@ export default class UpdateReservationPage extends React.Component {
           >
             Apply
           </button>
-          <button onClick={()=>console.log(this.state)}>state</button>
           <Link to='/admin/reservations'>Cancel</Link>
         </div>
       </div>
