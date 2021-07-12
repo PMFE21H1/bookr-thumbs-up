@@ -1,5 +1,6 @@
 
 import React from "react"
+import {Link} from "react-router-dom";
 import {listReservations} from "../reservations/reservations";
 import {deleteResource} from "./resources";
 
@@ -34,7 +35,7 @@ export default class DeleteResourcePage extends React.Component{
                     }
                 })}
                 <button onClick={()=> {try{deleteResource(this.state.resource)}catch(e){alert(e.message)}}}>Delete</button>
-                {/*<Link to={"admin/resources"}></Link>*/}
+                <Link to={"/admin/resources"} exact>Cancel</Link>
 
             </div>
         )
