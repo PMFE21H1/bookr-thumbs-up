@@ -48,7 +48,7 @@ render(){
             }
             
         </table>
-        <button>Add resource</button>
+        <Link to="/admin/resources/create">Add resource</Link>
         </>
         
         )

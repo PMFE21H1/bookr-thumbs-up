@@ -19,6 +19,9 @@ export default class DeleteResourcePage extends React.Component{
             reservations:reservations
         }))
 
+        fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${this.state.resourceId}.json`).then(response => response.json())
+            .then(resource => this.setState({resource : resource })).then(()=> this.setState({resource : {...this.state.resource,id : this.state.resourceId}}))
+
     }
 
     render(){
@@ -30,7 +33,7 @@ export default class DeleteResourcePage extends React.Component{
                         return(<div><p>{reservation.name}, {reservation.slot}</p></div>)
                     }
                 })}
-                <button onClick={()=>deleteResource(this.state.resourceId)}>Delete</button>
+                <button onClick={()=> {try{deleteResource(this.state.resource)}catch(e){alert(e.message)}}}>Delete</button>
                 {/*<Link to={"admin/resources"}></Link>*/}
 
             </div>

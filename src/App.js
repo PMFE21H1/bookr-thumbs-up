@@ -22,13 +22,13 @@ function App() {
                 <Route path="/admin/resources">
                     <ListResourcesAdminPage/>
                 </Route>
-
+                <Route path="/admin/resource/:resourceID/delete" render={(props)=>(<DeleteResourcePage {...props}/>)}></Route>
 
                 <Route path="/admin/resource/:resourceID/edit" render={(props)=>(<UpdateResourcePage {...props}/>)}></Route>
 
                 <Route path="/admin/reservations/create" exact><CreateReservationPage/></Route>
 
-                <Route path="/admin/resources/:resourceID/delete" render={(props)=>(<DeleteResourcePage {...props}/>)}></Route>
+
 
                 <Route path="/admin/reservations/:reservationID/delete" render={(props)=>(<DeleteReservationPage {...props}/>)}></Route>
 
