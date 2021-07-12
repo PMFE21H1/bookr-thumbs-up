@@ -73,13 +73,14 @@ export function updateResource(id, patch) {
     listResources().then(resources => {
             resources.forEach(
                 resource => {
-                    if (resource.id == id) {
+                    if (resource.id === id) {
                         return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${id}.json`, {
                             body: JSON.stringify(patch),
                             method: "PATCH"
-                        }).then(response => response.json()).then(patchedObject => console.log(patchedObject))
-                    } else {
-                        throw new Error("Resource does not exist, also wrong ID")
+                        }).then(response => response.json()).then(
+                            patchedObject => alert("Resource succesfully changed : " + patchedObject.name)
+                        )
+
                     }
                 }
             )
