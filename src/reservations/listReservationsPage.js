@@ -19,14 +19,14 @@ export default class ListReservationsPage extends React.Component {
   render() {
     return (
       <>
-        {/* <Route path="/admin/reservations"> */}
-        <button>Add reservation</button>
+
+        <Link to={"/admin/reservations/create"}>Add reservation</Link>
         <table>
           <tr>
             <th>Reservations customer</th>
             <th>Reservations id</th>
             <th>Reservations time</th>
-            <th>Reservations resource-id</th>
+            <th>Resource-name</th>
           </tr>
           {this.state.reservations ? (
             this.state.reservations.map((reservation) => {
@@ -53,7 +53,6 @@ export default class ListReservationsPage extends React.Component {
             <p></p>
           )}
         </table>
-        {/* </Route> */}
       </>
     );
   }

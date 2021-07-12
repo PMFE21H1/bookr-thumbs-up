@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { listResources, Resource } from '../resources/resources'
-// import { createReservation } from './reservations'
+import { createReservation } from './reservations'
 
 export default class CreateReservationPage extends Component {
     constructor(props){
@@ -105,13 +105,10 @@ export default class CreateReservationPage extends Component {
                 <button onClick={
                     (e) => {
                     e.preventDefault();
-                    
-                    console.log(this.state.resourceToSubmit)
-                    console.log(`${this.state.date}T${this.state.time}`)
-                    console.log(this.state.customer)
 
-                    // try {createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit)
-                    // } catch(e) {console.error(e.message)}
+
+                    try {createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit)
+                    } catch(e) {console.error(e.message)}
                     
                     this.changeToDefault()
                 }
