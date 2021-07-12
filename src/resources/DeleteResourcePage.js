@@ -25,7 +25,7 @@ export default class DeleteResourcePage extends React.Component{
                 <p>Are you sure you want to delete the resource along with the following reservations?</p>
                 {this.state.reservations.map(reservation=> {
                     if(reservation.resource===this.state.resourceId){
-                        return(<div><span>{reservation.name}, {reservation.slot}</span></div>)
+                        return(<div><p>{reservation.name}, {reservation.slot}</p></div>)
                     }
                 })}
                 <button onClick={()=>deleteResource(this.state.resourceId)}>Delete</button>
