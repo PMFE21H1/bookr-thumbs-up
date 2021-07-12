@@ -52,6 +52,35 @@ export class Resource {
     }
 }
 
+
+export function deleteResource(resource){
+    if (!resource.id) {
+        throw new Error("invalid ID")
+    }
+
+    let deleteReservations=[];
+
+    fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json`)
+        .then(response=>response.json())
+        .then(reservations=>{
+            Object.keys(reservations).forEach(reservation=>{
+                if(reservations[reservation].resource === resource.id){
+                    reservations[reservation].id=reservation;
+                    deleteReservations=[...deleteReservations,reservations[reservation]]
+                }
+            })}).then(()=>console.log(deleteReservations))
+        .then(()=>{for(let i=0; i<deleteReservations.length; i++) {
+            fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${deleteReservations[i].id}.json`, {
+                method: "DELETE"
+            })
+        }})
+        .then(()=> fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${resource.id}.json`, {
+            method: "DELETE"
+        }))
+        .then(response=>{if(response===null){return true}})
+
+}
+
 export function listResources() {
     return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources.json")
 
