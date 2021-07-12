@@ -32,21 +32,21 @@ export default class UpdateReservationPage extends React.Component {
   };
   handleName = (e) => {
     this.setState({
-      name: e.target.value,
+      reservationData: {...this.state.reservationData, name: e.target.value}
     });
-    console.log(e);
+
   };
   handleDate = (e) => {
     this.setState({
-      date: e.target.value,
+      reservationData: {...this.state.reservationData, date: e.target.value}
     });
-    console.log(e);
+
   };
   handleTime = (e) => {
     this.setState({
-      time: e.target.value,
+      reservationData: {...this.state.reservationData, time: e.target.value}
     });
-    console.log(e);
+
   };
   render() {
     return (
