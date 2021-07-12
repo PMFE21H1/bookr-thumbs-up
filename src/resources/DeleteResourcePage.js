@@ -11,6 +11,7 @@ export default class DeleteResourcePage extends React.Component{
     render(){
         return(
             <div>
+                <p>Are you sure you want to delete the following resource?</p>
 
             </div>
         )
