@@ -1,6 +1,8 @@
 
 import React from "react"
 import {listReservations} from "../reservations/reservations";
+import {deleteResource} from "./resources";
+
 
 export default class DeleteResourcePage extends React.Component{
     constructor(props) {
