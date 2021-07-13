@@ -8,10 +8,12 @@ export default class UpdateReservationPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      //itt olvassuk ki az id-t az url-bol
       reservationID: this.props.match.params.reservationID,
       reservationData: {},
     };
   }
+  // fetchelunk az url-bol kiolvasott id alapjan egy reservationt
   componentDidMount = () => {
     return fetch(
       `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${this.state.reservationID}.json`,
@@ -21,9 +23,11 @@ export default class UpdateReservationPage extends React.Component {
     )
       .then((response) => response.json())
       .then((reservation) => {
+        //a lekert reservation adatait setStateljuk es beleirjuk a reservationDatankba.
         this.setState({
           reservationData: {
             name: reservation.customer,
+            //mivel a slot magaba foglalja a datet es a timeot ezert a split hasznalataval szetszedtuk azokat
             date: reservation.slot.split("T")[0],
             time: reservation.slot.split("T")[1],
           },
@@ -59,8 +63,8 @@ export default class UpdateReservationPage extends React.Component {
           <p>Update name</p>
           <input
             type="text"
+            //itt jelenitjuk meg azokat az adatokat amit a statben beleirtunk
             placeholder={this.state.reservationData.name}
-            value={this.state.updatedName}
             onChange={this.handleName}
           />
 
@@ -84,7 +88,9 @@ export default class UpdateReservationPage extends React.Component {
             onClick={(e) => {
               e.preventDefault();
               try {
+                //itt hasznaljuk fel ujbol a reservationID-t amit a statbol olvasunk ki(ez az elso parameter amit a fg. var)
                 updateReservation(this.state.reservationID, 
+                  //ez lesz az uj reservation amivel updatelni szeretnenk azt (newData)
                   {customer: this.state.reservationData.name,
                      slot: this.state.reservationData.date + 'T' + this.state.reservationData.time})
                      .then(()=>this.props.history.push('/admin/reservations'))
