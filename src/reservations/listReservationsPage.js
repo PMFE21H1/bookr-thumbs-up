@@ -38,12 +38,12 @@ export default class ListReservationsPage extends React.Component {
                   <td>{reservation.resource}</td>
                   <td>
                      <Link to={`/admin/reservations/${reservation.id}/delete`}>
-                        Delete
+                        DELETE
                       </Link>
                     </td>
                     <td>
                       <Link to={`/admin/reservations/${reservation.id}/edit`}>
-                        Edit
+                        EDIT
                       </Link>
                   </td>
                 </tr>
