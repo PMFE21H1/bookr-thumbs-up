@@ -46,7 +46,7 @@ export class UpdateResourcePage extends React.Component {
             >
               Apply
             </button>
-            <Link to="/admin/resource">Cancel</Link>
+            <Link to="/admin/resources">Cancel</Link>
           </div>
         ) : (
           <p></p>

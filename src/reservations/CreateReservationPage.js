@@ -108,7 +108,7 @@ export default class CreateReservationPage extends Component {
 
 
                     try {createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit)
-                    } catch(e) {console.error(e.message)}
+                    } catch(e) {alert(e.message)}
                     
                     this.changeToDefault()
                 }
