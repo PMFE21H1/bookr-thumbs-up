@@ -16,13 +16,17 @@ const firebaseConfig = {
 const firebaseApp = initializeApp(firebaseConfig);
 
 export function listReservations() {
+    //reservation-ok lekérése
     return fetch(
         "https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json"
     )
         .then((resp) => resp.json())
         .then((reservations) => {
+            // tömböt hoz létre a lekért objectek kulcsaival, majd végig megy a tömbön
             return Object.keys(reservations).map((key) => {
+            // a map létrehoz egy tömböt, amibe az eredeti objecteket rakja, a hozzájuk tartozó ID beleírásával
                 reservations[key].id = key;
+            // Az újonnan létrehozott objectet adja vissza és teszi bele a map által visszaadott tömbbe.
                 return reservations[key];
             });
         });
