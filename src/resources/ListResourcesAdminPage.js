@@ -21,6 +21,7 @@ class listResourceAdminPage extends React.Component{
 render(){
     return(
         <>
+            <Link to="/admin/resources/create">Add resource</Link>
     
         <table>
             <tr>
@@ -48,7 +49,7 @@ render(){
             }
             
         </table>
-        <Link to="/admin/resources/create">Add resource</Link>
+
         </>
         
         )
