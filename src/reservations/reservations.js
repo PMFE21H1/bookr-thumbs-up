@@ -31,9 +31,10 @@ export function listReservations() {
 }
 
 export function createReservation(customer, slot, resource) {
+    //ellenőrzi, hogy van-e customer
     if (!customer) throw new Error('Customer can not be empty')
 
-
+        //reservation-ok lekérése, annak leellenőrzése, hogy van e már erre az időpontra és resource-ra foglalás
         return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json")
             .then(response => response.json())
             .then(reservations => {
@@ -45,11 +46,14 @@ export function createReservation(customer, slot, resource) {
                         throw new Error("No available slot for this spot!")
                     }
                 }
+                //új reservation létrehozása
                 if (!exists) {
+                    //posttal elküldjük az adatokat a firebasre
                     return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json", {
                         body: JSON.stringify({customer: customer, slot: slot, resource: resource.id}),
                         method: "POST"
                     }).then(response => {
+                        //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
                         if (response.status === 200) {
                             alert("Successful reservation creation!")
                         } else {
@@ -58,6 +62,7 @@ export function createReservation(customer, slot, resource) {
 
                         return response.json()
                     })
+                        //itt jön létre az új reservation a Reservation class használatával
                         .then(data => {
                             let reservation;
                             try {reservation = new Reservation(customer, resource, slot, data.name)} catch (e){alert(e.message)}
@@ -65,8 +70,6 @@ export function createReservation(customer, slot, resource) {
                         })
                 }
             })
-
-
 }
 
 
@@ -107,15 +110,19 @@ export function updateReservation(id, newData) {
 
 export class Reservation{
     constructor(customer,resource,slot,id) {
+        //ellenőrzi a customer formátumát
         if(!customer || typeof customer != "string"){
             throw new Error("Customer declaration invalid")
         }
+        //ellenőrzi, hogy van-e resource
         if(!resource ){
             throw new Error("Bad resource declaration!")
         }
+        //a slot formátumát ellenőrzi
         if (!slot || !slot.match("^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2})$")) {
             throw new Error("Bad slot declaration!")
         }
+        //az id-t nem itt adjuk meg, mert azt a firebase generálja
         this.id = ""
         this.customer = customer
         this.resource = resource
