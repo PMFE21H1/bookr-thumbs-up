@@ -21,13 +21,21 @@ class App extends React.Component {
         }
     }
 
+    logIn = (user) => {
+        this.setState({
+            user: user
+        })
+        console.log(user)
+        console.log(this.state)
+    }
+
     render() {
         return (
             <Router>
                 <AuthContext.Provider value={{user: this.state.user}}>
                     <Switch>
 
-                        <Route path="/login"><LoginPage/></Route>
+                        <Route path="/login"><LoginPage onLogIn={this.logIn}/></Route>
                         <PrivateRoute
                             path="/admin/resources/create"
                             render={(props) => (<CreateResourcePage {...props}/>)}>
@@ -50,7 +58,7 @@ class App extends React.Component {
 
                         <PrivateRoute
                             path="/admin/reservations/create"
-                            render={(props) => (<CreateReservationPage {...props}/>)}>>
+                            render={(props) => (<CreateReservationPage {...props}/>)}>
                         </PrivateRoute>
 
                         <PrivateRoute
@@ -83,7 +91,7 @@ let PrivateRoute = ({render, ...props}) => {
         <AuthContext.Consumer>
             {({user, ...rest}) => {
                 return <Route {...props}
-                              render={() => (user ? render : <Redirect to="/login"/>)}/>
+                              render={() => (user ? render : <Redirect to="/login" />)}/>
             }}
         </AuthContext.Consumer>
     )
