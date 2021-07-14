@@ -8,6 +8,7 @@ import DeleteResourcePage from "./resources/DeleteResourcePage";
 import UpdateReservationPage from "./reservations/UpdateReservationPage";
 import {UpdateResourcePage} from "./resources/UpdateResourcePage";
 import CreateReservationPage from "./reservations/CreateReservationPage";
+import LoginPage from "./authentication/LoginPage";
 
 
 function App() {
@@ -15,7 +16,7 @@ function App() {
         <Router>
             <Switch>
 
-
+                <Route path="/login"><LoginPage/></Route>
                 <Route path="/admin/resources/create">
                     <CreateResourcePage/>
                 </Route>
