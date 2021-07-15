@@ -11,7 +11,7 @@ import CreateReservationPage from "./reservations/CreateReservationPage";
 import LoginPage from "./authentication/LoginPage";
 
 
-let AuthContext = React.createContext(null)
+export let AuthContext = React.createContext(null)
 
 class App extends React.Component {
     constructor(props) {
@@ -89,11 +89,12 @@ class App extends React.Component {
 let PrivateRoute = ({render, ...props}) => {
     return (
         <AuthContext.Consumer>
-            {({user, ...rest}) => {
+            {({user}) => {
                 return <Route {...props}
                               render={(props) => (user ? render(props) : <Redirect to="/login" />)}/>
             }}
         </AuthContext.Consumer>
+
     )
 }
 

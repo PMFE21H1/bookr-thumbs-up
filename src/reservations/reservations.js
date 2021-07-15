@@ -34,7 +34,7 @@ export function listReservations() {
 
 }
 
-export function createReservation(customer, slot, resource) {
+export function createReservation(customer, slot, resource,status) {
     //ellenőrzi, hogy van-e customer
     if (!customer) throw new Error('Customer can not be empty')
 
@@ -54,7 +54,7 @@ export function createReservation(customer, slot, resource) {
                 if (!exists) {
                     //posttal elküldjük az adatokat a firebasre
                     return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json", {
-                        body: JSON.stringify({customer: customer, slot: slot, resource: resource.id}),
+                        body: JSON.stringify({customer: customer, slot: slot, resource: resource.id, status: status}),
                         method: "POST"
                     }).then(response => {
                         //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
@@ -69,7 +69,7 @@ export function createReservation(customer, slot, resource) {
                         //itt jön létre az új reservation a Reservation class használatával
                         .then(data => {
                             let reservation;
-                            try {reservation = new Reservation(customer, resource, slot, data.name)} catch (e){alert(e.message)}
+                            try {reservation = new Reservation(customer, resource, slot,status, data.name)} catch (e){alert(e.message)}
                             return reservation
                         })
                 }
@@ -113,13 +113,13 @@ export function updateReservation(id, newData) {
 
 
 export class Reservation{
-    constructor(customer,resource,slot,id) {
+    constructor(customer,resource,slot,status,id) {
         //ellenőrzi a customer formátumát
         if(!customer || typeof customer != "string"){
             throw new Error("Customer declaration invalid")
         }
         //ellenőrzi, hogy van-e resource
-        if(!resource ){
+        if(!resource){
             throw new Error("Bad resource declaration!")
         }
         //a slot formátumát ellenőrzi
@@ -131,6 +131,9 @@ export class Reservation{
         this.customer = customer
         this.resource = resource
         this.slot = slot
+        this.status= status
+
+
     }
 }
 
