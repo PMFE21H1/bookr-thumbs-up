@@ -70,6 +70,7 @@ export function createReservation(customer, slot, resource,status) {
                         .then(data => {
                             let reservation;
                             try {reservation = new Reservation(customer, resource, slot,status, data.name)} catch (e){alert(e.message)}
+                            //New reservation nem lehetne paraméternek megadni a functionnél?
                             return reservation
                         })
                 }
