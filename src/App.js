@@ -91,7 +91,7 @@ let PrivateRoute = ({render, ...props}) => {
         <AuthContext.Consumer>
             {({user, ...rest}) => {
                 return <Route {...props}
-                              render={() => (user ? render : <Redirect to="/login" />)}/>
+                              render={(props) => (user ? render(props) : <Redirect to="/login" />)}/>
             }}
         </AuthContext.Consumer>
     )
