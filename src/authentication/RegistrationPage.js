@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { saveAccountToDatabase } from "./authentication";
 
 export default class RegistrationPage extends Component {
   constructor(props) {
@@ -8,7 +9,7 @@ export default class RegistrationPage extends Component {
       email: "",
       password: "",
       confirmation: "",
-      customer: "",
+      name: "",
     };
   }
 
@@ -23,15 +24,11 @@ export default class RegistrationPage extends Component {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          user.customer = this.state.customer;
+          user.name = this.state.name;
           user.admin = false;
-          const userToDatabase = {
-            customer: this.state.customer,
-            email: this.state.email,
-            admin: false,
-          };
-          fetch()
-          // ...
+          console.log(user)
+          saveAccountToDatabase(this.state.name, this.state.email, false, user.uid)
+          this.props.onLogIn(user)
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -58,9 +55,9 @@ export default class RegistrationPage extends Component {
       confirmation: e.target.value,
     });
   };
-  handleCustomer = (e) => {
+  handleName = (e) => {
     this.setState({
-      customer: e.target.value,
+      name: e.target.value,
     });
   };
   render() {
@@ -69,17 +66,19 @@ export default class RegistrationPage extends Component {
         <form>
           <h3>Registration Page</h3>
           <p>Customer Name</p>
-          <input onChange={(e) => this.handleCustomer(e)}></input>
+          <input onChange={(e) => this.handleName(e)}></input>
           <p>Email</p>
-          <input onChange={(e) => this.handleEmail(e)}></input>
+          <input type="email" onChange={(e) => this.handleEmail(e)}></input>
           <p>Password</p>
-          <input onChange={(e) => this.handlePassword(e)}></input>
+          <input type="password" onChange={(e) => this.handlePassword(e)}></input>
           <p>Password Confirmation</p>
-          <input onChange={(e) => this.handleConfirmation(e)}></input>
+          <input type="password" onChange={(e) => this.handleConfirmation(e)}></input>
         </form>
         <button
           onClick={(e) => {
             e.preventDefault();
+            this.register()
+            .then(()=>this.props.history.push('/user/my-reservations'))
           }}
         >
           Registration

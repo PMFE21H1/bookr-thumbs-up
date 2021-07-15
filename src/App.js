@@ -39,10 +39,15 @@ class App extends React.Component {
     return (
       <Router>
         <AuthContext.Provider value={{ user: this.state.user }}>
+        <Link to="/admin/resources">Resources</Link>
+        <Link to="/admin/reservations">Reservations</Link>
+        <Link to="/login">Log In</Link>
+        <Link to="/registration">Registration</Link>
+
           <Switch>
               
             <Route path="/registration">
-              <RegistrationPage />
+              <RegistrationPage onLogIn={this.logIn} />
             </Route>
 
             <Route path="/login">
@@ -88,8 +93,7 @@ class App extends React.Component {
               render={(props) => <ListReservationsPage {...props} />}
             ></PrivateRoute>
           </Switch>
-          <Link to="/admin/resources">Resources</Link>
-          <Link to="/admin/reservations">Reservations</Link>
+
         </AuthContext.Provider>
       </Router>
     );
