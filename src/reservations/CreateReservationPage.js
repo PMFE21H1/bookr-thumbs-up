@@ -1,6 +1,8 @@
-import React, {Component} from 'react'
-import {listResources, Resource} from '../resources/resources'
-import {createReservation} from './reservations'
+
+import React, { Component } from 'react'
+import { listResources, Resource } from '../resources/resources'
+import { createReservation } from './reservations'
+import SlotSelector from "./SlotSelector";
 import {AuthContext} from "../App";
 
 
@@ -33,13 +35,6 @@ export default class CreateReservationPage extends Component {
         this.setState({customer: e.target.value})
     }
 
-    changeDate = (e) => {
-        this.setState({date: e.target.value})
-    }
-
-    changeTime = (e) => {
-        this.setState({time: e.target.value})
-    }
 
     changeResource = (e) => {
         this.state.resources.forEach(resource => {
@@ -47,6 +42,11 @@ export default class CreateReservationPage extends Component {
                 this.setState({resourceToSubmit: resource, resource: resource.id})
             }
         })
+    }
+
+    changeSlot=(date,time)=>{
+        this.setState(()=>{return{date:date, time:time}})
+        console.log(this.state)
     }
 
     changeToDefault = () => {
@@ -81,60 +81,57 @@ export default class CreateReservationPage extends Component {
     render() {
 
         return (
-            <AuthContext.Consumer >
+  
+        <AuthContext.Consumer >
                 {({user, ...rest}) => {
-                  return   <>
-                      <form>
+            <>
+            <form>
 
-                          <h3>Create Reservation</h3>
+                <h3>Create Reservation</h3>
 
-                          <div>
+                <div>
 
-                              <label>Resource:</label>
-                              <select onChange={e => this.changeResource(e)} value={this.state.resource}>
-                                  <option value={null}>Select a resource</option>
+                    
+                    <label>Resource:</label>
+                    <select onChange={e =>this.changeResource(e)} value={this.state.resource}>
+                        <option value={null}>Select a resource</option>
 
-                                  {(this.state.resources !== []) ?
+                        {(this.state.resources!==[]) ?
 
-                                      this.state.resources.map(resource =>
-                                          <option key={resource.id} value={resource.id}>{resource.name}</option>
-                                      )
+                            this.state.resources.map(resource => 
+                                <option key={resource.id} value={resource.id}>{resource.name}</option>
+                            )
+                      
+                        :
 
-                                      :
+                        ""
+                        }
 
-                                      ""
-                                  }
+                    </select>
+                </div>
 
+                <div>
+                    <label>Customer:</label>
+                    <input onChange={(e)=>this.changeCustomer(e)} value={this.state.customer}></input>
+                </div>
 
-                              </select>
-                          </div>
+                <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
 
-                          <div>
-                              <label>Customer:</label>
-                              <input onChange={(e) => this.changeCustomer(e)} value={this.state.customer}></input>
-                          </div>
+               
 
-                          <div>
-                              <label>Date:</label>
-                              <input type="date" onChange={(e) => this.changeDate(e)} value={this.state.date}></input>
-                          </div>
-
-                          <div>
-                              <label>Time:</label>
-                              <input type="time" onChange={(e) => this.changeTime(e)} value={this.state.time}></input>
-                          </div>
-
-                          <button onClick={
+                   <button onClick={
                               (e) => {this.onClickCreateReservation(e,user)}}>Create</button>
 
                           <button>Cancel</button>
 
-                      </form>
 
-                  </>
-                }}
+              
 
-            </AuthContext.Consumer>
+                </form>
+                 
+            </>
+                }
+             </AuthContext.Consumer >
         )
     }
 }

@@ -94,7 +94,7 @@ export function updateReservation(id, newData) {
     }
 
     for (let k in newData) {
-        if (k !== "slot" && k !== "customer") {
+        if (k !== "slot" && k !== "customer" && k !== "resource") {
             throw new Error("Partial update is invalid")
         }
     }
