@@ -1,8 +1,9 @@
 import React from "react";
 import { getAuth } from "firebase/auth";
-import { createResource } from "../resources/resources";
+import {createResource, listResources} from "../resources/resources";
 import { Route, Link } from "react-router-dom";
 import { updateReservation } from './reservations'
+import SlotSelector from "./SlotSelector";
 
 export default class UpdateReservationPage extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ export default class UpdateReservationPage extends React.Component {
       //itt olvassuk ki az id-t az url-bol
       reservationID: this.props.match.params.reservationID,
       reservationData: {},
+      resources:[],
     };
   }
   // fetchelunk az url-bol kiolvasott id alapjan egy reservationt
@@ -27,12 +29,22 @@ export default class UpdateReservationPage extends React.Component {
         this.setState({
           reservationData: {
             name: reservation.customer,
+            resource: reservation.resource,
             //mivel a slot magaba foglalja a datet es a timeot ezert a split hasznalataval szetszedtuk azokat
             date: reservation.slot.split("T")[0],
             time: reservation.slot.split("T")[1],
           },
         });
-      });
+      })
+        .then(()=>{
+            listResources().then(resourcesArr => resourcesArr.map(
+                resource => {
+                  this.setState(() => {
+                    return {resources: [...this.state.resources, resource]}
+                  })
+                }
+            ))
+        });
   };
   handleName = (e) => {
     this.setState({
@@ -40,25 +52,41 @@ export default class UpdateReservationPage extends React.Component {
     });
 
   };
-  handleDate = (e) => {
-    this.setState({
-      reservationData: {...this.state.reservationData, date: e.target.value}
-    });
 
-  };
-  handleTime = (e) => {
-    this.setState({
-      reservationData: {...this.state.reservationData, time: e.target.value}
-    });
-
-  };
+  changeResource = (e) => {
+    this.state.resources.forEach(resource => {
+      if (resource.id === e.target.value){
+        this.setState({ resource:resource.id})
+      }
+    })
+    console.log(this.state)
+  }
+    changeSlot=(date,time)=>{
+        this.setState({reservationData:{...this.state.reservationData, date:date, time:time}})
+        console.log(this.state)
+    }
   render() {
     return (
       <div>
+
         <form>
           <h3>Update reservation</h3>
 
-          <p>Resource</p>
+          <select onChange={e =>this.changeResource(e)} value={this.state.resource}>
+            <option value={null}>Select a resource</option>
+
+            {(this.state.resources!==[]) ?
+
+                this.state.resources.map(resource =>
+                    <option key={resource.id} value={resource.id}>{resource.name}</option>
+                )
+
+                :
+
+                ""
+            }
+
+          </select>
 
           <p>Update name</p>
           <input
@@ -67,21 +95,8 @@ export default class UpdateReservationPage extends React.Component {
             placeholder={this.state.reservationData.name}
             onChange={this.handleName}
           />
+            <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
 
-          <p>Update date</p>
-          <input
-            type="date"
-            value={this.state.reservationData.date}
-            onChange={this.handleDate}
-          />
-
-          <p>Update time</p>
-          <p></p>
-          <input
-            type="time"
-            value={this.state.reservationData.time}
-            onChange={this.handleTime}
-          />
         </form>
         <div>
           <button
@@ -92,7 +107,7 @@ export default class UpdateReservationPage extends React.Component {
                 updateReservation(this.state.reservationID, 
                   //ez lesz az uj reservation amivel updatelni szeretnenk azt (newData)
                   {customer: this.state.reservationData.name,
-                     slot: this.state.reservationData.date + 'T' + this.state.reservationData.time})
+                     slot: this.state.reservationData.date + 'T' + this.state.reservationData.time, resource:this.state.resource})
                      .then(()=>this.props.history.push('/admin/reservations'))
               } catch (e) {
                 alert(e.message);
