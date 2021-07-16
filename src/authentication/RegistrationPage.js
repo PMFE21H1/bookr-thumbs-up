@@ -29,14 +29,16 @@ export default class RegistrationPage extends Component {
           console.log(user)
           saveAccountToDatabase(this.state.name, this.state.email, false, user.uid)
           this.props.onLogIn(user)
+          this.props.history.push('/user/my-reservations')
         })
+        
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           // ..
         });
     } else {
-      throw new Error("The password and the confirmation-password didnt match");
+      throw new Error("The password and the confirmation-password didn't match");
     }
   };
 
@@ -78,7 +80,7 @@ export default class RegistrationPage extends Component {
           onClick={(e) => {
             e.preventDefault();
             this.register()
-            .then(()=>this.props.history.push('/user/my-reservations'))
+            
           }}
         >
           Registration
