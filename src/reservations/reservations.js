@@ -34,9 +34,10 @@ export function listReservations() {
 
 }
 
-export function createReservation(customer, slot, resource,status) {
+export function createReservation(Reservation) {
     //ellenőrzi, hogy van-e customer
-    if (!customer) throw new Error('Customer can not be empty')
+    if (!Reservation.customer) throw new Error('Customer can not be empty')
+    // if(!(Reservation instanceof Reservation)) throw new Error('reservation is not instanceof Reservation')
 
         //reservation-ok lekérése, annak leellenőrzése, hogy van e már erre az időpontra és resource-ra foglalás
         return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json")
@@ -45,7 +46,7 @@ export function createReservation(customer, slot, resource,status) {
                 let exists = false
                 for (let k in reservations) {
 
-                    if (reservations[k].resource === resource.id && reservations[k].slot === slot) {
+                    if (reservations[k].resource === Reservation.resource && reservations[k].slot === Reservation.slot) {
                         exists = true
                         throw new Error("No available slot for this spot!")
                     }
@@ -54,7 +55,7 @@ export function createReservation(customer, slot, resource,status) {
                 if (!exists) {
                     //posttal elküldjük az adatokat a firebasre
                     return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json", {
-                        body: JSON.stringify({customer: customer, slot: slot, resource: resource.id, status: status}),
+                        body: JSON.stringify({customer: Reservation.customer, slot: Reservation.slot, resource: Reservation.resource, status: Reservation.status}),
                         method: "POST"
                     }).then(response => {
                         //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
@@ -68,10 +69,7 @@ export function createReservation(customer, slot, resource,status) {
                     })
                         //itt jön létre az új reservation a Reservation class használatával
                         .then(data => {
-                            let reservation;
-                            try {reservation = new Reservation(customer, resource, slot,status, data.name)} catch (e){alert(e.message)}
-                            //New reservation nem lehetne paraméternek megadni a functionnél?
-                            return reservation
+                           console.log(data)
                         })
                 }
             })
