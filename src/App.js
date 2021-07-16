@@ -17,6 +17,7 @@ import CreateReservationPage from "./reservations/CreateReservationPage";
 import LoginPage from "./authentication/LoginPage";
 import RegistrationPage from "./authentication/RegistrationPage";
 import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
+import RequestReservationPage from "./reservations/RequestReservationPage";
 
 
 
@@ -98,6 +99,12 @@ class App extends React.Component {
                 path="/admin/reservations/:reservationID"
                 render={(props) => <ReservationDetailsPage {...props} />}
             ></PrivateRoute>
+
+            <PrivateRoute
+                path="/resources/:resourceID/request-reservation"
+                render={(props) => <RequestReservationPage {...props} />}
+            />
+
             <PrivateRoute
               path="/admin/reservations"
               render={(props) => <ListReservationsPage {...props} />}
