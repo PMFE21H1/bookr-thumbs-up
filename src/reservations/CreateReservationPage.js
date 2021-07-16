@@ -63,7 +63,7 @@ export default class CreateReservationPage extends Component {
 
         if(user.admin){
 
-                createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit, "approved").catch((error)=>{  //hibakezelés nem catchel, rákérdezni
+                createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit, "confirmed").catch((error)=>{  //hibakezelés nem catchel, rákérdezni
                     alert(error.message)
 
                 })
