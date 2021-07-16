@@ -16,8 +16,13 @@ import { UpdateResourcePage } from "./resources/UpdateResourcePage";
 import CreateReservationPage from "./reservations/CreateReservationPage";
 import LoginPage from "./authentication/LoginPage";
 import RegistrationPage from "./authentication/RegistrationPage";
+import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
 
-let AuthContext = React.createContext(null);
+
+
+export let AuthContext = React.createContext(null)
+
+
 
 class App extends React.Component {
   constructor(props) {
@@ -35,6 +40,7 @@ class App extends React.Component {
 
   render() {
     return (
+
       <Router>
         <AuthContext.Provider value={{ user: this.state.user }}>
         <Link to="/admin/resources">Resources</Link>
@@ -86,15 +92,21 @@ class App extends React.Component {
             ></PrivateRoute>
 
             <PrivateRoute
+                path="/admin/reservations/:reservationID"
+                render={(props) => <ReservationDetailsPage {...props} />}
+            ></PrivateRoute>
+            <PrivateRoute
               path="/admin/reservations"
               render={(props) => <ListReservationsPage {...props} />}
             ></PrivateRoute>
+
           </Switch>
 
         </AuthContext.Provider>
       </Router>
     );
   }
+
 }
 
 let PrivateRoute = ({ render, ...props }) => {
