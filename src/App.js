@@ -16,6 +16,7 @@ import { UpdateResourcePage } from "./resources/UpdateResourcePage";
 import CreateReservationPage from "./reservations/CreateReservationPage";
 import LoginPage from "./authentication/LoginPage";
 import RegistrationPage from "./authentication/RegistrationPage";
+import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
 
 
 
@@ -96,6 +97,11 @@ class App extends React.Component {
             <PrivateRoute
               path="/admin/reservations"
               render={(props) => <ListReservationsPage {...props} />}
+            ></PrivateRoute>
+
+            <PrivateRoute
+                path="/admin/reservations/:id"
+                render={(props) => <ReservationDetailsPage {...props} />}
             ></PrivateRoute>
           </Switch>
 
