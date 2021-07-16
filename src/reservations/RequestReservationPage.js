@@ -18,11 +18,17 @@ export default class RequestReservationPage extends Component {
                 })
             )
     }
+    changeSlot=(date, time) => {
+        this.setState({
+            date: date,
+            time: time
+        })
+    }
 
     render() {
         return (
             <>
-                <SlotSelector/>
+                <SlotSelector resource={ this.props.match.params.resourceID} changeSlot={this.changeSlot}/>
             </>
 
         )
