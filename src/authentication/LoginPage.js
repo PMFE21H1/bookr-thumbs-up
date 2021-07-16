@@ -1,6 +1,6 @@
 import React from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-import { listUsersFromDatabase } from "./authentication";
+import { listUsersFromDatabase, getUserByUid } from "./authentication";
 import { tsImportEqualsDeclaration } from "@babel/types";
 
 
@@ -10,7 +10,6 @@ export default class LoginPage extends React.Component{
         this.state={
             email:"",
             password:"",
-            users:[]
         }
     }
 
@@ -21,12 +20,6 @@ export default class LoginPage extends React.Component{
     setPassword = (e) => {
         this.setState({password: e.target.value})
     }
-
-componentDidMount(){
-    listUsersFromDatabase().then(users => 
-        {this.setState({users: users})
-        console.log(users)})
-}
     
 logIn = () => {
     const auth = getAuth();
@@ -34,9 +27,17 @@ logIn = () => {
       .then((userCredential) => {
         // Signed in 
         const user= userCredential.user
-        this.props.onLogIn(user)
-        console.log(this.state.users)
-
+        getUserByUid(user.uid).then(userByUid => {
+            this.props.onLogIn(
+                userByUid, 
+                () =>
+                userByUid.admin ?
+            this.props.history.push("/admin/reservations") 
+            :  
+            this.props.history.push("/my-reservations"))
+        
+            
+        })
       })
       
       .catch((error) => {
