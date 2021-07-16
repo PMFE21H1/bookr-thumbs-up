@@ -25,6 +25,7 @@ logIn = () => {
       .then((userCredential) => {
         // Signed in 
         const user= userCredential.user
+
         this.props.onLogIn(user)
       })
       .catch((error) => {
