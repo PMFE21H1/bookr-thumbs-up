@@ -7,8 +7,9 @@ export default class ListReservationsPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            reservations: null,
-            resources: null
+            resources: [],
+            confirmed: [],
+            pending:[]
         };
     }
 
@@ -40,8 +41,7 @@ export default class ListReservationsPage extends React.Component {
                         <th>Reservations time</th>
                         <th>Resource</th>
                     </tr>
-                    {this.state.confirmed ? (
-                            this.state.confirmed.map(reservation => {
+                    {this.state.confirmed.map(reservation => {
                                 return (
                                     <tr>
                                         <td>{reservation.customer}</td>
@@ -68,12 +68,7 @@ export default class ListReservationsPage extends React.Component {
                                         </td>
                                     </tr>
                                 );
-                            })
-                        )
-                        :
-                        (
-                            <p></p>
-                        )}
+                            })}
                 </table>
 
 
@@ -85,7 +80,7 @@ export default class ListReservationsPage extends React.Component {
                         <th>Reservations time</th>
                         <th>Resource</th>
                     </tr>
-                    {this.state.pending ? (
+                    {
                             this.state.pending.map(reservation => {
                                 return (
                                     <tr>
@@ -118,12 +113,9 @@ export default class ListReservationsPage extends React.Component {
                                         </td>
                                     </tr>
                                 );
-                            })
-                        )
-                        :
-                        (
-                            <p></p>
-                        )}
+                            })}
+
+
                 </table>
 
             </>
