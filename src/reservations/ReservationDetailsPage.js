@@ -5,7 +5,7 @@ export default class ReservationDetailsPage extends React.Component {
         super(props);
         this.state ={
             reservationID :"",
-            reservation: null
+            reservation: {}
         }
     }
 
@@ -13,7 +13,7 @@ export default class ReservationDetailsPage extends React.Component {
         fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${this.props.match.params.reservationID}.json`)
             .then(resp => resp.json())
             .then(reservation => {
-                this.setState({reservation: reservation})
+                 return this.setState({reservation: reservation})
             }).then( ()=>
                 fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${this.state.reservation.resource}.json`)
         ).then ( resp => resp.json()).then(resource => this.setState( {resourcename: resource.name}))
