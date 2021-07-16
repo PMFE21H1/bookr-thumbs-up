@@ -84,54 +84,54 @@ export default class CreateReservationPage extends Component {
   
         <AuthContext.Consumer >
                 {({user, ...rest}) => {
-            <>
-            <form>
+                    return(
+                        <form>
 
-                <h3>Create Reservation</h3>
+                            <h3>Create Reservation</h3>
 
-                <div>
-
-                    
-                    <label>Resource:</label>
-                    <select onChange={e =>this.changeResource(e)} value={this.state.resource}>
-                        <option value={null}>Select a resource</option>
-
-                        {(this.state.resources!==[]) ?
-
-                            this.state.resources.map(resource => 
-                                <option key={resource.id} value={resource.id}>{resource.name}</option>
-                            )
-                      
-                        :
-
-                        ""
-                        }
-
-                    </select>
-                </div>
-
-                <div>
-                    <label>Customer:</label>
-                    <input onChange={(e)=>this.changeCustomer(e)} value={this.state.customer}></input>
-                </div>
-
-                <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
-
-               
-
-                   <button onClick={
-                              (e) => {this.onClickCreateReservation(e,user)}}>Create</button>
-
-                          <button>Cancel</button>
+                            <div>
 
 
-              
+                                <label>Resource:</label>
+                                <select onChange={e => this.changeResource(e)} value={this.state.resource}>
+                                    <option value={null}>Select a resource</option>
 
-                </form>
-                 
-            </>
-                }
-             </AuthContext.Consumer >
+                                    {(this.state.resources !== []) ?
+
+                                        this.state.resources.map(resource =>
+                                            <option key={resource.id} value={resource.id}>{resource.name}</option>
+                                        )
+
+                                        :
+
+                                        ""
+                                    }
+
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Customer:</label>
+                                <input onChange={(e) => this.changeCustomer(e)} value={this.state.customer}></input>
+                            </div>
+
+                            <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
+
+
+                            <button onClick={
+                                (e) => {
+                                    this.onClickCreateReservation(e, user)
+                                }}>Create
+                            </button>
+
+                            <button>Cancel</button>
+
+
+                        </form>
+
+                    )
+                }}
+             </AuthContext.Consumer>
         )
     }
 }
