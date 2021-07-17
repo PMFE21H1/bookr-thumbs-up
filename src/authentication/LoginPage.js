@@ -27,6 +27,10 @@ logIn = () => {
       .then((userCredential) => {
         // Signed in 
         const user= userCredential.user
+<<<<<<< HEAD
+=======
+
+>>>>>>> d0b7c41579f6caa4459f5c3d09295988fb7f6d64
         getUserByUid(user.uid).then(userByUid => {
             this.props.onLogIn(
                 userByUid, 
@@ -38,6 +42,10 @@ logIn = () => {
         
             
         })
+<<<<<<< HEAD
+=======
+
+>>>>>>> d0b7c41579f6caa4459f5c3d09295988fb7f6d64
       })
       
       .catch((error) => {
