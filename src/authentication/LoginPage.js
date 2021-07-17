@@ -27,6 +27,7 @@ logIn = () => {
       .then((userCredential) => {
         // Signed in 
         const user= userCredential.user
+
         getUserByUid(user.uid).then(userByUid => {
             this.props.onLogIn(
                 userByUid, 
@@ -38,6 +39,7 @@ logIn = () => {
         
             
         })
+
       })
       
       .catch((error) => {
