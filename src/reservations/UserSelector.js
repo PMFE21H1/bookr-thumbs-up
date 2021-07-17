@@ -21,7 +21,6 @@ export default class UserSelector extends React.Component {
     render(){
         return (
             <>
-            <h1>{this.state.selectedUser}</h1>
             <select onChange={(e) => this.handleChange(e)} value={this.state.selectedUser}>
 
                 <option value={null}>Select user</option>
