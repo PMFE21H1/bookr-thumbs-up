@@ -5,25 +5,38 @@ export default class UserSelector extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            users:null
+            users:null,
+            selectedUser:null
         }
     }
 
     componentDidMount(){
         listUsersFromDatabase().then(users => this.setState({users: users}))
     }
+
+    handleChange = (e) => {
+        this.setState({selectedUser: e.target.value})
+    }
     
     render(){
         return (
-            <select>
+            <>
+            <h1>{this.state.selectedUser}</h1>
+            <select onChange={(e) => this.handleChange(e)} value={this.state.selectedUser}>
+
+                <option value={null}>Select user</option>
+
                 {this.state.users ? 
                     this.state.users.map(user => {
-                        return <option>{user.name}</option>
+                        return <option value={user.uid}>{user.name}: {user.email}</option>
                     })
+                
                     :
-                    <p></p>
+                
+                <option value={null}>Select a user</option>
             }
             </select>
+            </>
         )
     }
 }
