@@ -5,7 +5,7 @@ export default class UserSelector extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            users:[]
+            users:null
         }
     }
 
@@ -14,10 +14,16 @@ export default class UserSelector extends React.Component {
     }
     
     render(){
-    return (
-        <select>
-            
-        </select>
-    )
+        return (
+            <select>
+                {this.state.users ? 
+                    this.state.users.map(user => {
+                        return <option>{user.name}</option>
+                    })
+                    :
+                    <p></p>
+            }
+            </select>
+        )
     }
 }
