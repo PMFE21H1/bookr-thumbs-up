@@ -1,31 +1,34 @@
+
 import React, { Component } from 'react'
 import { listResources, Resource } from '../resources/resources'
 import { createReservation } from './reservations'
 import SlotSelector from "./SlotSelector";
+import {AuthContext} from "../App";
+
 
 export default class CreateReservationPage extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             resourceToSubmit: {},
-            resource:"",
-            customer:"",
-            date:"",
-            time:"",
-            resources:[]
+            resource: "",
+            customer: "",
+            date: "",
+            time: "",
+            resources: []
 
-            
+
         }
     }
 
-    componentDidMount(){
+    componentDidMount() {
         listResources().then(resourcesArr => resourcesArr.map(
             resource => {
                 this.setState(() => {
                     return {resources: [...this.state.resources, resource]}
                 })
             }
-        ))   
+        ))
     }
 
     changeCustomer = (e) => {
@@ -35,9 +38,9 @@ export default class CreateReservationPage extends Component {
 
     changeResource = (e) => {
         this.state.resources.forEach(resource => {
-           if (resource.id === e.target.value){
-            this.setState({resourceToSubmit: resource, resource:resource.id})
-           } 
+            if (resource.id === e.target.value) {
+                this.setState({resourceToSubmit: resource, resource: resource.id})
+            }
         })
     }
 
@@ -48,65 +51,87 @@ export default class CreateReservationPage extends Component {
 
     changeToDefault = () => {
         this.setState({
-            resource:"",
-            customer:"",
-            date:"",
-            time:"",
+            resource: "",
+            customer: "",
+            date: "",
+            time: "",
         })
     }
- 
+
+    onClickCreateReservation=(e,user)=>{
+        e.preventDefault();
+
+        if(user.admin){
+
+                createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit, "confirmed").catch((error)=>{  //hibakezelés nem catchel, rákérdezni
+                    alert(error.message)
+
+                })
+
+        }else{
+            createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit, "pending").catch((error)=>{  //hibakezelés nem catchel, rákérdezni
+                alert(error.message)
+
+            })
+        }
+        this.changeToDefault()
+
+    }
+
     render() {
 
         return (
-            <>
-            <form>
+  
+        <AuthContext.Consumer >
+                {({user, ...rest}) => {
+                    return(
+                        <form>
 
-                <h3>Create Reservation</h3>
+                            <h3>Create Reservation</h3>
 
-                <div>
-
-                    
-                    <label>Resource:</label>
-                    <select onChange={e =>this.changeResource(e)} value={this.state.resource}>
-                        <option value={null}>Select a resource</option>
-
-                        {(this.state.resources!==[]) ?
-
-                            this.state.resources.map(resource => 
-                                <option key={resource.id} value={resource.id}>{resource.name}</option>
-                            )
-                      
-                    :
-
-                        ""
-                        }
-
-                    </select>
-                </div>
-
-                <div>
-                    <label>Customer:</label>
-                    <input onChange={(e)=>this.changeCustomer(e)} value={this.state.customer}></input>
-                </div>
-
-                <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
-
-                <button onClick={
-                    (e) => {
-                    e.preventDefault();
+                            <div>
 
 
-                    try {createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit)
-                    } catch(e) {alert(e.message)}
-                    
-                    this.changeToDefault()
-                }
-                }>Create</button>
+                                <label>Resource:</label>
+                                <select onChange={e => this.changeResource(e)} value={this.state.resource}>
+                                    <option value={null}>Select a resource</option>
 
-                <button>Cancel</button>
+                                    {(this.state.resources !== []) ?
 
-                </form>
-            </>
+                                        this.state.resources.map(resource =>
+                                            <option key={resource.id} value={resource.id}>{resource.name}</option>
+                                        )
+
+                                        :
+
+                                        ""
+                                    }
+
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Customer:</label>
+                                <input onChange={(e) => this.changeCustomer(e)} value={this.state.customer}></input>
+                            </div>
+
+                            <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
+
+
+                            <button onClick={
+                                (e) => {
+                                    this.onClickCreateReservation(e, user)
+                                }}>Create
+                            </button>
+
+                            <button>Cancel</button>
+
+
+                        </form>
+
+                    )
+                }}
+             </AuthContext.Consumer>
         )
     }
 }
