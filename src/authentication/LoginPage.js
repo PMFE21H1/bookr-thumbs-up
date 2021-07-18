@@ -29,7 +29,7 @@ logIn = () => {
         const user= userCredential.user
         getUserByUid(user.uid).then(userByUid => {
             this.props.onLogIn(
-                userByUid, 
+                userByUid,
                 () => 
                 userByUid.admin ?
             this.props.history.push("/admin/reservations") 

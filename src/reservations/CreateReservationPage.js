@@ -4,6 +4,7 @@ import { listResources, Resource } from '../resources/resources'
 import { createReservation } from './reservations'
 import SlotSelector from "./SlotSelector";
 import {AuthContext} from "../App";
+import UserSelector from './UserSelector';
 
 
 export default class CreateReservationPage extends Component {
@@ -31,8 +32,8 @@ export default class CreateReservationPage extends Component {
         ))
     }
 
-    changeCustomer = (e) => {
-        this.setState({customer: e.target.value})
+    changeCustomer = (newUserName) => {
+        this.setState({customer: newUserName})
     }
 
 
@@ -112,7 +113,8 @@ export default class CreateReservationPage extends Component {
 
                             <div>
                                 <label>Customer:</label>
-                                <input onChange={(e) => this.changeCustomer(e)} value={this.state.customer}></input>
+                                <UserSelector onHandleName={this.changeCustomer}/>
+                                {/* <input onChange={(e) => this.changeCustomer(e)} value={this.state.customer}></input> */}
                             </div>
 
                             <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>

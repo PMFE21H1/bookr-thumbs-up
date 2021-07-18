@@ -5,13 +5,19 @@ export default class UserSelector extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            users:null,
+            users:[],
             selectedUser:null
         }
     }
 
     componentDidMount(){
         listUsersFromDatabase().then(users => this.setState({users: users}))
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(prevState.selectedUser !== this.state.selectedUser){
+        this.props.onHandleName(this.state.selectedUser)
+        }
     }
 
     handleChange = (e) => {
@@ -25,14 +31,10 @@ export default class UserSelector extends React.Component {
 
                 <option value={null}>Select user</option>
 
-                {this.state.users ? 
-                    this.state.users.map(user => {
-                        return <option value={user.uid}>{user.name}: {user.email}</option>
-                    })
-                
-                    :
-                
-                <option value={null}>Select a user</option>
+            {
+                this.state.users.map(user => {
+                    return <option value={user.email}>{user.name}: {user.email}</option>
+                })
             }
             </select>
             </>

@@ -47,9 +47,9 @@ export default class UpdateReservationPage extends React.Component {
             ))
         });
   };
-  handleName = (e) => {
+  handleName = (newUserName) => {
     this.setState({
-      reservationData: {...this.state.reservationData, name: e.target.value}
+      reservationData: {...this.state.reservationData, name: newUserName}
     });
 
   };
@@ -90,7 +90,7 @@ export default class UpdateReservationPage extends React.Component {
           </select>
 
           <p>Update name</p>
-            <UserSelector onHandlename={(e)=>this.handleName(e)}/>
+            <UserSelector onHandleName={this.handleName}/>
             <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
 
         </form>
