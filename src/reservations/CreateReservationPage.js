@@ -61,21 +61,15 @@ export default class CreateReservationPage extends Component {
 
     onClickCreateReservation = (e, user) => {
         e.preventDefault();
-
-        if (user.email==="admin@admin.com") {
-
-            createReservation(new Reservation(this.state.customer, this.state.resource, `${this.state.date}T${this.state.time}`, "confirmed")).catch((error) => {
+        try{createReservation(new Reservation(this.state.customer, this.state.resource, `${this.state.date}T${this.state.time}`, "confirmed")).catch((error) => {
                     alert(error.message)
                 }
-            )
-        } else {
-            createReservation(new Reservation(this.state.customer, this.state.resource, `${this.state.date}T${this.state.time}`, "pending")).catch((error) => {
-                    alert(error.message)
-                }
-            )
+
+            )}catch(e){
+            alert(e.message)
         }
-        this.changeToDefault()
 
+        this.changeToDefault()
     }
 
     render() {
