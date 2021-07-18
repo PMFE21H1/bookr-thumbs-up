@@ -24,9 +24,9 @@ export function listReservations() {
         .then((reservations) => {
             // tömböt hoz létre a lekért objectek kulcsaival, majd végig megy a tömbön
             return Object.keys(reservations).map((key) => {
-            // a map létrehoz egy tömböt, amibe az eredeti objecteket rakja, a hozzájuk tartozó ID beleírásával
+                // a map létrehoz egy tömböt, amibe az eredeti objecteket rakja, a hozzájuk tartozó ID beleírásával
                 reservations[key].id = key;
-            // Az újonnan létrehozott objectet adja vissza és teszi bele a map által visszaadott tömbbe.
+                // Az újonnan létrehozott objectet adja vissza és teszi bele a map által visszaadott tömbbe.
                 return reservations[key];
             });
         });
@@ -34,47 +34,54 @@ export function listReservations() {
 
 }
 
-export function createReservation(customer, slot, resource,status) {
-    //ellenőrzi, hogy van-e customer
-    if (!customer) throw new Error('Customer can not be empty')
+export function createReservation(reservation) {
 
-        //reservation-ok lekérése, annak leellenőrzése, hogy van e már erre az időpontra és resource-ra foglalás
-        return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json")
-            .then(response => response.json())
-            .then(reservations => {
-                let exists = false
-                for (let k in reservations) {
+    if(!(reservation instanceof Reservation)) throw new Error('reservation is not instanceof Reservation')
 
-                    if (reservations[k].resource === resource.id && reservations[k].slot === slot) {
-                        exists = true
-                        throw new Error("No available slot for this spot!")
+    //reservation-ok lekérése, annak leellenőrzése, hogy van e már erre az időpontra és resource-ra foglalás
+    return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json")
+        .then(response => response.json())
+        .then(reservations => {
+            let exists = false
+            for (let k in reservations) {
+
+                if (reservations[k].resource === reservation.resource && reservations[k].slot === reservation.slot) {
+                    exists = true
+                    throw new Error("No available slot for this spot!")
+                }
+            }
+            //új reservation létrehozása
+            if (!exists) {
+                //posttal elküldjük az adatokat a firebasre
+                return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json", {
+                    body: JSON.stringify({
+                        customer: reservation.customer,
+                        slot: reservation.slot,
+                        resource: reservation.resource,
+                        status: reservation.status
+                    }),
+                    method: "POST"
+                }).then(response => {
+                    //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
+                    if (response.status === 200) {
+                        alert("Successful reservation creation!")
+                    } else {
+                        alert("Unsuccessful!")
                     }
-                }
-                //új reservation létrehozása
-                if (!exists) {
-                    //posttal elküldjük az adatokat a firebasre
-                    return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json", {
-                        body: JSON.stringify({customer: customer, slot: slot, resource: resource.id, status: status}),
-                        method: "POST"
-                    }).then(response => {
-                        //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
-                        if (response.status === 200) {
-                            alert("Successful reservation creation!")
-                        } else {
-                            alert("Unsuccessful!")
-                        }
 
-                        return response.json()
+                    return response.json()
+                })
+                    .then(data => {
+                        return {
+                            customer: reservation.customer,
+                            slot: reservation.slot,
+                            resource: reservation.resource,
+                            status: reservation.status,
+                            id: data.name
+                        }
                     })
-                        //itt jön létre az új reservation a Reservation class használatával
-                        .then(data => {
-                            let reservation;
-                            try {reservation = new Reservation(customer, resource, slot,status, data.name)} catch (e){alert(e.message)}
-                            //New reservation nem lehetne paraméternek megadni a functionnél?
-                            return reservation
-                        })
-                }
-            })
+            }
+        })
 }
 
 
@@ -113,14 +120,14 @@ export function updateReservation(id, newData) {
 }
 
 
-export class Reservation{
-    constructor(customer,resource,slot,status,id) {
+export class Reservation {
+    constructor(customer, resource, slot, status, id) {
         //ellenőrzi a customer formátumát
-        if(!customer || typeof customer != "string"){
+        if (!customer || typeof customer != "string") {
             throw new Error("Customer declaration invalid")
         }
         //ellenőrzi, hogy van-e resource
-        if(!resource){
+        if (!resource) {
             throw new Error("Bad resource declaration!")
         }
         //a slot formátumát ellenőrzi
@@ -132,7 +139,7 @@ export class Reservation{
         this.customer = customer
         this.resource = resource
         this.slot = slot
-        this.status= status
+        this.status = status
 
 
     }
