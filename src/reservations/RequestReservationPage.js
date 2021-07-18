@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import SlotSelector from "./SlotSelector";
-import {createReservation, listReservations} from "./reservations";
+import {createReservation, listReservations, Reservation} from "./reservations";
 import CreateReservationPage from "./CreateReservationPage";
 import {AuthContext} from "../App";
 
@@ -38,7 +38,8 @@ export default class RequestReservationPage extends Component {
                 <SlotSelector resource={ this.props.match.params.resourceID} changeSlot={this.changeSlot}/>
                 <button onClick={ (e) => {
                     e.preventDefault()
-                    createReservation(new Reservation(user.name, this.props.match.params.resourceID, `${this.state.date}T${this.state.time}`,"pending"))
+                    try{createReservation(new Reservation(user.name, this.props.match.params.resourceID, `${this.state.date}T${this.state.time}`,"pending"))
+                        .catch((e) => alert(e.message))} catch(error){alert(error)}
 
                 }} > Create </button>
             </form>)
