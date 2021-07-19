@@ -17,6 +17,7 @@ import CreateReservationPage from "./reservations/CreateReservationPage";
 import LoginPage from "./authentication/LoginPage";
 import RegistrationPage from "./authentication/RegistrationPage";
 import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
+import RequestReservationPage from "./reservations/RequestReservationPage";
 import PublicResourcesPage from "./resources/PublicResourcesPage";
 
 
@@ -36,8 +37,8 @@ class App extends React.Component {
             user: user,
 
         }, callback);
+    }
 
-    };
 
     render() {
         return (
@@ -56,6 +57,11 @@ class App extends React.Component {
                             <RegistrationPage onLogIn={this.logIn}/>
                         </Route>
 
+                        <PrivateRoute
+                            path="/resources/:resourceID/request-reservation"
+                            render={(props) => <RequestReservationPage {...props} />}
+                        />
+
                         <Route path="/resources">
                             <PublicResourcesPage/>
                         </Route>
@@ -73,6 +79,8 @@ class App extends React.Component {
                             admin={true}
                             render={(props) => <ListResourcesAdminPage {...props} />}
                         ></PrivateRoute>
+
+
 
                         <PrivateRoute
                             path="/admin/resource/:resourceID/delete"
