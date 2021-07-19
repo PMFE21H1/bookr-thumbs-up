@@ -59,8 +59,7 @@ class App extends React.Component {
         <Link to="/login">Log In</Link>
         <Link to="/registration">Registration</Link>
 
-        
-        <UsersDatabaseContext.Provider value={{users: this.state.usersFromDatabase}}>
+        <UsersDatabaseContext.Provider value={ this.state.usersFromDatabase }>
           <Switch>
               
             <Route path="/registration">

@@ -42,6 +42,7 @@ export default class ListReservationsPage extends React.Component {
                         <th>Resource</th>
                     </tr>
                     {this.state.confirmed.map(reservation => {
+                        //itt kell majd a userDatabaseConsumer
                                 return (
                                     <tr>
                                         <td>{reservation.customer}</td>

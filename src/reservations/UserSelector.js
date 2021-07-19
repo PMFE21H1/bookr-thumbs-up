@@ -1,18 +1,17 @@
 import React from 'react'
 import { listUsersFromDatabase } from '../authentication/authentication'
+import { UsersDatabaseContext } from '../App'
+import { PATTERNLIKE_TYPES } from '@babel/types'
 
 export default class UserSelector extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-            users:[],
-            selectedUser:null
+            selectedUser:null,
+            usersArr:[{uid: 1234, name: "Patrik", email:"patrik@patrik.com"},{uid: 1234, name: "Patrik", email:"patrik@patrik.com"},{uid: 1234, name: "Patrik", email:"patrik@patrik.com"}]
         }
     }
 
-    componentDidMount(){
-        listUsersFromDatabase().then(users => this.setState({users: users}))
-    }
 
     componentDidUpdate(prevProps, prevState){
         if(prevState.selectedUser !== this.state.selectedUser){
@@ -26,18 +25,22 @@ export default class UserSelector extends React.Component {
     
     render(){
         return (
-            <>
-            <select onChange={(e) => this.handleChange(e)} value={this.state.selectedUser}>
+            <UsersDatabaseContext.Consumer>
+                {(users) => {
+            console.log(users)
+            return <select onChange={(e) => this.handleChange(e)} value={this.state.selectedUser}>
 
                 <option value={null}>Select user</option>
 
             {
-                this.state.users.map(user => {
-                    return <option value={user.email}>{user.name}: {user.email}</option>
+                users.map(user => {
+                    console.log(user)
+                    return <option value={user.uid}>{user.name}: {user.email}</option>
                 })
             }
             </select>
-            </>
+    }}
+            </UsersDatabaseContext.Consumer>
         )
     }
 }

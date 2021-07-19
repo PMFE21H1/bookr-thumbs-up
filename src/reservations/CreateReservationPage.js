@@ -31,8 +31,8 @@ export default class CreateReservationPage extends Component {
         ))
     }
 
-    changeCustomer = (newUserName) => {
-        this.setState({customerUid: newUserName})
+    changeCustomer = (newUserUid) => {
+        this.setState({customerUid: newUserUid})
     }
 
 
