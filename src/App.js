@@ -57,6 +57,11 @@ class App extends React.Component {
                             <RegistrationPage onLogIn={this.logIn}/>
                         </Route>
 
+                        <PrivateRoute
+                            path="/resources/:resourceID/request-reservation"
+                            render={(props) => <RequestReservationPage {...props} />}
+                        />
+
                         <Route path="/resources">
                             <PublicResourcesPage/>
                         </Route>
@@ -75,10 +80,7 @@ class App extends React.Component {
                             render={(props) => <ListResourcesAdminPage {...props} />}
                         ></PrivateRoute>
 
-                        <PrivateRoute
-                            path="/resources/:resourceID/request-reservation"
-                            render={(props) => <RequestReservationPage {...props} />}
-                        />
+
 
                         <PrivateRoute
                             path="/admin/resource/:resourceID/delete"
