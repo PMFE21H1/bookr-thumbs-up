@@ -27,6 +27,10 @@ export let UsersDatabaseContext = React.createContext(null)
 
 
 class App extends React.Component {
+<<<<<<< HEAD
+=======
+
+>>>>>>> 130b37d382f8efafcdf5c73fdc1da0763ff83116
   constructor(props) {
     super(props);
     this.state = {
@@ -38,11 +42,16 @@ class App extends React.Component {
   logIn = (user, callback) => {
     this.setState({
       user: user,
-
     }, callback);
+<<<<<<< HEAD
   }
 
   
+=======
+
+
+
+>>>>>>> 130b37d382f8efafcdf5c73fdc1da0763ff83116
   componentDidMount(){
     listUsersFromDatabase()
     .then((users) => this.setState({usersFromDatabase: users}))
