@@ -32,6 +32,7 @@ export default class CreateReservationPage extends Component {
     }
 
     changeCustomer = (newUserUid) => {
+        console.log(newUserUid)
         this.setState({customerUid: newUserUid})
     }
 
@@ -108,13 +109,13 @@ export default class CreateReservationPage extends Component {
                             <div>
                                 <label>Customer:</label>
                                 <UserSelector onHandleName={this.changeCustomer}/>
-                                {/* <input onChange={(e) => this.changeCustomer(e)} value={this.state.customer}></input> */}
                             </div>
 
                             <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
 
                             <button onClick={
                                 (e) => {
+                                    console.log(user)
                                     this.onClickCreateReservation(e, user)
                                 }}>Create
                             </button>

@@ -8,7 +8,6 @@ export default class UserSelector extends React.Component {
         super(props)
         this.state = {
             selectedUser:null,
-            usersArr:[{uid: 1234, name: "Patrik", email:"patrik@patrik.com"},{uid: 1234, name: "Patrik", email:"patrik@patrik.com"},{uid: 1234, name: "Patrik", email:"patrik@patrik.com"}]
         }
     }
 
@@ -27,7 +26,6 @@ export default class UserSelector extends React.Component {
         return (
             <UsersDatabaseContext.Consumer>
                 {(users) => {
-            console.log(users)
             return <select onChange={(e) => this.handleChange(e)} value={this.state.selectedUser}>
 
                 <option value={null}>Select user</option>

@@ -30,7 +30,7 @@ export default class UpdateReservationPage extends React.Component {
         //a lekert reservation adatait setStateljuk es beleirjuk a reservationDatankba.
         this.setState({
           reservationData: {
-            name: reservation.customer,
+            customerUid: reservation.customerUid,
             resource: reservation.resource,
             //mivel a slot magaba foglalja a datet es a timeot ezert a split hasznalataval szetszedtuk azokat
             date: reservation.slot.split("T")[0],
@@ -49,9 +49,9 @@ export default class UpdateReservationPage extends React.Component {
         });
 
   };
-  handleName = (newUserName) => {
+  handleName = (newUserUid) => {
     this.setState({
-      reservationData: {...this.state.reservationData, name: newUserName}
+      reservationData: {...this.state.reservationData, customerUid: newUserUid}
     });
 
   };
@@ -103,7 +103,7 @@ export default class UpdateReservationPage extends React.Component {
                 //itt hasznaljuk fel ujbol a reservationID-t amit a statbol olvasunk ki(ez az elso parameter amit a fg. var)
                 updateReservation(this.state.reservationID, 
                   //ez lesz az uj reservation amivel updatelni szeretnenk azt (newData)
-                  {customer: this.state.reservationData.name,
+                  {customerUid: this.state.reservationData.customerUid,
                      slot: this.state.reservationData.date + 'T' + this.state.reservationData.time, resource:this.state.resource})
                      .then(()=>this.props.history.push('/admin/reservations'))
               } catch (e) {
