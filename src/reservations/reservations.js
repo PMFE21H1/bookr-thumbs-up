@@ -121,7 +121,7 @@ export function updateReservation(id, newData) {
 
 
 export class Reservation {
-    constructor(customer, resource, slot, status, id) {
+    constructor(customerUid, resource, slot, status, id) {
         //ellenőrzi a customer formátumát
         if (!customer || typeof customer != "string") {
             throw new Error("Customer declaration invalid")
@@ -136,7 +136,7 @@ export class Reservation {
         }
         //az id-t nem itt adjuk meg, mert azt a firebase generálja
         this.id = ""
-        this.customer = customer
+        this.customerUid = customerUid
         this.resource = resource
         this.slot = slot
         this.status = status

@@ -12,7 +12,7 @@ export default class CreateReservationPage extends Component {
         this.state = {
             resourceToSubmit: {},
             resource: "",
-            customer: "",
+            customerUid: "",
             date: "",
             time: "",
             resources: []
@@ -32,7 +32,7 @@ export default class CreateReservationPage extends Component {
     }
 
     changeCustomer = (newUserName) => {
-        this.setState({customer: newUserName})
+        this.setState({customerUid: newUserName})
     }
 
 
@@ -54,7 +54,7 @@ export default class CreateReservationPage extends Component {
     changeToDefault = () => {
         this.setState({
             resource: "",
-            customer: "",
+            customerUid: "",
             date: "",
             time: "",
         })
@@ -62,7 +62,7 @@ export default class CreateReservationPage extends Component {
 
     onClickCreateReservation = (e, user) => {
         e.preventDefault();
-        try{createReservation(new Reservation(this.state.customer, this.state.resource, `${this.state.date}T${this.state.time}`, "confirmed")).catch((error) => {
+        try{createReservation(new Reservation(this.state.customerUid, this.state.resource, `${this.state.date}T${this.state.time}`, "confirmed")).catch((error) => {
                     alert(error.message)
                 }
 
