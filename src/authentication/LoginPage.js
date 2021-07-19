@@ -1,5 +1,7 @@
 import React from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { listUsersFromDatabase, getUserByUid } from "./authentication";
+import { tsImportEqualsDeclaration } from "@babel/types";
 
 
 export default class LoginPage extends React.Component{
@@ -7,7 +9,7 @@ export default class LoginPage extends React.Component{
         super(props);
         this.state={
             email:"",
-            password:""
+            password:"",
         }
     }
 
@@ -26,13 +28,23 @@ logIn = () => {
         // Signed in 
         const user= userCredential.user
 
-        this.props.onLogIn(user)
+        getUserByUid(user.uid).then(userByUid => {
+            this.props.onLogIn(
+                userByUid, 
+                () =>
+
+                userByUid.admin ?
+            this.props.history.push("/admin/reservations") 
+            :  
+            this.props.history.push("/my-reservations"))
+        })
+
       })
+      
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
-      console.log(this.state)
     }
     
 

@@ -1,10 +1,10 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
-  Link,
-  Switch,
-  Route,
-  Redirect,
+    BrowserRouter as Router,
+    Link,
+    Switch,
+    Route,
+    Redirect,
 } from "react-router-dom";
 import CreateResourcePage from "./resources/CreateResourcePage";
 import ListReservationsPage from "./reservations/listReservationsPage";
@@ -12,128 +12,153 @@ import ListResourcesAdminPage from "./resources/ListResourcesAdminPage";
 import DeleteReservationPage from "./reservations/DeleteReservationPage";
 import DeleteResourcePage from "./resources/DeleteResourcePage";
 import UpdateReservationPage from "./reservations/UpdateReservationPage";
-import { UpdateResourcePage } from "./resources/UpdateResourcePage";
+import {UpdateResourcePage} from "./resources/UpdateResourcePage";
 import CreateReservationPage from "./reservations/CreateReservationPage";
 import LoginPage from "./authentication/LoginPage";
 import RegistrationPage from "./authentication/RegistrationPage";
 import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
 import RequestReservationPage from "./reservations/RequestReservationPage";
-
+import PublicResourcesPage from "./resources/PublicResourcesPage";
 
 
 export let AuthContext = React.createContext(null)
 
 
-
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: false,
-    };
-  }
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: false,
+        };
+    }
 
-  logIn = (user) => {
-    this.setState({
-      user: user,
-    });
-    console.log(user);
-    console.log(this.state);
-  };
+    logIn = (user, callback) => {
+        this.setState({
+            user: user,
 
-  render() {
-    return (
+        }, callback);
+    }
 
-      <Router>
-        <AuthContext.Provider value={{ user: this.state.user }}>
-        <Link to="/admin/resources">Resources</Link>
-        <Link to="/admin/reservations">Reservations</Link>
-        <Link to="/login">Log In</Link>
-        <Link to="/registration">Registration</Link>
 
-          <Switch>
-              
-            <Route path="/registration">
-              <RegistrationPage onLogIn={this.logIn} />
-            </Route>
+    render() {
+        return (
 
-            <Route path="/login">
-              <LoginPage onLogIn={this.logIn} />
-            </Route>
-            <PrivateRoute
-              path="/admin/resources/create"
-              render={(props) => <CreateResourcePage {...props} />}
-            ></PrivateRoute>
+            <Router>
+                <AuthContext.Provider value={{user: this.state.user}}>
+                    <Link to="/admin/resources">Resources</Link>
+                    <Link to="/resources"> Public Resources</Link>
+                    <Link to="/admin/reservations">Reservations</Link>
+                    <Link to="/login">Log In</Link>
+                    <Link to="/registration">Registration</Link>
 
-            <PrivateRoute
-              path="/admin/resources"
-              render={(props) => <ListResourcesAdminPage {...props} />}
-            ></PrivateRoute>
+                    <Switch>
 
-            <PrivateRoute
-              path="/admin/resource/:resourceID/delete"
-              render={(props) => <DeleteResourcePage {...props} />}
-            ></PrivateRoute>
+                        <Route path="/registration">
+                            <RegistrationPage onLogIn={this.logIn}/>
+                        </Route>
 
-            <PrivateRoute
-              path="/admin/resource/:resourceID/edit"
-              render={(props) => <UpdateResourcePage {...props} />}
-            ></PrivateRoute>
+                        <Route path="/resources">
+                            <PublicResourcesPage/>
+                        </Route>
 
-            <PrivateRoute
-              path="/admin/reservations/create"
-              render={(props) => <CreateReservationPage {...props} />}
-            ></PrivateRoute>
+                        <Route path="/login" render={(props) => <LoginPage onLogIn={this.logIn} {...props}/>}/>
 
-            <PrivateRoute
-              path="/admin/reservations/:reservationID/delete"
-              render={(props) => <DeleteReservationPage {...props} />}
-            ></PrivateRoute>
+                        <PrivateRoute
+                            path="/admin/resources/create"
+                            admin={true}
+                            render={(props) => <CreateResourcePage {...props} />}
+                        ></PrivateRoute>
 
-            <PrivateRoute
-              path="/admin/reservations/:reservationID/edit"
-              render={(props) => <UpdateReservationPage {...props} />}
-            ></PrivateRoute>
+                        <PrivateRoute
+                            path="/admin/resources"
+                            admin={true}
+                            render={(props) => <ListResourcesAdminPage {...props} />}
+                        ></PrivateRoute>
 
-            <PrivateRoute
-                path="/admin/reservations/:reservationID"
-                render={(props) => <ReservationDetailsPage {...props} />}
-            ></PrivateRoute>
+                        <PrivateRoute
+                            path="/resources/:resourceID/request-reservation"
+                            render={(props) => <RequestReservationPage {...props} />}
+                        />
 
-            <PrivateRoute
-                path="/resources/:resourceID/request-reservation"
-                render={(props) => <RequestReservationPage {...props} />}
-            />
+                        <PrivateRoute
+                            path="/admin/resource/:resourceID/delete"
+                            admin={true}
+                            render={(props) => <DeleteResourcePage {...props} />}
+                        ></PrivateRoute>
 
-            <PrivateRoute
-              path="/admin/reservations"
-              render={(props) => <ListReservationsPage {...props} />}
-            ></PrivateRoute>
+                        <PrivateRoute
+                            path="/admin/resource/:resourceID/edit"
+                            admin={true}
+                            render={(props) => <UpdateResourcePage {...props} />}
+                        ></PrivateRoute>
 
-          </Switch>
+                        <PrivateRoute
+                            path="/admin/reservations/create"
+                            admin={true}
+                            render={(props) => <CreateReservationPage {...props} />}
+                        ></PrivateRoute>
 
-        </AuthContext.Provider>
-      </Router>
-    );
-  }
+                        <PrivateRoute
+                            path="/admin/reservations/:reservationID/delete"
+                            admin={true}
+                            render={(props) => <DeleteReservationPage {...props} />}
+                        ></PrivateRoute>
+
+                        <PrivateRoute
+                            path="/admin/reservations/:reservationID/edit"
+                            admin={true}
+                            render={(props) => <UpdateReservationPage {...props} />}
+                        ></PrivateRoute>
+
+                        <PrivateRoute
+                            path="/admin/reservations/:reservationID"
+                            admin={true}
+                            render={(props) => <ReservationDetailsPage {...props} />}
+                        ></PrivateRoute>
+                        <PrivateRoute
+                            path="/admin/reservations"
+                            admin={true}
+                            render={(props) => <ListReservationsPage {...props} />}
+                        ></PrivateRoute>
+
+                    </Switch>
+
+                </AuthContext.Provider>
+            </Router>
+        );
+    }
 
 }
 
-let PrivateRoute = ({ render, ...props }) => {
-  return (
-    <AuthContext.Consumer>
-      {({ user, ...rest }) => {
-        return (
-          <Route
-            {...props}
-            render={(props) =>
-              user ? render(props) : <Redirect to="/login" />
-            }
-          />
-        );
-      }}
-    </AuthContext.Consumer>
-  );
+let PrivateRoute = ({render, ...routeProps}) => {
+    return (
+        <AuthContext.Consumer>
+            {({user, ...rest}) => {
+                return (
+                    <Route
+                        {...routeProps}
+                        render={(props) => {
+                            if (!user) {
+                                return <Redirect to="/login"/>
+                            }
+
+                            if (routeProps.admin) {
+
+                                if (user.admin) {
+                                    return render(props)
+                                }
+                                return <h1>Unauthorized</h1>
+                            }
+
+                            return render(props)
+
+
+                        }}
+                    />
+                );
+            }}
+        </AuthContext.Consumer>
+    );
 };
 
 export default App;

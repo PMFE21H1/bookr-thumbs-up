@@ -4,6 +4,7 @@ import {createResource, listResources} from "../resources/resources";
 import { Route, Link } from "react-router-dom";
 import { updateReservation } from './reservations'
 import SlotSelector from "./SlotSelector";
+import UserSelector from "./UserSelector";
 
 export default class UpdateReservationPage extends React.Component {
   constructor(props) {
@@ -46,9 +47,9 @@ export default class UpdateReservationPage extends React.Component {
             ))
         });
   };
-  handleName = (e) => {
+  handleName = (newUserName) => {
     this.setState({
-      reservationData: {...this.state.reservationData, name: e.target.value}
+      reservationData: {...this.state.reservationData, name: newUserName}
     });
 
   };
@@ -89,12 +90,7 @@ export default class UpdateReservationPage extends React.Component {
           </select>
 
           <p>Update name</p>
-          <input
-            type="text"
-            //itt jelenitjuk meg azokat az adatokat amit a statben beleirtunk
-            placeholder={this.state.reservationData.name}
-            onChange={this.handleName}
-          />
+            <UserSelector onHandleName={this.handleName}/>
             <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
 
         </form>
