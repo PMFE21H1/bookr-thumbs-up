@@ -32,6 +32,7 @@ logIn = () => {
             this.props.onLogIn(
                 userByUid, 
                 () =>
+
                 userByUid.admin ?
             this.props.history.push("/admin/reservations") 
             :  
@@ -44,7 +45,6 @@ logIn = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
       });
-      console.log(this.state)
     }
     
 

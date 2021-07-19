@@ -1,9 +1,9 @@
-
-import React, { Component } from 'react'
-import { listResources, Resource } from '../resources/resources'
-import { createReservation } from './reservations'
+import React, {Component} from 'react'
+import {listResources, Resource} from '../resources/resources'
+import {createReservation, Reservation} from './reservations'
 import SlotSelector from "./SlotSelector";
 import {AuthContext} from "../App";
+import UserSelector from './UserSelector';
 
 
 export default class CreateReservationPage extends Component {
@@ -31,8 +31,8 @@ export default class CreateReservationPage extends Component {
         ))
     }
 
-    changeCustomer = (e) => {
-        this.setState({customer: e.target.value})
+    changeCustomer = (newUserName) => {
+        this.setState({customer: newUserName})
     }
 
 
@@ -44,8 +44,10 @@ export default class CreateReservationPage extends Component {
         })
     }
 
-    changeSlot=(date,time)=>{
-        this.setState(()=>{return{date:date, time:time}})
+    changeSlot = (date, time) => {
+        this.setState(() => {
+            return {date: date, time: time}
+        })
         console.log(this.state)
     }
 
@@ -58,33 +60,26 @@ export default class CreateReservationPage extends Component {
         })
     }
 
-    onClickCreateReservation=(e,user)=>{
+    onClickCreateReservation = (e, user) => {
         e.preventDefault();
-
-        if(user.admin){
-
-                createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit, "confirmed").catch((error)=>{  //hibakezelés nem catchel, rákérdezni
+        try{createReservation(new Reservation(this.state.customer, this.state.resource, `${this.state.date}T${this.state.time}`, "confirmed")).catch((error) => {
                     alert(error.message)
+                }
 
-                })
-
-        }else{
-            createReservation(this.state.customer, `${this.state.date}T${this.state.time}`, this.state.resourceToSubmit, "pending").catch((error)=>{  //hibakezelés nem catchel, rákérdezni
-                alert(error.message)
-
-            })
+            )}catch(e){
+            alert(e.message)
         }
-        this.changeToDefault()
 
+        this.changeToDefault()
     }
 
     render() {
 
         return (
-  
-        <AuthContext.Consumer >
+
+            <AuthContext.Consumer>
                 {({user, ...rest}) => {
-                    return(
+                    return (
                         <form>
 
                             <h3>Create Reservation</h3>
@@ -112,11 +107,11 @@ export default class CreateReservationPage extends Component {
 
                             <div>
                                 <label>Customer:</label>
-                                <input onChange={(e) => this.changeCustomer(e)} value={this.state.customer}></input>
+                                <UserSelector onHandleName={this.changeCustomer}/>
+                                {/* <input onChange={(e) => this.changeCustomer(e)} value={this.state.customer}></input> */}
                             </div>
 
                             <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
-
 
                             <button onClick={
                                 (e) => {
@@ -131,7 +126,7 @@ export default class CreateReservationPage extends Component {
 
                     )
                 }}
-             </AuthContext.Consumer>
+            </AuthContext.Consumer>
         )
     }
 }
