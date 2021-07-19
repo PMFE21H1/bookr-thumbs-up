@@ -17,6 +17,7 @@ import CreateReservationPage from "./reservations/CreateReservationPage";
 import LoginPage from "./authentication/LoginPage";
 import RegistrationPage from "./authentication/RegistrationPage";
 import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
+import PublicResourcesPage from "./resources/PublicResourcesPage";
 
 
 
@@ -54,6 +55,10 @@ class App extends React.Component {
               
             <Route path="/registration">
               <RegistrationPage onLogIn={this.logIn} />
+            </Route>
+
+            <Route path="/resources">
+              <PublicResourcesPage />
             </Route>
 
             <Route path="/login" render={(props) => <LoginPage onLogIn={this.logIn} {...props}/>}/>
