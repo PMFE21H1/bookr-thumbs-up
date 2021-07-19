@@ -35,7 +35,9 @@ class App extends React.Component {
   logIn = (user, callback) => {
     this.setState({
       user: user,
+
     }, callback);
+
   };
 
   render() {
@@ -117,7 +119,9 @@ let PrivateRoute = ({ render, ...props }) => {
           <Route
             {...props}
             render={(props) =>{
+
               return user ?
+
               render(props)
               : 
               <Redirect to="/login" />

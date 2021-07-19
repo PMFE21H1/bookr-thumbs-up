@@ -27,17 +27,18 @@ logIn = () => {
       .then((userCredential) => {
         // Signed in 
         const user= userCredential.user
+
         getUserByUid(user.uid).then(userByUid => {
             this.props.onLogIn(
-                userByUid,
-                () => 
+                userByUid, 
+                () =>
+
                 userByUid.admin ?
             this.props.history.push("/admin/reservations") 
             :  
             this.props.history.push("/my-reservations"))
-                
-            
         })
+
       })
       
       .catch((error) => {
