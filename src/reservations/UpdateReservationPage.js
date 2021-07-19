@@ -71,10 +71,6 @@ export default class UpdateReservationPage extends React.Component {
   render() {
     return (
       <div>
-
-                        <UsersDatabaseContext.Consumer>
-                            {(props) => console.log(props.users)}
-                        </UsersDatabaseContext.Consumer>
         <form>
           <h3>Update reservation</h3>
 
