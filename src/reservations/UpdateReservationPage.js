@@ -5,6 +5,7 @@ import { Route, Link } from "react-router-dom";
 import { updateReservation } from './reservations'
 import SlotSelector from "./SlotSelector";
 import UserSelector from "./UserSelector";
+import { UsersDatabaseContext } from "../App";
 
 export default class UpdateReservationPage extends React.Component {
   constructor(props) {
@@ -46,6 +47,7 @@ export default class UpdateReservationPage extends React.Component {
                 }
             ))
         });
+
   };
   handleName = (newUserName) => {
     this.setState({
@@ -70,6 +72,9 @@ export default class UpdateReservationPage extends React.Component {
     return (
       <div>
 
+                        <UsersDatabaseContext.Consumer>
+                            {(props) => console.log(props.users)}
+                        </UsersDatabaseContext.Consumer>
         <form>
           <h3>Update reservation</h3>
 

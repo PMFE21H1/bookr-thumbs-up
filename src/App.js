@@ -17,10 +17,12 @@ import CreateReservationPage from "./reservations/CreateReservationPage";
 import LoginPage from "./authentication/LoginPage";
 import RegistrationPage from "./authentication/RegistrationPage";
 import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
+import {listUsersFromDatabase} from './authentication/authentication'
 
 
-
+// CONTEXTS
 export let AuthContext = React.createContext(null)
+export let UsersDatabaseContext = React.createContext(null)
 
 
 
@@ -29,6 +31,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       user: false,
+      usersFromDatabase: [],
     };
   }
 
@@ -40,11 +43,17 @@ class App extends React.Component {
 
   };
 
+  componentDidMount(){
+    listUsersFromDatabase()
+    .then((users) => this.setState({usersFromDatabase: users}))
+}
+
   render() {
     return (
 
       <Router>
         <AuthContext.Provider value={{ user: this.state.user }}>
+          <UsersDatabaseContext.Provider value={{users: this.state.usersFromDatabase}}>
         <Link to="/admin/resources">Resources</Link>
         <Link to="/admin/reservations">Reservations</Link>
         <Link to="/login">Log In</Link>
@@ -112,7 +121,7 @@ class App extends React.Component {
             ></PrivateRoute>
 
           </Switch>
-
+          </UsersDatabaseContext.Provider>
         </AuthContext.Provider>
       </Router>
     );
