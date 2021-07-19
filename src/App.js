@@ -60,45 +60,54 @@ class App extends React.Component {
 
             <PrivateRoute
               path="/admin/resources/create"
+              admin={true}
               render={(props) => <CreateResourcePage {...props} />}
             ></PrivateRoute>
 
             <PrivateRoute
               path="/admin/resources"
+              admin={true}
               render={(props) => <ListResourcesAdminPage {...props} />}
             ></PrivateRoute>
 
             <PrivateRoute
               path="/admin/resource/:resourceID/delete"
+              admin={true}
               render={(props) => <DeleteResourcePage {...props} />}
             ></PrivateRoute>
 
             <PrivateRoute
               path="/admin/resource/:resourceID/edit"
+              admin={true}
               render={(props) => <UpdateResourcePage {...props} />}
             ></PrivateRoute>
 
             <PrivateRoute
               path="/admin/reservations/create"
+              admin={true}
               render={(props) => <CreateReservationPage {...props} />}
             ></PrivateRoute>
 
             <PrivateRoute
               path="/admin/reservations/:reservationID/delete"
+              admin={true}
               render={(props) => <DeleteReservationPage {...props} />}
             ></PrivateRoute>
 
             <PrivateRoute
               path="/admin/reservations/:reservationID/edit"
+              admin={true}
               render={(props) => <UpdateReservationPage {...props} />}
             ></PrivateRoute>
 
             <PrivateRoute
                 path="/admin/reservations/:reservationID"
+                admin={true}
                 render={(props) => <ReservationDetailsPage {...props} />}
             ></PrivateRoute>
             <PrivateRoute
               path="/admin/reservations"
+              admin={true}
               render={(props) => <ListReservationsPage {...props} />}
             ></PrivateRoute>
 
@@ -111,20 +120,29 @@ class App extends React.Component {
 
 }
 
-let PrivateRoute = ({ render, ...props }) => {
+let PrivateRoute = ({ render, ...routeProps }) => {
   return (
     <AuthContext.Consumer>
       {({ user, ...rest }) => {
         return (
           <Route
-            {...props}
+            {...routeProps}
             render={(props) =>{
+              if(!user){
+                return  <Redirect to="/login" />
+              }
 
-              return user ?
+              if(routeProps.admin){
 
-              render(props)
-              : 
-              <Redirect to="/login" />
+                if(user.admin){
+                  return render(props)
+                }
+                return <h1>Unauthorized</h1>
+              }
+
+              return render(props)
+
+
             }}
           />
         );
