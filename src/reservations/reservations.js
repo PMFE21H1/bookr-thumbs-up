@@ -123,7 +123,7 @@ export function updateReservation(id, newData) {
 export class Reservation {
     constructor(customerUid, resource, slot, status, id) {
         //ellenőrzi a customer formátumát
-        if (!customer || typeof customer != "string") {
+        if (!customerUid || typeof customerUid != "string") {
             throw new Error("Customer declaration invalid")
         }
         //ellenőrzi, hogy van-e resource
