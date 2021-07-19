@@ -32,12 +32,10 @@ class App extends React.Component {
     };
   }
 
-  logIn = (user) => {
+  logIn = (user, callback) => {
     this.setState({
       user: user,
-    });
-    console.log(user);
-    console.log(this.state);
+    }, callback);
   };
 
   render() {
@@ -56,9 +54,8 @@ class App extends React.Component {
               <RegistrationPage onLogIn={this.logIn} />
             </Route>
 
-            <Route path="/login">
-              <LoginPage onLogIn={this.logIn} />
-            </Route>
+            <Route path="/login" render={(props) => <LoginPage onLogIn={this.logIn} {...props}/>}/>
+
             <PrivateRoute
               path="/admin/resources/create"
               render={(props) => <CreateResourcePage {...props} />}
@@ -119,9 +116,12 @@ let PrivateRoute = ({ render, ...props }) => {
         return (
           <Route
             {...props}
-            render={(props) =>
-              user ? render(props) : <Redirect to="/login" />
-            }
+            render={(props) =>{
+              return user ?
+              render(props)
+              : 
+              <Redirect to="/login" />
+            }}
           />
         );
       }}
