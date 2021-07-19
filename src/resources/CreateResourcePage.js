@@ -29,7 +29,7 @@ export default class CreateResourcePage extends React.Component {
 
                             e.preventDefault()
                             try {
-                                createResource(new Resource(this.state.resourceName))
+                                createResource(new Resource(this.state.resourceName)) .then(()=>this.props.history.push('/admin/resources'))
                             } catch (e) {
                                 alert(e.message)
                             }
