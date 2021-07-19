@@ -53,12 +53,14 @@ class App extends React.Component {
 
       <Router>
         <AuthContext.Provider value={{ user: this.state.user }}>
-          <UsersDatabaseContext.Provider value={{users: this.state.usersFromDatabase}}>
+          
         <Link to="/admin/resources">Resources</Link>
         <Link to="/admin/reservations">Reservations</Link>
         <Link to="/login">Log In</Link>
         <Link to="/registration">Registration</Link>
 
+        
+        <UsersDatabaseContext.Provider value={{users: this.state.usersFromDatabase}}>
           <Switch>
               
             <Route path="/registration">
