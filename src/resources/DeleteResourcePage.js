@@ -32,7 +32,7 @@ export default class DeleteResourcePage extends React.Component {
   }
   handleDelete = () => {
     try {
-      deleteResource(this.state.resource);
+      deleteResource(this.state.resource) .then(()=>this.props.history.push('/admin/resources'));
     } catch (e) {
       alert(e.message);
     }
