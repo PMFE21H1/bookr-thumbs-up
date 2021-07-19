@@ -1,10 +1,10 @@
 import React from "react";
 import {
-  BrowserRouter as Router,
-  Link,
-  Switch,
-  Route,
-  Redirect,
+    BrowserRouter as Router,
+    Link,
+    Switch,
+    Route,
+    Redirect,
 } from "react-router-dom";
 import CreateResourcePage from "./resources/CreateResourcePage";
 import ListReservationsPage from "./reservations/listReservationsPage";
@@ -12,21 +12,22 @@ import ListResourcesAdminPage from "./resources/ListResourcesAdminPage";
 import DeleteReservationPage from "./reservations/DeleteReservationPage";
 import DeleteResourcePage from "./resources/DeleteResourcePage";
 import UpdateReservationPage from "./reservations/UpdateReservationPage";
-import { UpdateResourcePage } from "./resources/UpdateResourcePage";
+import {UpdateResourcePage} from "./resources/UpdateResourcePage";
 import CreateReservationPage from "./reservations/CreateReservationPage";
 import LoginPage from "./authentication/LoginPage";
 import RegistrationPage from "./authentication/RegistrationPage";
 import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
 import {listUsersFromDatabase} from './authentication/authentication'
-
+import RequestReservationPage from "./reservations/RequestReservationPage";
+import PublicResourcesPage from "./resources/PublicResourcesPage";
 
 // CONTEXTS
 export let AuthContext = React.createContext(null)
 export let UsersDatabaseContext = React.createContext(null)
 
 
-
 class App extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
@@ -38,10 +39,9 @@ class App extends React.Component {
   logIn = (user, callback) => {
     this.setState({
       user: user,
-
     }, callback);
 
-  };
+
 
   componentDidMount(){
     listUsersFromDatabase()
@@ -130,35 +130,35 @@ class App extends React.Component {
 
 }
 
-let PrivateRoute = ({ render, ...routeProps }) => {
-  return (
-    <AuthContext.Consumer>
-      {({ user, ...rest }) => {
-        return (
-          <Route
-            {...routeProps}
-            render={(props) =>{
-              if(!user){
-                return  <Redirect to="/login" />
-              }
+let PrivateRoute = ({render, ...routeProps}) => {
+    return (
+        <AuthContext.Consumer>
+            {({user, ...rest}) => {
+                return (
+                    <Route
+                        {...routeProps}
+                        render={(props) => {
+                            if (!user) {
+                                return <Redirect to="/login"/>
+                            }
 
-              if(routeProps.admin){
+                            if (routeProps.admin) {
 
-                if(user.admin){
-                  return render(props)
-                }
-                return <h1>Unauthorized</h1>
-              }
+                                if (user.admin) {
+                                    return render(props)
+                                }
+                                return <h1>Unauthorized</h1>
+                            }
 
-              return render(props)
+                            return render(props)
 
 
+                        }}
+                    />
+                );
             }}
-          />
-        );
-      }}
-    </AuthContext.Consumer>
-  );
+        </AuthContext.Consumer>
+    );
 };
 
 export default App;

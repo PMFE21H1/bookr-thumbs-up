@@ -36,7 +36,7 @@ export function listReservations() {
 
 export function createReservation(reservation) {
 
-    if(!(reservation instanceof Reservation)) throw new Error('reservation is not instanceof Reservation')
+    if (!(reservation instanceof Reservation)) throw new Error('reservation is not instanceof Reservation')
 
     //reservation-ok lekérése, annak leellenőrzése, hogy van e már erre az időpontra és resource-ra foglalás
     return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json")
@@ -162,3 +162,13 @@ export function deleteReservation(id) {
 }
 
 
+export function confirmReservation(reservationId) {
+    return fetch(
+        `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${reservationId}.json`,
+        {
+            body: JSON.stringify({status: "confirmed"}),
+            method: "PATCH"
+        }
+    )
+
+}
