@@ -60,7 +60,7 @@ export function deleteResource(resource) {
 
   let deleteReservations = [];
 
-  fetch(
+   return fetch(
     `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json`
   )
     .then((response) => response.json())
@@ -94,11 +94,11 @@ export function deleteResource(resource) {
         }
       )
     )
-    .then((response) => {
-      if (response === null) {
+    .then((response) =>
+       {
         return true;
       }
-    });
+    );
 }
 
 export function listResources() {

@@ -66,7 +66,7 @@ export default class CreateReservationPage extends Component {
                     alert(error.message)
                 }
 
-            )}catch(e){
+            ) .then(()=>this.props.history.push('/admin/reservations'))}catch(e){
             alert(e.message)
         }
 
