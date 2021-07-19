@@ -23,7 +23,8 @@ export default class PublicResourcesPage extends React.Component {
         return (
             <>
                 {this.state.resources.map(resource =>
-                    <div> {resource.name} <p> description </p> <Link to= /resources/resource.id/request-reservation > Reservation Request Page </Link> </div>
+                    <div> {resource.name} <p> description </p> <Link
+                        to={`/resources/${resource.id}/request-reservation`}> Request Reservation </Link></div>
                 )}
             </>
         )
