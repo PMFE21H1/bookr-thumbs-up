@@ -71,19 +71,35 @@ export function createReservation(reservation) {
 
                     return response.json()
                 })
+                    //user reservation tömbbe belerakjuk az új reservation ID-t
                     .then(data => {
 
                         fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`)
-                            .then()
+
+                            .then(response => response.json())
+                            .then(data2 => {
+                                if (data2 === null) {
+                                    data2 = [data.name]
+                                } else {
+                                    data2.push(data.name);
+
+                                }
+                                fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`,
+                                    {
+                                        body: JSON.stringify(data2),
+                                        method: "PUT"
+                                    }
+                                )
+                            })
 
 
-                        return {
-                            customerUid: reservation.customerUid,
-                            slot: reservation.slot,
-                            resource: reservation.resource,
-                            status: reservation.status,
-                            id: data.name
-                        }
+                        // return {
+                        //     customerUid: reservation.customerUid,
+                        //     slot: reservation.slot,
+                        //     resource: reservation.resource,
+                        //     status: reservation.status,
+                        //     id: data.name
+                        // }
 
                     })
             }
@@ -178,3 +194,20 @@ export function confirmReservation(reservationId) {
     )
 
 }
+
+export  function listUsersReservations(user) {
+    return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${user.uid}/reservations.json`)
+        .then(response => response.json())
+        .then(async (reservationArr) =>{
+                let searchedReservations = [];
+             for (let i = 0; i < reservationArr.length; i++) {
+                   await fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${reservationArr[i]}.json`)
+                        .then(response => response.json())
+                        .then(reservation => searchedReservations.push(reservation))
+                }
+                return searchedReservations
+            }
+        )
+
+}
+

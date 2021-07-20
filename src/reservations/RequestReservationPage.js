@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import SlotSelector from "./SlotSelector";
 import {createReservation, listReservations, Reservation} from "./reservations";
-
-import {AuthContext} from "../App";
+import {AuthContext, UsersDatabaseContext} from "../context/context"
 import {Link} from "react-router-dom";
 
 export default class RequestReservationPage extends Component {

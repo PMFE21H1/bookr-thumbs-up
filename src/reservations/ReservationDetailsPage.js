@@ -1,5 +1,5 @@
 import React from "react";
-import {AuthContext} from "../App"
+import {AuthContext, UsersDatabaseContext} from "../context/context"
 import {confirmReservation} from "./reservations";
 
 export default class ReservationDetailsPage extends React.Component {

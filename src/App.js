@@ -6,6 +6,7 @@ import {
     Route,
     Redirect,
 } from "react-router-dom";
+import {AuthContext, UsersDatabaseContext} from "./context/context"
 import CreateResourcePage from "./resources/CreateResourcePage";
 import ListReservationsPage from "./reservations/listReservationsPage";
 import ListResourcesAdminPage from "./resources/ListResourcesAdminPage";
@@ -22,9 +23,7 @@ import RequestReservationPage from "./reservations/RequestReservationPage";
 import PublicResourcesPage from "./resources/PublicResourcesPage";
 import MyReservationsPage from "./reservations/MyReservationsPage";
 
-// CONTEXTS
-export let AuthContext = React.createContext(null)
-export let UsersDatabaseContext = React.createContext(null)
+
 
 
 class App extends React.Component {
@@ -39,7 +38,7 @@ class App extends React.Component {
 
     logIn = (user, callback) => {
         this.setState({
-            user: user,
+            user: user
         }, callback);
     }
 
