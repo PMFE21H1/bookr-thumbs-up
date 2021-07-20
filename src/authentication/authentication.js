@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-export class User extends Component {
+export class User  {
     constructor(name, email, uid){
         if(!name || typeof name != "string"){
             throw new Error("Name declaration invalid")}
@@ -19,7 +19,7 @@ export class User extends Component {
 export function saveAccountToDatabase(name, email, admin, uid) {
 
     return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${uid}.json`, {
-        body: JSON.stringify({name: name, email: email, admin: admin}),
+        body: JSON.stringify({name: name, email: email, admin: admin, uid:uid}),
         method: "PUT"
     }).then(response => {
         //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
