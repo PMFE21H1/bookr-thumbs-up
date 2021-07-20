@@ -1,47 +1,61 @@
 import React from "react";
-import {Link, BrowserRouter as Router, Route, Switch} from "react-router-dom";
-import {createResource, Resource} from "./resources";
-
+import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { createResource, Resource } from "./resources";
 
 export default class CreateResourcePage extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            resourceName: ""
-        }
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      resourceName: "",
+      description: "",
+    };
+  }
 
-    upDateName = (e) => {
-        this.setState({
-            resourceName: e.target.value
-        })
-    }
+  updateName = (e) => {
+    this.setState({
+      resourceName: e.target.value,
+    });
+  };
+  updateDescription = (e) => {
+    this.setState({
+      description: e.target.value,
+    });
+  };
 
-    render() {
-        return (
-            <>
-                <form>
-                    <p> Resource Name </p>
-                    <input type="text" onChange={this.upDateName} value={this.state.resourceName}/>
+  render() {
+    return (
+      <>
+        <form>
+          <p> Resource Name </p>
+          <input
+            type="text"
+            onChange={this.updateName}
+            value={this.state.resourceName}
+          />
+          <p> Resource Description </p>
+          <textarea
+            onChange={this.updateDescription}
+            value={this.state.description}
+          />
 
-                    <button onClick={
-                        (e) => {
-
-                            e.preventDefault()
-                            try {
-                                createResource(new Resource(this.state.resourceName)) .then(()=>this.props.history.push('/admin/resources'))
-                            } catch (e) {
-                                alert(e.message)
-                            }
-                        }
-                    }> Create
-                    </button>
-                    <button> Cancel</button>
-                </form>
-
-            </>
-        )
-    }
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              try {
+                createResource(new Resource(this.state.resourceName, this.state.description)).then(() =>
+                  this.props.history.push("/admin/resources")
+                );
+              } catch (e) {
+                alert(e.message);
+              }
+            }}
+          >
+            {" "}
+            Create
+          </button>
+          <button onClick={() => this.props.history.push("/admin/resources")}> Cancel</button>
+        </form>
+      </>
+    );
+  }
 }
-
-

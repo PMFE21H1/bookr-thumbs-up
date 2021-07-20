@@ -42,8 +42,8 @@ export default class DeleteReservationPage extends React.Component {
                         }
                 </table>
 
-                <button onClick={() => deleteReservation(this.props.match.params.reservationID)}>Delete Reservation</button>
-                <Link to="/admin/reservations">Cancel</Link>
+                <button onClick={() => deleteReservation(this.props.match.params.reservationID) .then(this.props.history.push("/admin/reservations"))}>Delete Reservation</button>
+                <button onClick={() => this.props.history.push("/admin/reservations")}> Cancel</button>
             </div>
         )
     }

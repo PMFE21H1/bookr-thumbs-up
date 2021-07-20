@@ -120,7 +120,7 @@ export default class CreateReservationPage extends Component {
                                 }}>Create
                             </button>
 
-                            <button>Cancel</button>
+                            <button onClick={() => this.props.history.push("/admin/reservations")}> Cancel</button>
 
 
                         </form>
