@@ -55,7 +55,7 @@ export function createReservation(reservation) {
                 //posttal elküldjük az adatokat a firebasre
                 return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json", {
                     body: JSON.stringify({
-                        customer: reservation.customer,
+                        customerUid: reservation.customerUid,
                         slot: reservation.slot,
                         resource: reservation.resource,
                         status: reservation.status
@@ -73,7 +73,7 @@ export function createReservation(reservation) {
                 })
                     .then(data => {
                         return {
-                            customer: reservation.customer,
+                            customerUid: reservation.customerUid,
                             slot: reservation.slot,
                             resource: reservation.resource,
                             status: reservation.status,
@@ -86,7 +86,9 @@ export function createReservation(reservation) {
 
 
 export function updateReservation(id, newData) {
-    if (!newData.customer) {
+    console.log(newData)
+    console.log(id)
+    if (!newData.customerUid) {
         throw new Error('Customer can not be empty')
     }
     if (!newData.slot.match("^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2})$")) {
@@ -101,7 +103,7 @@ export function updateReservation(id, newData) {
     }
 
     for (let k in newData) {
-        if (k !== "slot" && k !== "customer" && k !== "resource") {
+        if (k !== "slot" && k !== "customerUid" && k !== "resource") {
             throw new Error("Partial update is invalid")
         }
     }
@@ -114,16 +116,16 @@ export function updateReservation(id, newData) {
             `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${id}.json`, {
                 method: "GET"
             }).then(
-            response => response.json()).then(updatedObject => alert('successful update: ' + updatedObject.customer)))
+            response => response.json()).then(updatedObject => alert('successful update: ' + updatedObject.customerUid)))
 
 
 }
 
 
 export class Reservation {
-    constructor(customer, resource, slot, status, id) {
+    constructor(customerUid, resource, slot, status, id) {
         //ellenőrzi a customer formátumát
-        if (!customer || typeof customer != "string") {
+        if (!customerUid || typeof customerUid != "string") {
             throw new Error("Customer declaration invalid")
         }
         //ellenőrzi, hogy van-e resource
@@ -136,7 +138,7 @@ export class Reservation {
         }
         //az id-t nem itt adjuk meg, mert azt a firebase generálja
         this.id = ""
-        this.customer = customer
+        this.customerUid = customerUid
         this.resource = resource
         this.slot = slot
         this.status = status

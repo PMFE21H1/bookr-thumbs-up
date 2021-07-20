@@ -1,5 +1,6 @@
 import React from "react";
 import {Route, Link} from "react-router-dom";
+import { UsersDatabaseContext } from "../App";
 import {listResources} from "../resources/resources";
 import {listReservations} from "./reservations";
 
@@ -28,9 +29,12 @@ export default class ListReservationsPage extends React.Component {
     }
 
     render() {
-        return (
-            <>
 
+        return (
+
+            <UsersDatabaseContext>
+                {users => {
+                    return <>
                 <Link to={"/admin/reservations/create"}>Add reservation</Link>
 
                 <h2>Confirmed Reservations</h2>
@@ -42,9 +46,12 @@ export default class ListReservationsPage extends React.Component {
                         <th>Resource</th>
                     </tr>
                     {this.state.confirmed.map(reservation => {
+                        //itt kell majd a userDatabaseConsumer
+                        
+                                console.log(users)
                                 return (
                                     <tr>
-                                        <td>{reservation.customer}</td>
+                                        <td>{users.map(user => {if(reservation.customerUid === user.uid){ return user.name }} )}</td>
                                         <td>{reservation.id}</td>
                                         <td>{reservation.slot}</td>
                                         <td>{this.state.resources.map(resource => reservation.resource == resource.id ? resource.name : "")}</td>
@@ -68,6 +75,7 @@ export default class ListReservationsPage extends React.Component {
                                         </td>
                                     </tr>
                                 );
+
                             })}
                 </table>
 
@@ -84,7 +92,7 @@ export default class ListReservationsPage extends React.Component {
                             this.state.pending.map(reservation => {
                                 return (
                                     <tr>
-                                        <td>{reservation.customer}</td>
+                                        <td>{reservation.customerUid}</td>
                                         <td>{reservation.id}</td>
                                         <td>{reservation.slot}</td>
                                         <td>{this.state.resources.map(resource => reservation.resource == resource.id ? resource.name : "")}</td>
@@ -117,8 +125,9 @@ export default class ListReservationsPage extends React.Component {
 
 
                 </table>
-
-            </>
+        </>
+        }}
+        </UsersDatabaseContext>
         );
     }
 }
