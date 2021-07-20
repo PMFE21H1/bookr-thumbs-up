@@ -54,7 +54,7 @@ export default class CreateResourcePage extends React.Component {
             {" "}
             Create
           </button>
-          <button> Cancel</button>
+          <button onClick={() => this.props.history.push("/admin/resources")}> Cancel</button>
         </form>
       </>
     );

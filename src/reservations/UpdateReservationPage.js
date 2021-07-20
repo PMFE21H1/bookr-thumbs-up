@@ -27,6 +27,7 @@ export default class UpdateReservationPage extends React.Component {
     )
       .then((response) => response.json())
       .then((reservation) => {
+        console.log(reservation)
         //a lekert reservation adatait setStateljuk es beleirjuk a reservationDatankba.
         this.setState({
           reservationData: {
