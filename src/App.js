@@ -58,12 +58,22 @@ class App extends React.Component {
                     <Link to="/admin/reservations">Reservations</Link>
                     <Link to="/login">Log In</Link>
                     <Link to="/registration">Registration</Link>
+                    <Link to="/resources">Public Recources</Link>
 
                     <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
                         <Switch>
 
                             <Route path="/registration">
                                 <RegistrationPage onLogIn={this.logIn}/>
+                            </Route>
+
+                            <PrivateRoute
+                                path="/resources/:resourceID/request-reservation"
+                                render={(props) => <RequestReservationPage {...props} />}
+                            ></PrivateRoute>
+
+                            <Route path="/resources">
+                                <PublicResourcesPage/>
                             </Route>
 
                             <Route path="/login" render={(props) => <LoginPage onLogIn={this.logIn} {...props}/>}/>
@@ -73,6 +83,14 @@ class App extends React.Component {
                                 admin={true}
                                 render={(props) => <CreateResourcePage {...props} />}
                             ></PrivateRoute>
+
+
+
+                            <PrivateRoute
+                                path="/my-reservations/:reservationID"
+                                render={(props) => <ReservationDetailsPage {...props} />}
+                            ></PrivateRoute>
+
                             <PrivateRoute
                                 path="/my-reservations"
                                 render={(props) => <MyReservationsPage {...props} />}

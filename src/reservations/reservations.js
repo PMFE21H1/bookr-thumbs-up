@@ -195,15 +195,19 @@ export function confirmReservation(reservationId) {
 
 }
 
-export  function listUsersReservations(user) {
+export function listUsersReservations(user) {
     return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${user.uid}/reservations.json`)
         .then(response => response.json())
-        .then(async (reservationArr) =>{
+        .then(async (reservationArr) => {
                 let searchedReservations = [];
-             for (let i = 0; i < reservationArr.length; i++) {
-                   await fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${reservationArr[i]}.json`)
+                for (let i = 0; i < reservationArr.length; i++) {
+                    await fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${reservationArr[i]}.json`)
                         .then(response => response.json())
-                        .then(reservation => searchedReservations.push(reservation))
+                        .then(reservation => {
+                                reservation.id = reservationArr[i];
+                                return searchedReservations.push(reservation)
+                            }
+                        )
                 }
                 return searchedReservations
             }

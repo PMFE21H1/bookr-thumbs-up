@@ -48,7 +48,9 @@ export default class ReservationDetailsPage extends React.Component {
                                 </tr>
 
                                 <tr>
-                                    <td>{this.state.reservation.customer}</td>
+
+                                    //név megjelenítése uid helyett hogyan?
+                                    <td>{this.state.reservation.customerUid}</td>
                                     <td>{this.state.reservation.resource}</td>
                                     <td>{this.state.resourcename}</td>
                                     <td>{this.state.reservation.slot}</td>

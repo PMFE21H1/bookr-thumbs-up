@@ -28,21 +28,21 @@ export default class MyReservationsPage extends React.Component{
 
     render(){
         return(
-            <div>
+            <table>
                 {this.state.reservations.map(reservation=>{
-                    return (<div>
+                    return (<tr>
                         {this.state.resources.map(resource=>{
                             if(resource.id===reservation.resource){
-                                return <span>{resource.name}</span>
+                                return <td>{resource.name}</td>
                             }
                         })}
-                        <span>{reservation.slot}</span>
-                        <span>{reservation.status}</span>
-                        <Link to={`/my-reservations/${reservation.id}`}>Details</Link>
-                    </div>)
+                        <td>{reservation.slot}</td>
+                        <td>{reservation.status}</td>
+                        <td><Link to={`/my-reservations/${reservation.id}`}>Details</Link></td>
+                    </tr>)
                 })}
 
-            </div>
+            </table>
         )
     }
 }

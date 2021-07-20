@@ -38,7 +38,7 @@ export default class RequestReservationPage extends Component {
                 <SlotSelector resource={ this.props.match.params.resourceID} changeSlot={this.changeSlot}/>
                 <button onClick={ (e) => {
                     e.preventDefault()
-                    try{createReservation(new Reservation(user.email, this.props.match.params.resourceID, `${this.state.date}T${this.state.time}`,"pending"))
+                    try{createReservation(new Reservation(user.uid, this.props.match.params.resourceID, `${this.state.date}T${this.state.time}`,"pending"))
                         .catch((e) => alert(e.message))
                         .then(()=>this.props.history.push('/my-reservations'))} catch(error){alert(error)}
 
