@@ -12,7 +12,7 @@ export default class CreateReservationPage extends Component {
         this.state = {
             resourceToSubmit: {},
             resource: "",
-            customer: "",
+            customerUid: "",
             date: "",
             time: "",
             resources: []
@@ -31,8 +31,9 @@ export default class CreateReservationPage extends Component {
         ))
     }
 
-    changeCustomer = (newUserName) => {
-        this.setState({customer: newUserName})
+    changeCustomer = (newUserUid) => {
+        console.log(newUserUid)
+        this.setState({customerUid: newUserUid})
     }
 
 
@@ -54,7 +55,7 @@ export default class CreateReservationPage extends Component {
     changeToDefault = () => {
         this.setState({
             resource: "",
-            customer: "",
+            customerUid: "",
             date: "",
             time: "",
         })
@@ -62,7 +63,7 @@ export default class CreateReservationPage extends Component {
 
     onClickCreateReservation = (e, user) => {
         e.preventDefault();
-        try{createReservation(new Reservation(this.state.customer, this.state.resource, `${this.state.date}T${this.state.time}`, "confirmed")).catch((error) => {
+        try{createReservation(new Reservation(this.state.customerUid, this.state.resource, `${this.state.date}T${this.state.time}`, "confirmed")).catch((error) => {
                     alert(error.message)
                 }
 
@@ -108,13 +109,13 @@ export default class CreateReservationPage extends Component {
                             <div>
                                 <label>Customer:</label>
                                 <UserSelector onHandleName={this.changeCustomer}/>
-                                {/* <input onChange={(e) => this.changeCustomer(e)} value={this.state.customer}></input> */}
                             </div>
 
                             <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
 
                             <button onClick={
                                 (e) => {
+                                    console.log(user)
                                     this.onClickCreateReservation(e, user)
                                 }}>Create
                             </button>
