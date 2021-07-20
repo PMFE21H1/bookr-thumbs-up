@@ -9,6 +9,8 @@ export class UpdateResourcePage extends React.Component {
       newResourceName: "",
       resourceID: this.props.match.params.resourceID,
       oldResourceName: "",
+      oldDescription: "",
+      newDescription: "",
     };
   }
 
@@ -17,7 +19,7 @@ export class UpdateResourcePage extends React.Component {
       `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${this.state.resourceID}.json`
     )
       .then((response) => response.json())
-      .then((resource) => this.setState({ oldResourceName: resource.name }));
+      .then((resource) => this.setState({ oldResourceName: resource.name, oldDescription: resource.description }));
   }
 
   updateResourceName = (e) => {
@@ -25,7 +27,21 @@ export class UpdateResourcePage extends React.Component {
       newResourceName: e.target.value,
     });
   };
-
+  updateDescription = (e) => {
+    this.setState({
+      newDescription: e.target.value,
+    });
+  };
+  handleApply = () => {
+    try {
+      updateResource(this.state.resourceID, {
+        name: this.state.newResourceName,
+        description: this.state.newDescription,
+      }) .then(()=>this.props.history.push('/admin/resources'))
+    } catch (e) {
+      alert(e.message);
+    }
+  };
   render() {
     return (
       <>
@@ -37,12 +53,18 @@ export class UpdateResourcePage extends React.Component {
               onChange={this.updateResourceName}
               value={this.state.newResourceName}
             />
+            <input
+              type="text"
+              placeholder={this.state.oldDescription}
+              onChange={this.updateDescription}
+              value={this.state.newDescription}
+            />
             <button
-              onClick={() =>
-                updateResource(this.state.resourceID, {
-                  name: this.state.newResourceName,
-                })
-              }
+              onClick={this.handleApply}
+                // updateResource(this.state.resourceID, {
+                //   name: this.state.newResourceName,
+                //   description: this.state.newDescription,
+                // })
             >
               Apply
             </button>

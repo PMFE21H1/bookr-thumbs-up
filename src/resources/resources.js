@@ -46,10 +46,11 @@ export function createResource(resource) {
 }
 
 export class Resource {
-  constructor(name, id) {
+  constructor(name, description, id) {
     if (!name) throw new Error("Name can not be empty");
     this.name = name;
     this.id = id;
+    this.description = description;
   }
 }
 
@@ -60,7 +61,7 @@ export function deleteResource(resource) {
 
   let deleteReservations = [];
 
-   return fetch(
+  return fetch(
     `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json`
   )
     .then((response) => response.json())
@@ -94,11 +95,9 @@ export function deleteResource(resource) {
         }
       )
     )
-    .then((response) =>
-       {
-        return true;
-      }
-    );
+    .then((response) => {
+      return true;
+    });
 }
 
 export function listResources() {
@@ -118,9 +117,13 @@ export function updateResource(id, patch) {
   if (!id) {
     throw new Error("Id is invalid");
   }
-  listResources().then((resources) => {
-    resources.forEach((resource) => {
-      if (resource.id === id) {
+  if (!patch.name) {
+    throw new Error("Name can not be empty");
+  }
+  return listResources().then((resources) => {
+    for(let i = 0; i < resources.length; i++)
+     {
+      if (resources[i].id === id) {
         return fetch(
           `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${id}.json`,
           {
@@ -130,10 +133,12 @@ export function updateResource(id, patch) {
         )
           .then((response) => response.json())
 
-          .then((patchedObject) =>
+          .then((patchedObject) => {
             alert("Resource succesfully changed : " + patchedObject.name)
-          );
+            console.log(patchedObject)
+            return patchedObject
+          })
       }
-    });
+    };
   });
 }
