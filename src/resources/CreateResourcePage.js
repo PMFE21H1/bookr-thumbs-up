@@ -33,8 +33,7 @@ export default class CreateResourcePage extends React.Component {
             value={this.state.resourceName}
           />
           <p> Resource Description </p>
-          <input
-            type="text"
+          <textarea
             onChange={this.updateDescription}
             value={this.state.description}
           />

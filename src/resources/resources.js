@@ -46,6 +46,7 @@ export function createResource(resource) {
 }
 
 export class Resource {
+  //a resource classt kiegeszitettuk egy bemeno parameterrel
   constructor(name, description, id) {
     if (!name) throw new Error("Name can not be empty");
     this.name = name;
