@@ -19,6 +19,7 @@ import RegistrationPage from "./authentication/RegistrationPage";
 import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
 import RequestReservationPage from "./reservations/RequestReservationPage";
 import PublicResourcesPage from "./resources/PublicResourcesPage";
+import MyReservationsPage from "./reservations/MyReservationsPage";
 
 
 export let AuthContext = React.createContext(null)
@@ -60,6 +61,11 @@ class App extends React.Component {
                         <PrivateRoute
                             path="/resources/:resourceID/request-reservation"
                             render={(props) => <RequestReservationPage {...props} />}
+                        />
+
+                        <PrivateRoute
+                            path="/my-reservations"
+                            render={(props) => <MyReservationsPage {...props} />}
                         />
 
                         <Route path="/resources">
