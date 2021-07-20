@@ -2,7 +2,7 @@ import React from "react";
 import {Route, Link} from "react-router-dom";
 import { UsersDatabaseContext } from "../App";
 import {listResources} from "../resources/resources";
-import {listReservations} from "./reservations";
+import {listReservations, confirmReservation} from "./reservations";
 
 export default class ListReservationsPage extends React.Component {
     constructor(props) {
@@ -115,7 +115,7 @@ export default class ListReservationsPage extends React.Component {
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link>
+                                            <Link onClick={confirmReservation(reservation.id)}>
                                                 CONFIRM
                                             </Link>
                                         </td>
