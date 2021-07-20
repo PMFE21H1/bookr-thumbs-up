@@ -18,6 +18,7 @@ export default class MyReservationsPage extends React.Component{
     }
 
     componentDidMount() {
+        console.log("didmount")
         //this.context=AuthContextből érkező user
         listUsersReservations(this.context.user)
             .then(searchedReservation=>this.setState({reservations:searchedReservation}))

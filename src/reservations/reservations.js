@@ -74,7 +74,7 @@ export function createReservation(reservation) {
                     //user reservation tömbbe belerakjuk az új reservation ID-t
                     .then(data => {
 
-                        fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`)
+                        return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`)
 
                             .then(response => response.json())
                             .then(data2 => {
@@ -84,7 +84,7 @@ export function createReservation(reservation) {
                                     data2.push(data.name);
 
                                 }
-                                fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`,
+                                return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`,
                                     {
                                         body: JSON.stringify(data2),
                                         method: "PUT"
