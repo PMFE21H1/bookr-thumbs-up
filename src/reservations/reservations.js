@@ -72,13 +72,15 @@ export function createReservation(reservation) {
                     return response.json()
                 })
                     .then(data => {
-                        return {
-                            customer: reservation.customer,
-                            slot: reservation.slot,
-                            resource: reservation.resource,
-                            status: reservation.status,
-                            id: data.name
-                        }
+                        fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`)
+                            .
+                        // return {
+                        //     customer: reservation.customer,
+                        //     slot: reservation.slot,
+                        //     resource: reservation.resource,
+                        //     status: reservation.status,
+                        //     id: data.name
+                        // }
                     })
             }
         })
