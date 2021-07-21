@@ -25,8 +25,6 @@ import UnauthorizedPage from "./authentication/UnauthorizedPage";
 import MyReservationsPage from "./reservations/MyReservationsPage";
 
 
-
-
 class App extends React.Component {
 
     constructor(props) {
@@ -67,6 +65,7 @@ class App extends React.Component {
                             <Route path="/registration">
                                 <RegistrationPage onLogIn={this.logIn}/>
                             </Route>
+
 
                             <Route path="/unauthorized">
                                 <UnauthorizedPage />
@@ -154,6 +153,7 @@ class App extends React.Component {
             </Router>
         );
     }
+
 }
 
 let PrivateRoute = ({render, ...routeProps}) => {
