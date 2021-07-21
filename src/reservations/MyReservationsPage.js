@@ -29,21 +29,30 @@ export default class MyReservationsPage extends React.Component{
 
     render(){
         return(
-            <table>
-                {this.state.reservations.map(reservation=>{
-                    return (<tr>
-                        {this.state.resources.map(resource=>{
-                            if(resource.id===reservation.resource){
-                                return <td>{resource.name}</td>
-                            }
-                        })}
-                        <td>{reservation.slot}</td>
-                        <td>{reservation.status}</td>
-                        <td><Link to={`/my-reservations/${reservation.id}`}>Details</Link></td>
-                    </tr>)
-                })}
+            <>
+            {
+                this.state.reservations!==[]  ?
 
-            </table>
+
+                    <table>
+                        {this.state.reservations.map(reservation => {
+                            return (<tr>
+                                {this.state.resources.map(resource => {
+                                    if (resource.id === reservation.resource) {
+                                        return <td>{resource.name}</td>
+                                    }
+                                })}
+                                <td>{reservation.slot}</td>
+                                <td>{reservation.status}</td>
+                                <td><Link to={`/my-reservations/${reservation.id}`}>Details</Link></td>
+                            </tr>)
+                        })}
+
+                    </table>
+                    :
+                    <h1>You have no reservations yet</h1>
+            }
+            </>
         )
     }
 }

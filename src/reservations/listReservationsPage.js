@@ -113,9 +113,9 @@ export default class ListReservationsPage extends React.Component {
                                             </Link>
                                         </td>
                                         <td>
-                                            <Link onClick={confirmReservation(reservation.id)}>
+                                            <button onClick={()=>confirmReservation(reservation.id)}>
                                                 CONFIRM
-                                            </Link>
+                                            </button>
                                         </td>
                                     </tr>
                                 );
