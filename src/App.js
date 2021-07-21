@@ -66,9 +66,9 @@ class App extends React.Component {
                                 <RegistrationPage onLogIn={this.logIn}/>
                             </Route>
 
- 
+
                             <Route path="/unauthorized">
-                              <UnauthorizedPage />
+                                <UnauthorizedPage />
                             </Route>
 
                             <PrivateRoute
