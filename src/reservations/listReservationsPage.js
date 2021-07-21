@@ -1,6 +1,6 @@
 import React from "react";
 import {Route, Link} from "react-router-dom";
-import { UsersDatabaseContext } from "../App";
+import {AuthContext, UsersDatabaseContext} from "../context/context"
 import {listResources} from "../resources/resources";
 import {listReservations, confirmReservation} from "./reservations";
 
@@ -47,8 +47,6 @@ export default class ListReservationsPage extends React.Component {
                     </tr>
                     {this.state.confirmed.map(reservation => {
                         //itt kell majd a userDatabaseConsumer
-                        
-                                console.log(users)
                                 return (
                                     <tr>
                                         <td>{users.map(user => {if(reservation.customerUid === user.uid){ return user.name }} )}</td>
