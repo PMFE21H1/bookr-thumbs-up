@@ -1,6 +1,6 @@
 import React from 'react'
 import { listUsersFromDatabase } from '../authentication/authentication'
-import { UsersDatabaseContext } from '../App'
+import {AuthContext, UsersDatabaseContext} from "../context/context"
 import { PATTERNLIKE_TYPES } from '@babel/types'
 
 export default class UserSelector extends React.Component {
@@ -32,7 +32,6 @@ export default class UserSelector extends React.Component {
 
             {
                 users.map(user => {
-                    console.log(user)
                     return <option value={user.uid}>{user.name}: {user.email}</option>
                 })
             }

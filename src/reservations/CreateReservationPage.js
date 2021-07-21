@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {listResources, Resource} from '../resources/resources'
 import {createReservation, Reservation} from './reservations'
 import SlotSelector from "./SlotSelector";
-import {AuthContext} from "../App";
+import {AuthContext, UsersDatabaseContext} from "../context/context"
 import UserSelector from './UserSelector';
 
 
