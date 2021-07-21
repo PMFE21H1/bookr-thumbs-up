@@ -21,9 +21,8 @@ import ReservationDetailsPage from "./reservations/ReservationDetailsPage";
 import {listUsersFromDatabase} from './authentication/authentication'
 import RequestReservationPage from "./reservations/RequestReservationPage";
 import PublicResourcesPage from "./resources/PublicResourcesPage";
+import UnauthorizedPage from "./authentication/UnauthorizedPage";
 import MyReservationsPage from "./reservations/MyReservationsPage";
-
-
 
 
 class App extends React.Component {
@@ -65,6 +64,11 @@ class App extends React.Component {
 
                             <Route path="/registration">
                                 <RegistrationPage onLogIn={this.logIn}/>
+                            </Route>
+
+ 
+                            <Route path="/unauthorized">
+                              <UnauthorizedPage />
                             </Route>
 
                             <PrivateRoute
@@ -150,7 +154,6 @@ class App extends React.Component {
         );
     }
 
-
 }
 
 let PrivateRoute = ({render, ...routeProps}) => {
@@ -170,7 +173,7 @@ let PrivateRoute = ({render, ...routeProps}) => {
                                 if (user.admin) {
                                     return render(props)
                                 }
-                                return <h1>Unauthorized</h1>
+                                return <Redirect to="/unauthorized"/>
                             }
 
                             return render(props)
