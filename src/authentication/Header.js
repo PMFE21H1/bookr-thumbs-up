@@ -25,12 +25,19 @@ export default class Header extends Component {
               );
             } else {
                   return user.admin ? 
+                    
+                    <>
+                      <Link to="/admin/resources">Resources</Link>
+                      <Link to="/admin/reservations">Reservations</Link>
+                      <p>Admin</p>
+                    </>
 
-                    <h1> Admin vagy </h1>
-                
                     :
 
-                    <h1>User vagy</h1>
+                    <>
+                      <Link to="/my-reservations">Reservations</Link>
+                      <Link to="/resources">Public Recources</Link>
+                    </>
 
                     }
           }}
