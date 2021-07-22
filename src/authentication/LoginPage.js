@@ -34,7 +34,7 @@ logIn = () => {
                 () =>
 
                 userByUid.admin ?
-            this.props.history.push("/admin/config") 
+            this.props.history.push("/admin/reservations") 
             :  
             this.props.history.push("/my-reservations"))
         })

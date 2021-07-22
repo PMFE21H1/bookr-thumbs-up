@@ -36,6 +36,7 @@ export default class ListReservationsPage extends React.Component {
                 {users => {
                     return <>
                 <Link to={"/admin/reservations/create"}>Add reservation</Link>
+                <Link to={"/admin/config"}>Config</Link>
 
                 <h2>Confirmed Reservations</h2>
                 <table>
