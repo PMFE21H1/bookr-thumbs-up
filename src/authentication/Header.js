@@ -37,6 +37,7 @@ export default class Header extends Component {
                     <>
                       <Link to="/my-reservations">Reservations</Link>
                       <Link to="/resources">Public Recources</Link>
+                      <p>User</p>
                     </>
 
                     }
