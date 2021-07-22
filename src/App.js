@@ -6,7 +6,7 @@ import {
     Route,
     Redirect,
 } from "react-router-dom";
-import {AuthContext, UsersDatabaseContext} from "./context/context"
+import {AuthContext, UsersDatabaseContext,TaxonomyContext} from "./context/context"
 import CreateResourcePage from "./resources/CreateResourcePage";
 import ListReservationsPage from "./reservations/listReservationsPage";
 import ListResourcesAdminPage from "./resources/ListResourcesAdminPage";
@@ -23,6 +23,7 @@ import RequestReservationPage from "./reservations/RequestReservationPage";
 import PublicResourcesPage from "./resources/PublicResourcesPage";
 import UnauthorizedPage from "./authentication/UnauthorizedPage";
 import MyReservationsPage from "./reservations/MyReservationsPage";
+import ResourceTaxonomy from "./resources/ResourceTaxonomy";
 
 
 class App extends React.Component {
@@ -32,6 +33,15 @@ class App extends React.Component {
         this.state = {
             user: false,
             usersFromDatabase: [],
+            taxonomy: {
+                resource:"",
+                resources:"",
+                url:""
+            }
+
+
+
+
         };
     }
 
@@ -43,8 +53,22 @@ class App extends React.Component {
 
 
     componentDidMount() {
-        listUsersFromDatabase()
+
+           fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/taxonomy.json`).then(response => response.json())
+                .then(
+                taxonomy=>  this.setState({taxonomy: {resource:taxonomy.resource, resources: taxonomy.resources, url: taxonomy.url}})
+            )
+
+            listUsersFromDatabase()
             .then((users) => this.setState({usersFromDatabase: users}))
+    }
+
+
+
+    taxonomyChange=(resource, resources,url)=>{
+        this.setState(()=>({
+            taxonomy : {resource : resource, resources: resources, url: url}
+        }))
     }
 
     render() {
@@ -53,11 +77,13 @@ class App extends React.Component {
             <Router>
                 <AuthContext.Provider value={{user: this.state.user}}>
 
-                    <Link to="/admin/resources">Resources</Link>
+                    <Link to="/admin/resources">{this.state.taxonomy.resources}</Link>
                     <Link to="/admin/reservations">Reservations</Link>
                     <Link to="/login">Log In</Link>
                     <Link to="/registration">Registration</Link>
                     <Link to="/resources">Public Recources</Link>
+                    <Link to="/admin/config/resources/taxonomy">Taxonomy</Link>
+
 
                     <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
                         <Switch>
@@ -83,7 +109,7 @@ class App extends React.Component {
                             <Route path="/login" render={(props) => <LoginPage onLogIn={this.logIn} {...props}/>}/>
 
                             <PrivateRoute
-                                path="/admin/resources/create"
+                                path={`/admin/${this.state.taxonomy.resources}/create`}
                                 admin={true}
                                 render={(props) => <CreateResourcePage {...props} />}
                             ></PrivateRoute>
@@ -103,7 +129,7 @@ class App extends React.Component {
                             <PrivateRoute
                                 path="/admin/resources"
                                 admin={true}
-                                render={(props) => <ListResourcesAdminPage {...props} />}
+                                render={(props) => <ListResourcesAdminPage taxonomy ={this.state.taxonomy} {...props} />}
                             ></PrivateRoute>
 
                             <PrivateRoute
@@ -146,6 +172,13 @@ class App extends React.Component {
                                 admin={true}
                                 render={(props) => <ListReservationsPage {...props} />}
                             ></PrivateRoute>
+
+                            <PrivateRoute
+                                path= "/admin/config/resources/taxonomy"
+                                admin ={true}
+                                render={(props) => <ResourceTaxonomy taxonomyChange = {this.taxonomyChange}{...props}/>}
+                            >
+                            </PrivateRoute>
 
                         </Switch>
                     </UsersDatabaseContext.Provider>

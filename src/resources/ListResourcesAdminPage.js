@@ -21,7 +21,7 @@ class listResourceAdminPage extends React.Component{
 render(){
     return(
         <>
-            <Link to="/admin/resources/create">Add resource</Link>
+            <Link to={`/admin/${this.props.taxonomy.url}/create`}>Add resource</Link>
     
         <table>
             <tr>
