@@ -24,6 +24,7 @@ import PublicResourcesPage from "./resources/PublicResourcesPage";
 import UnauthorizedPage from "./authentication/UnauthorizedPage";
 import MyReservationsPage from "./reservations/MyReservationsPage";
 import ConfigPage from "./authentication/ConfigPage";
+import Header from "./authentication/Header";
 
 class App extends React.Component {
   constructor(props) {
@@ -53,13 +54,10 @@ class App extends React.Component {
     return (
       <Router>
         <AuthContext.Provider value={{ user: this.state.user }}>
-          <Link to="/admin/resources">Resources</Link>
-          <Link to="/admin/reservations">Reservations</Link>
-          <Link to="/login">Log In</Link>
-          <Link to="/registration">Registration</Link>
-          <Link to="/resources">Public Recources</Link>
 
           <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
+            <Header />
+
             <Switch>
               <Route path="/registration">
                 <RegistrationPage onLogIn={this.logIn} />
@@ -86,6 +84,7 @@ class App extends React.Component {
               />
 
               <PrivateRoute
+
                 path="/admin/config/resources/create"
                 admin={true}
                 render={(props) => <CreateResourcePage {...props} />}
@@ -108,12 +107,14 @@ class App extends React.Component {
               ></PrivateRoute>
 
               <PrivateRoute
+
                 path="/admin/config/resource/:resourceID/delete"
                 admin={true}
                 render={(props) => <DeleteResourcePage {...props} />}
               ></PrivateRoute>
 
               <PrivateRoute
+
                 path="/admin/config/resource/:resourceID/edit"
                 admin={true}
                 render={(props) => <UpdateResourcePage {...props} />}
@@ -147,11 +148,13 @@ class App extends React.Component {
                 admin={true}
                 render={(props) => <ListReservationsPage {...props} />}
               ></PrivateRoute>
+
               <PrivateRoute
                 path="/admin/config"
                 admin={true}
                 render={(props) => <ConfigPage {...props} />}
               ></PrivateRoute>
+
             </Switch>
           </UsersDatabaseContext.Provider>
         </AuthContext.Provider>
