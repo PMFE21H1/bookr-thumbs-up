@@ -1,10 +1,13 @@
 import React, { Component } from "react";
 import { AuthContext, UsersDatabaseContext } from "../context/context";
 import { Link } from "react-router-dom";
+import { getUserByUid } from "./authentication";
+
+
 export default class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+
   }
 
   render() {
@@ -21,20 +24,15 @@ export default class Header extends Component {
                 </>
               );
             } else {
-              <UsersDatabaseContext.Consumer>
-                {(usersFromDatabase) => {
-                    console.log(usersFromDatabase)
-                    console.log(user)
-                  return usersFromDatabase.map((userFromDatabase) => {
-                    userFromDatabase.uid === user.uid ? (
-                      <h1>{user.name}</h1>
-                    ) : (
-                      <h1>nem volt jo a kod</h1>
-                    );
-                  });
-                }}
-              </UsersDatabaseContext.Consumer>;
-            }
+                  return user.admin ? 
+
+                    <h1> Admin vagy </h1>
+                
+                    :
+
+                    <h1>User vagy</h1>
+
+                    }
           }}
         </AuthContext.Consumer>
       </div>
