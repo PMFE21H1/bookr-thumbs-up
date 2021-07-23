@@ -36,8 +36,11 @@ export default class ResourceTaxonomy extends React.Component {
     render() {
         return (
             <>
-                <label>Change Resource Name</label>
+                <h2>Change Resource Name</h2>
+
+                <label>Singular Name</label>
                 <input value={this.state.newResourceTextSingular} onChange={this.updateNewResourceTextSingular}/>
+                <label>Plural Name</label>
                 <input value={this.state.newResourceTextPlural} onChange={this.updateNewResourceTextPlural}/>
                 <button onClick={this.updateTaxonomy}>Submit</button>
             </>
