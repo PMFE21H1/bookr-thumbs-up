@@ -38,6 +38,8 @@ export default class ReservationDetailsPage extends React.Component {
             <>
                 <AuthContext.Consumer>
                     {({user}) => {
+                        <UsersDatabaseContext>
+                            {(usersFromDatabase) => {
                         return (
                             <table>
                                 <tr>
@@ -49,7 +51,7 @@ export default class ReservationDetailsPage extends React.Component {
 
                                 <tr>
 
-                                    <td>{this.state.reservation.customerUid}</td>
+                                    <td>{usersFromDatabase.map(user => this.state.reservation.customerUid === user.uid ? user.name : "")}</td>
                                     <td>{this.state.reservation.resource}</td>
                                     <td>{this.state.resourcename}</td>
                                     <td>{this.state.reservation.slot}</td>
@@ -59,7 +61,8 @@ export default class ReservationDetailsPage extends React.Component {
                                 </tr>
                             </table>
                         )
-
+                    }}
+                        </UsersDatabaseContext>
                     }
                     }
 
