@@ -42,7 +42,7 @@ export default class Header extends Component {
                 <>
                   <Nav className="justify-content-center" activeKey="/home">
                     <Nav.Item>
-                      <Nav.Link as={Link} to="/admin/resources">
+                      <Nav.Link as={Link} to="/admin/config/resources">
                         Resources
                       </Nav.Link>
                     </Nav.Item>

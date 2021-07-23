@@ -84,7 +84,7 @@ class listResourceAdminPage extends React.Component {
   render() {
     return (
       <>
-        <Link to="/admin/resources/create">Add resource</Link>
+        <Link to="/admin/config/resources/create">Add resource</Link>
 
         <Table striped bordered hover>
           <thead>

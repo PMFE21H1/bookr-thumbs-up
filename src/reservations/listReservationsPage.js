@@ -4,7 +4,7 @@ import { AuthContext, UsersDatabaseContext } from "../context/context";
 import { listResources } from "../resources/resources";
 import { listReservations, confirmReservation } from "./reservations";
 import Table from "react-bootstrap/Table";
-
+import { Button } from "react-bootstrap";
 export default class ListReservationsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -140,11 +140,11 @@ export default class ListReservationsPage extends React.Component {
                           </Link>
                         </td>
                         <td>
-                          <button
+                          <Button
                             onClick={() => confirmReservation(reservation.id)}
                           >
                             CONFIRM
-                          </button>
+                          </Button>
                         </td>
                       </tr>
                     );

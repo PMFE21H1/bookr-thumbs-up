@@ -257,7 +257,7 @@ export default class CreateReservationPage extends Component {
                     ></SlotSelector>
 
                     <Button
-                      variant="success btn-block"
+                      variant="primary btn-block"
                       type="submit"
                       onClick={(e) => {
                         console.log(user);
