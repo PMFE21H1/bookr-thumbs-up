@@ -78,12 +78,14 @@ class App extends React.Component {
                 <TaxonomyContext.Provider value ={this.state.taxonomy}>
                 <AuthContext.Provider value={{user: this.state.user}}>
 
-                    <Link to={`/admin/${this.state.taxonomy.resources}`}>{this.state.taxonomy.resources}</Link>
+                    {/* <Link to={`/admin/${this.state.taxonomy.resources}`}>{this.state.taxonomy.resources}</Link>
                     <Link to="/admin/reservations">Reservations</Link>
                     <Link to="/login">Log In</Link>
                     <Link to="/registration">Registration</Link>
                     <Link to={`/${this.state.taxonomy.resources}`}>Public {this.state.taxonomy.resources}</Link>
-                    <Link to="/admin/config/resources/taxonomy">Taxonomy</Link>
+                    <Link to="/admin/config/resources/taxonomy">Taxonomy</Link> */}
+
+                    <Header/>
 
 
                     <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
@@ -141,7 +143,7 @@ class App extends React.Component {
                             ></PrivateRoute>
 
                             <PrivateRoute
-                                path={`/admin/${this.state.taxonomy.resources}`}
+                                path={`/admin/config/${this.state.taxonomy.resources}`}
                                 admin={true}
                                 render={(props) => <ListResourcesAdminPage {...props} />}
                             ></PrivateRoute>
@@ -179,6 +181,12 @@ class App extends React.Component {
                                 path= "/admin/config/resources/taxonomy"
                                 admin ={true}
                                 render={(props) => <ResourceTaxonomy taxonomyChange = {this.taxonomyChange}{...props}/>}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                path="/admin/config"
+                                admin={true}
+                                render={(props) => <ConfigPage {...props} />}
                             ></PrivateRoute>
 
                         </Switch>
