@@ -40,7 +40,7 @@ render(){
                         </td>
 
                          <td><Link
-                         to={`/admin/resource/${resource.id}/edit`}>EDIT</Link></td>
+                         to={`/admin/config/resource/${resource.id}/edit`}>EDIT</Link></td>
                         <td><Link to={`/admin/resource/${resource.id}/delete`}>DELETE</Link></td>
                     </tr>)
                 })

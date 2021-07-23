@@ -27,7 +27,7 @@ export default class Header extends Component {
                   return user.admin ? 
                     
                     <>
-                      <Link to="/admin/resources">Resources</Link>
+                      <Link to="/admin/config/resources">Resources</Link>
                       <Link to="/admin/reservations">Reservations</Link>
                       <p>Admin</p>
                     </>

@@ -70,7 +70,7 @@ class App extends React.Component {
 
               <PrivateRoute
                   admin={true}
-                  path="/admin/config/slot/slot-generation"
+                  path="/admin/config/slot"
                   render={(props) => <SlotConfig {...props} />}
               />
 
