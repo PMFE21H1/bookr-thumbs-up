@@ -33,7 +33,7 @@ export default class ListReservationsPage extends React.Component {
         return (
             <TaxonomyContext.Consumer>
                 { (taxonomy)=>{
-                    return<UsersDatabaseContext>
+                    return (<UsersDatabaseContext>
                 {users => {
                     return <>
                 <Link to={"/admin/reservations/create"}>Add reservation</Link>
@@ -126,7 +126,7 @@ export default class ListReservationsPage extends React.Component {
                 </table>
         </>
         }}
-        </UsersDatabaseContext>
+        </UsersDatabaseContext>)
                 }
 
                 }

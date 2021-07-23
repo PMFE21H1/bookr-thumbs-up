@@ -231,9 +231,11 @@ export function confirmReservation(reservationId) {
 ///////////////////////////////////////
 
 export function listUsersReservations(user) {
+    console.log(user)
     return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${user.uid}/reservations.json`)
         .then(response => response.json())
         .then(async (reservationArr) => {
+            console.log(reservationArr)
                 if (reservationArr === null) {
                     return []
                 } else {
@@ -242,6 +244,7 @@ export function listUsersReservations(user) {
                         await fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${reservationArr[i]}.json`)
                             .then(response => response.json())
                             .then(reservation => {
+                                    console.log(reservation)
                                     reservation.id = reservationArr[i];
                                     return searchedReservations.push(reservation)
                                 }
