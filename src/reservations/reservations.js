@@ -73,17 +73,20 @@ export function createReservation(reservation) {
                 })
                     //user reservation tömbbe belerakjuk az új reservation ID-t
                     .then(data => {
-
+                            //fetcheljük a user reservations kulcson lévő adatait
                         return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`)
 
                             .then(response => response.json())
                             .then(data2 => {
+                                //ha null, akkor létrehozzuk a tömbböt és beleírjuk a reservation id-t
                                 if (data2 === null) {
                                     data2 = [data.name]
+                                    //ha már létezik a kulcs és azon a tömb, akkor belepusholjuk az új reservation id-t
                                 } else {
                                     data2.push(data.name);
 
                                 }
+                                //beletesszük fetchel az új reservation id-t
                                 return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`,
                                     {
                                         body: JSON.stringify(data2),

@@ -25,6 +25,7 @@ import UnauthorizedPage from "./authentication/UnauthorizedPage";
 import MyReservationsPage from "./reservations/MyReservationsPage";
 import ConfigPage from "./authentication/ConfigPage";
 import Header from "./authentication/Header";
+import SlotConfig from "./reservations/SlotConfig";
 
 class App extends React.Component {
   constructor(props) {
@@ -66,6 +67,12 @@ class App extends React.Component {
               <Route path="/unauthorized">
                 <UnauthorizedPage />
               </Route>
+
+              <PrivateRoute
+                  admin={true}
+                  path="/admin/config/slot/slot-generation"
+                  render={(props) => <SlotConfig {...props} />}
+              />
 
               <PrivateRoute
                 path="/resources/:resourceID/request-reservation"
