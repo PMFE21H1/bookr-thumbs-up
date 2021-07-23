@@ -78,7 +78,7 @@ class App extends React.Component {
                     <Link to="/admin/reservations">Reservations</Link>
                     <Link to="/login">Log In</Link>
                     <Link to="/registration">Registration</Link>
-                    <Link to="/resources">Public {this.state.taxonomy.resources}</Link>
+                    <Link to={`/${this.state.taxonomy.resources}`}>Public {this.state.taxonomy.resources}</Link>
                     <Link to="/admin/config/resources/taxonomy">Taxonomy</Link>
 
 
@@ -99,7 +99,7 @@ class App extends React.Component {
                                 render={(props) => <RequestReservationPage {...props} />}
                             ></PrivateRoute>
 
-                            <Route path="/resources">
+                            <Route path={`/${this.state.taxonomy.resources}`}>
                                 <PublicResourcesPage/>
                             </Route>
 
