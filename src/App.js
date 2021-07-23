@@ -65,11 +65,7 @@ class App extends React.Component {
             <Router>
                 <AuthContext.Provider value={{user: this.state.user}}>
 
-                    <Link to="/admin/resources">Resources</Link>
-                    <Link to="/admin/reservations">Reservations</Link>
-                    <Link to="/login">Log In</Link>
-                    <Link to="/registration">Registration</Link>
-                    <Link to="/resources">Public Recources</Link>
+                    <Header />
 
                     <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
                         <Switch>
