@@ -1,6 +1,6 @@
 import React from "react";
-import {Link} from "react-router-dom";
-import {UsersDatabaseContext} from "../context/context"
+import {Route, Link} from "react-router-dom";
+import {AuthContext, TaxonomyContext, UsersDatabaseContext} from "../context/context"
 import {listResources} from "../resources/resources";
 import {listReservations, confirmReservation} from "./reservations";
 
@@ -31,8 +31,9 @@ export default class ListReservationsPage extends React.Component {
     render() {
 
         return (
-
-            <UsersDatabaseContext>
+            <TaxonomyContext.Consumer>
+                { (taxonomy)=>{
+                    return<UsersDatabaseContext>
                 {users => {
                     return <>
                 <Link to={"/admin/reservations/create"}>Add reservation</Link>
@@ -44,7 +45,7 @@ export default class ListReservationsPage extends React.Component {
                         <th>Reservations customer</th>
                         <th>Reservations id</th>
                         <th>Reservations time</th>
-                        <th>Resource</th>
+                        <th>{taxonomy.resource}</th>
                     </tr>
                     {this.state.confirmed.map(reservation => {
                                 return (
@@ -84,7 +85,7 @@ export default class ListReservationsPage extends React.Component {
                         <th>Reservations customer</th>
                         <th>Reservations id</th>
                         <th>Reservations time</th>
-                        <th>Resource</th>
+                        <th>{taxonomy.resource}</th>
                     </tr>
                     {
                             this.state.pending.map(reservation => {
@@ -126,6 +127,10 @@ export default class ListReservationsPage extends React.Component {
         </>
         }}
         </UsersDatabaseContext>
+                }
+
+                }
+            </TaxonomyContext.Consumer>
         );
     }
 }

@@ -2,6 +2,7 @@ import React from 'react'
 import {Link} from "react-router-dom"
 import { UsersDatabaseContext } from '../context/context';
 import {listReservations, deleteReservation} from "./reservations"
+import {TaxonomyContext} from "../context/context";
 
 export default class DeleteReservationPage extends React.Component {
     constructor(props) {
@@ -21,13 +22,15 @@ export default class DeleteReservationPage extends React.Component {
 
     render() {
         return (
-            <div>
+            <TaxonomyContext.Consumer>
+                { (taxonomy)=>{
+           return <div>
                 <p>Are you sure you want to delete the following reservation?</p>
                 <table>
                     <tr>
                         <th>Reservations customer</th>
                         <th>Reservations time</th>
-                        <th>Reservations resource-id</th>
+                        <th>Reservations {taxonomy.resource}-id</th>
                     </tr>
                     {this.state.reservation ?
                         <tr>
@@ -46,6 +49,10 @@ export default class DeleteReservationPage extends React.Component {
                 <button onClick={() => deleteReservation(this.props.match.params.reservationID) .then(() => this.props.history.push("/admin/reservations"))}>Delete Reservation</button>
                 <button onClick={() => this.props.history.push("/admin/reservations")}> Cancel</button>
             </div>
+                }
+
+                }
+            </TaxonomyContext.Consumer>
         )
     }
 }
