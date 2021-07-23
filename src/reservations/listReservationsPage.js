@@ -4,7 +4,7 @@ import { AuthContext, UsersDatabaseContext } from "../context/context";
 import { listResources } from "../resources/resources";
 import { listReservations, confirmReservation } from "./reservations";
 import Table from "react-bootstrap/Table";
-import { Button } from "react-bootstrap";
+import { Button, Nav } from "react-bootstrap";
 export default class ListReservationsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -38,8 +38,16 @@ export default class ListReservationsPage extends React.Component {
         {(users) => {
           return (
             <>
-              <Link to={"/admin/reservations/create"}>Add reservation</Link>
-              <Link to={"/admin/config"}>Config</Link>
+            <Nav>
+              <Nav.Item>
+                <Nav.Link as={Link} to={"/admin/reservations/create"}>Add reservation</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                 <Nav.Link as={Link} to={"/admin/config"}>Config</Nav.Link>
+              </Nav.Item>
+            </Nav>
+              
+             
 
               <h2>Confirmed Reservations</h2>
               <Table striped bordered hover>
@@ -99,7 +107,7 @@ export default class ListReservationsPage extends React.Component {
               </Table>
 
               <h2>Pending Reservations</h2>
-              <Table>
+              <Table striped bordered hover>
                 <tbody>
                   <tr>
                     <th>Reservations customer</th>

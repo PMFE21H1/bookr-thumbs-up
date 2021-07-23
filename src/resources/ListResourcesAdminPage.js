@@ -62,6 +62,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Table from "react-bootstrap/Table";
+import { Button, Nav } from "react-bootstrap";
 
 class listResourceAdminPage extends React.Component {
   constructor(props) {
@@ -84,7 +85,13 @@ class listResourceAdminPage extends React.Component {
   render() {
     return (
       <>
-        <Link to="/admin/config/resources/create">Add resource</Link>
+      <Nav>
+        <Nav.Item>
+         <Nav.Link as={Link} to="/admin/config/resources/create">Add resource</Nav.Link>
+      </Nav.Item>
+      </Nav>
+      
+       
 
         <Table striped bordered hover>
           <thead>
