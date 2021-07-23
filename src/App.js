@@ -95,7 +95,7 @@ class App extends React.Component {
                             <Route path="/login" render={(props) => <LoginPage onLogIn={this.logIn} {...props}/>}/>
 
                             <PrivateRoute
-                                path="/admin/resources/create"
+                                path="/admin/config/resources/create"
                                 admin={true}
                                 render={(props) => <CreateResourcePage {...props} />}
                             ></PrivateRoute>
@@ -113,19 +113,19 @@ class App extends React.Component {
                             />
 
                             <PrivateRoute
-                                path="/admin/resources"
+                                path="/admin/config/resources"
                                 admin={true}
                                 render={(props) => <ListResourcesAdminPage {...props} />}
                             ></PrivateRoute>
 
                             <PrivateRoute
-                                path="/admin/resource/:resourceID/delete"
+                                path="/admin/config/resource/:resourceID/delete"
                                 admin={true}
                                 render={(props) => <DeleteResourcePage {...props} />}
                             ></PrivateRoute>
 
                             <PrivateRoute
-                                path="/admin/resource/:resourceID/edit"
+                                path="/admin/config/resource/:resourceID/edit"
                                 admin={true}
                                 render={(props) => <UpdateResourcePage {...props} />}
                             ></PrivateRoute>
@@ -157,6 +157,13 @@ class App extends React.Component {
                                 path="/admin/reservations"
                                 admin={true}
                                 render={(props) => <ListReservationsPage {...props} />}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                path="/admin/config"
+                                admin={true}
+                                render={(props) =>
+                                <ConfigPage {...props} />}
                             ></PrivateRoute>
 
                         </Switch>
