@@ -38,10 +38,6 @@ class App extends React.Component {
                 resources:"",
                 url:""
             }
-
-
-
-
         };
     }
 
@@ -75,13 +71,14 @@ class App extends React.Component {
         return (
 
             <Router>
+                <TaxonomyContext.Provider value ={this.state.taxonomy}>
                 <AuthContext.Provider value={{user: this.state.user}}>
 
                     <Link to="/admin/resources">{this.state.taxonomy.resources}</Link>
                     <Link to="/admin/reservations">Reservations</Link>
                     <Link to="/login">Log In</Link>
                     <Link to="/registration">Registration</Link>
-                    <Link to="/resources">Public Recources</Link>
+                    <Link to="/resources">Public {this.state.taxonomy.resources}</Link>
                     <Link to="/admin/config/resources/taxonomy">Taxonomy</Link>
 
 
@@ -129,17 +126,17 @@ class App extends React.Component {
                             <PrivateRoute
                                 path="/admin/resources"
                                 admin={true}
-                                render={(props) => <ListResourcesAdminPage taxonomy ={this.state.taxonomy} {...props} />}
+                                render={(props) => <ListResourcesAdminPage {...props} />}
                             ></PrivateRoute>
 
                             <PrivateRoute
-                                path="/admin/resource/:resourceID/delete"
+                                path={`/admin/${this.state.taxonomy.resources}/:resourceID/delete`}
                                 admin={true}
                                 render={(props) => <DeleteResourcePage {...props} />}
                             ></PrivateRoute>
 
                             <PrivateRoute
-                                path="/admin/resource/:resourceID/edit"
+                                path={`/admin/${this.state.taxonomy.resources}/:resourceID/edit`}
                                 admin={true}
                                 render={(props) => <UpdateResourcePage {...props} />}
                             ></PrivateRoute>
@@ -183,6 +180,7 @@ class App extends React.Component {
                         </Switch>
                     </UsersDatabaseContext.Provider>
                 </AuthContext.Provider>
+                </TaxonomyContext.Provider>
             </Router>
         );
     }
