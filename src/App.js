@@ -38,12 +38,22 @@ class App extends React.Component {
             user: false,
             usersFromDatabase: [],
             taxonomy: {
-                resource:"",
-                resources:"",
-                url:""
+                resource: "",
+                resources: "",
+                url: ""
             }
         };
     }
+
+    logIn = (user, callback) => {
+        this.setState(
+            {
+                user: user,
+            },
+            callback
+        );
+    };
+
 
     logIn = (user, callback) => {
         this.setState({
@@ -54,20 +64,25 @@ class App extends React.Component {
 
     componentDidMount() {
 
-           fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/taxonomy.json`).then(response => response.json())
-                .then(
-                taxonomy=>  this.setState({taxonomy: {resource:taxonomy.resource, resources: taxonomy.resources, url: taxonomy.url}})
+        fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/taxonomy.json`).then(response => response.json())
+            .then(
+                taxonomy => this.setState({
+                    taxonomy: {
+                        resource: taxonomy.resource,
+                        resources: taxonomy.resources,
+                        url: taxonomy.url
+                    }
+                })
             )
 
-            listUsersFromDatabase()
+        listUsersFromDatabase()
             .then((users) => this.setState({usersFromDatabase: users}))
     }
 
 
-
-    taxonomyChange=(resource, resources,url)=>{
-        this.setState(()=>({
-            taxonomy : {resource : resource, resources: resources, url: url}
+    taxonomyChange = (resource, resources, url) => {
+        this.setState(() => ({
+            taxonomy: {resource: resource, resources: resources, url: url}
         }))
     }
 
