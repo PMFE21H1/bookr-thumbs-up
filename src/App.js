@@ -29,6 +29,7 @@ import MyReservationsPage from "./reservations/MyReservationsPage";
 import ResourceTaxonomy from "./resources/ResourceTaxonomy";
 import ConfigPage from "./authentication/ConfigPage";
 import Header from "./authentication/Header";
+import SlotConfig from "./reservations/SlotConfig";
 
 
 class App extends React.Component {
@@ -107,6 +108,11 @@ class App extends React.Component {
                             <Route path="/unauthorized">
                                 <UnauthorizedPage />
                             </Route>
+                           <PrivateRoute
+                                  admin={true}
+                                   path="/admin/config/slot"
+                                   render={(props) => <SlotConfig {...props} />}
+                                        />
 
                             <PrivateRoute
                                 path="/resources/:resourceID/request-reservation"

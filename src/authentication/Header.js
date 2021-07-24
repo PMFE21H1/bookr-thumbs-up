@@ -31,7 +31,10 @@ export default class Header extends Component {
                   return user.admin ? 
                     
                     <>
-                      <Link to={`/admin/config/${taxonomy.resources}`}>{taxonomy.resources}</Link>
+
+
+                    <Link to={`/admin/config/${taxonomy.resources}`}>{taxonomy.resources}</Link>
+
                       <Link to="/admin/reservations">Reservations</Link>
                       <Link to="/admin/config">Config</Link>
                       <Link to="/admin/config/resources/taxonomy">Taxonomy</Link>

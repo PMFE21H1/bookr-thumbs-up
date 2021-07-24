@@ -21,6 +21,7 @@ class listResourceAdminPage extends React.Component{
 
 render(){
     return(
+
         <TaxonomyContext.Consumer>
             { (taxonomy)=>{
               return  <>
@@ -57,6 +58,7 @@ render(){
                     </table>
 
                 </>
+
             }
 
             }

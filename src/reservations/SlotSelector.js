@@ -7,11 +7,29 @@ export default class SlotSelector extends React.Component{
         this.state={
             date:"",
             time:"",
-            slotArr:["08:00-09:00","09:00-10:00", "10:00-11:00","11:00-12:00","12:00-13:00","13:00-14:00","14:00-15:00","15:00-16:00","16:00-17:00","17:00-18:00"],
             slotOptions:[],
+            slotArr:[]
 
         }
     }
+    componentDidMount() {
+        fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/slotConfig.json")
+            .then(response=>response.json())
+            .then(slotConfig=>{
+                let generatedSlotArr=[];
+                let timeSlotter = require('time-slotter');
+                timeSlotter(slotConfig.start, slotConfig.end, parseInt(slotConfig.duration))
+                    .forEach(slotArr=>{
+                    let slot=`${slotArr[0]}-${slotArr[1]}`
+                        generatedSlotArr.push(slot);
+                })
+                this.setState({slotArr:generatedSlotArr})
+            }
+        ).then(()=>console.log(this.state.slotArr))
+
+
+    }
+
     componentDidUpdate(prevProps, prevState, snapshot) {
         if(prevState.date!==this.state.date||prevProps.resource!==this.props.resource){
             this.setState(()=>{return{slotOptions:[]}})
@@ -19,9 +37,9 @@ export default class SlotSelector extends React.Component{
             then(reservationsArray=>
                 reservationsArray.filter(reservation=>
                     reservation.slot.split("T")[0]===this.state.date&&reservation.resource===this.props.resource))
-                .then(data=>this.state.slotArr.forEach(slot=>{
+                .then(reservedSlots=>this.state.slotArr.forEach(slot=>{
                     let reserved=false;
-                    data.forEach(reservation=>{
+                    reservedSlots.forEach(reservation=>{
                         if(slot.split('-')[0]===reservation.slot.split('T')[1]){
                             this.setState({slotOptions:[...this.state.slotOptions, 'Reserved']})
                             reserved=true;
