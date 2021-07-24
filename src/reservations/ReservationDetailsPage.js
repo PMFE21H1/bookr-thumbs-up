@@ -35,6 +35,10 @@ export default class ReservationDetailsPage extends React.Component {
 
     render() {
         return (
+            <UsersDatabaseContext.Consumer>
+                {(usersFromDatabase) => {
+                    return (<>
+
             <TaxonomyContext.Consumer>
                 {(taxonomy) => {
                     return <>
@@ -51,29 +55,25 @@ export default class ReservationDetailsPage extends React.Component {
 
                                         <tr>
 
-                                            <td>{this.state.reservation.customerUid}</td>
-                                            <td>{this.state.reservation.resource}</td>
-                                            <td>{this.state.resourcename}</td>
-                                            <td>{this.state.reservation.slot}</td>
-                                            {user.admin &&
-                                            <button disabled={this.state.confirmed}
-                                                    onClick={this.onConfirm}>{this.state.confirmed ? "Confirmed" : "Confirm"}</button>
-                                            }
-                                        </tr>
-                                    </table>
-                                )
-
-                            }
-                            }
-
+                                    <td>{usersFromDatabase.map(user => this.state.reservation.customerUid === user.uid ? user.name : "")}</td>
+                                    <td>{this.state.reservation.resource}</td>
+                                    <td>{this.state.resourcename}</td>
+                                    <td>{this.state.reservation.slot}</td>
+                                    {user.admin&&
+                                        <button disabled={this.state.confirmed} onClick={this.onConfirm}>{this.state.confirmed ? "Confirmed" : "Confirm"}</button>
+                                        }
+                                </tr>
+                            </table>
+                        )
+                    }}
                         </AuthContext.Consumer>
 
-
                     </>
-                    }
-
-                }
+                    }}
             </TaxonomyContext.Consumer>
+        </>)
+            }}
+        </UsersDatabaseContext.Consumer>
         )
     }
 }

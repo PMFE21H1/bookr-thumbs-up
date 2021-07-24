@@ -63,11 +63,13 @@ export default class CreateReservationPage extends Component {
 
     onClickCreateReservation = (e, user) => {
         e.preventDefault();
-        try{createReservation(new Reservation(this.state.customerUid, this.state.resource, `${this.state.date}T${this.state.time}`, "confirmed")).catch((error) => {
+        try{
+            createReservation(new Reservation(this.state.customerUid, this.state.resource, `${this.state.date}T${this.state.time}`, "confirmed")).catch((error) => {
                     alert(error.message)
                 }
 
-            ) .then(()=>this.props.history.push('/admin/reservations'))}catch(e){
+            ) .then(()=>this.props.history.push('/admin/reservations'))
+        } catch(e){
             alert(e.message)
         }
 
@@ -115,7 +117,6 @@ export default class CreateReservationPage extends Component {
 
                             <button onClick={
                                 (e) => {
-                                    console.log(user)
                                     this.onClickCreateReservation(e, user)
                                 }}>Create
                             </button>

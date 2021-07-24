@@ -33,7 +33,7 @@ export default class ListReservationsPage extends React.Component {
         return (
             <TaxonomyContext.Consumer>
                 { (taxonomy)=>{
-                    return<UsersDatabaseContext>
+                    return (<UsersDatabaseContext>
                 {users => {
                     return <>
                 <Link to={"/admin/reservations/create"}>Add reservation</Link>
@@ -48,10 +48,9 @@ export default class ListReservationsPage extends React.Component {
                         <th>{taxonomy.resource}</th>
                     </tr>
                     {this.state.confirmed.map(reservation => {
-                        //itt kell majd a userDatabaseConsumer
                                 return (
                                     <tr>
-                                        <td>{users.map(user => {if(reservation.customerUid === user.uid){ return user.name }} )}</td>
+                                        <td>{users.map(user => reservation.customerUid === user.uid ? user.name : "")}</td>
                                         <td>{reservation.id}</td>
                                         <td>{reservation.slot}</td>
                                         <td>{this.state.resources.map(resource => reservation.resource == resource.id ? resource.name : "")}</td>
@@ -92,7 +91,7 @@ export default class ListReservationsPage extends React.Component {
                             this.state.pending.map(reservation => {
                                 return (
                                     <tr>
-                                        <td>{reservation.customerUid}</td>
+                                        <td>{users.map(user => reservation.customerUid === user.uid ? user.name : "")} </td>
                                         <td>{reservation.id}</td>
                                         <td>{reservation.slot}</td>
                                         <td>{this.state.resources.map(resource => reservation.resource == resource.id ? resource.name : "")}</td>
@@ -127,7 +126,7 @@ export default class ListReservationsPage extends React.Component {
                 </table>
         </>
         }}
-        </UsersDatabaseContext>
+        </UsersDatabaseContext>)
                 }
 
                 }
