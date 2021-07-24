@@ -1,6 +1,7 @@
 import { listResources } from './resources'
 import { Link } from 'react-router-dom'
 import React from 'react'
+import {TaxonomyContext} from "../context/context";
 
 class listResourceAdminPage extends React.Component{
     constructor(props){
@@ -20,38 +21,48 @@ class listResourceAdminPage extends React.Component{
 
 render(){
     return(
-        <>
-            <Link to="/admin/resources/create">Add resource</Link>
-    
-        <table>
-            <tr>
-                <th>Resource Name</th><th>Resource ID</th><th></th>
-            </tr>
-                {
-                this.state.resources ?
-                this.state.resources.map(resource => {
-                    return (
-                    <tr>
-                        <td>{resource.name}</td>
-                        <td>{resource.id}</td>
-                        <td>
+
+        <TaxonomyContext.Consumer>
+            { (taxonomy)=>{
+              return  <>
+
+                    <Link to={`/admin/${taxonomy.url}/create`}>Add {taxonomy.resource}</Link>
+
+                    <table>
+                        <tr>
+                            <th>{taxonomy.resource}</th>
+                            <th>{taxonomy.resource} ID</th>
+                            <th></th>
+                        </tr>
+                        {
+                            this.state.resources ?
+                                this.state.resources.map(resource => {
+                                    return (
+                                        <tr>
+                                            <td>{resource.name}</td>
+                                            <td>{resource.id}</td>
+                                            <td>
 
 
-                        </td>
+                                            </td>
 
-                         <td><Link
-                         to={`/admin/config/resource/${resource.id}/edit`}>EDIT</Link></td>
-                        <td><Link to={`/admin/resource/${resource.id}/delete`}>DELETE</Link></td>
-                    </tr>)
-                })
-            :
-                <p></p>
+                                            <td><Link
+                                                to={`/admin/${taxonomy.url}/${resource.id}/edit`}>EDIT</Link></td>
+                                            <td><Link to={`/admin/${taxonomy.url}/${resource.id}/delete`}>DELETE</Link></td>
+                                        </tr>)
+                                })
+                                :
+                                <p></p>
+                        }
+
+                    </table>
+
+                </>
+
             }
-            
-        </table>
 
-        </>
-        
+            }
+        </TaxonomyContext.Consumer>
         )
     }
 }

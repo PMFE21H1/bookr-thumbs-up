@@ -6,7 +6,9 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { AuthContext, UsersDatabaseContext } from "./context/context";
+
+import {AuthContext, UsersDatabaseContext,TaxonomyContext} from "./context/context"
+
 import CreateResourcePage from "./resources/CreateResourcePage";
 import ListReservationsPage from "./reservations/listReservationsPage";
 import ListResourcesAdminPage from "./resources/ListResourcesAdminPage";
@@ -23,151 +25,189 @@ import RequestReservationPage from "./reservations/RequestReservationPage";
 import PublicResourcesPage from "./resources/PublicResourcesPage";
 import UnauthorizedPage from "./authentication/UnauthorizedPage";
 import MyReservationsPage from "./reservations/MyReservationsPage";
+
+import ResourceTaxonomy from "./resources/ResourceTaxonomy";
 import ConfigPage from "./authentication/ConfigPage";
 import Header from "./authentication/Header";
 import SlotConfig from "./reservations/SlotConfig";
 
+
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: false,
-      usersFromDatabase: [],
+    constructor(props) {
+        super(props);
+        this.state = {
+            user: false,
+            usersFromDatabase: [],
+            taxonomy: {
+                resource: "",
+                resources: "",
+                url: ""
+            }
+        };
+    }
+
+    logIn = (user, callback) => {
+        this.setState(
+            {
+                user: user,
+            },
+            callback
+        );
     };
-  }
 
-  logIn = (user, callback) => {
-    this.setState(
-      {
-        user: user,
-      },
-      callback
-    );
-  };
 
-  componentDidMount() {
-    listUsersFromDatabase().then((users) =>
-      this.setState({ usersFromDatabase: users })
-    );
-  }
+    logIn = (user, callback) => {
+        this.setState({
+            user: user
+        }, callback);
+    }
 
-  render() {
-    return (
-      <Router>
-        <AuthContext.Provider value={{ user: this.state.user }}>
 
-          <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
-            <Header />
+    componentDidMount() {
 
-            <Switch>
-              <Route path="/registration">
-                <RegistrationPage onLogIn={this.logIn} />
-              </Route>
+        fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/taxonomy.json`).then(response => response.json())
+            .then(
+                taxonomy => this.setState({
+                    taxonomy: {
+                        resource: taxonomy.resource,
+                        resources: taxonomy.resources,
+                        url: taxonomy.url
+                    }
+                })
+            )
 
-              <Route path="/unauthorized">
-                <UnauthorizedPage />
-              </Route>
+        listUsersFromDatabase()
+            .then((users) => this.setState({usersFromDatabase: users}))
+    }
 
-              <PrivateRoute
-                  admin={true}
-                  path="/admin/config/slot"
-                  render={(props) => <SlotConfig {...props} />}
-              />
 
-              <PrivateRoute
-                path="/resources/:resourceID/request-reservation"
-                render={(props) => <RequestReservationPage {...props} />}
-              ></PrivateRoute>
+    taxonomyChange = (resource, resources, url) => {
+        this.setState(() => ({
+            taxonomy: {resource: resource, resources: resources, url: url}
+        }))
+    }
 
-              <Route path="/resources">
-                <PublicResourcesPage />
-              </Route>
+    render() {
+        return (
 
-              <Route
-                path="/login"
-                render={(props) => (
-                  <LoginPage onLogIn={this.logIn} {...props} />
-                )}
-              />
+            <Router>
+                <TaxonomyContext.Provider value ={this.state.taxonomy}>
+                <AuthContext.Provider value={{user: this.state.user}}>
 
-              <PrivateRoute
 
-                path="/admin/config/resources/create"
-                admin={true}
-                render={(props) => <CreateResourcePage {...props} />}
-              ></PrivateRoute>
+                    <Header/>
 
-              <PrivateRoute
-                path="/my-reservations/:reservationID"
-                render={(props) => <ReservationDetailsPage {...props} />}
-              ></PrivateRoute>
 
-              <PrivateRoute
-                path="/my-reservations"
-                render={(props) => <MyReservationsPage {...props} />}
-              />
+                    <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
+                        <Switch>
 
-              <PrivateRoute
-                path="/admin/config/resources"
-                admin={true}
-                render={(props) => <ListResourcesAdminPage {...props} />}
-              ></PrivateRoute>
+                            <Route path="/registration">
+                                <RegistrationPage onLogIn={this.logIn}/>
+                            </Route>
 
-              <PrivateRoute
+                            <Route path="/unauthorized">
+                                <UnauthorizedPage />
+                            </Route>
+                           <PrivateRoute
+                                  admin={true}
+                                   path="/admin/config/slot"
+                                   render={(props) => <SlotConfig {...props} />}
+                                        />
 
-                path="/admin/config/resource/:resourceID/delete"
-                admin={true}
-                render={(props) => <DeleteResourcePage {...props} />}
-              ></PrivateRoute>
+                            <PrivateRoute
+                                path="/resources/:resourceID/request-reservation"
+                                render={(props) => <RequestReservationPage {...props} />}
+                            ></PrivateRoute>
 
-              <PrivateRoute
+                            <Route path={`/${this.state.taxonomy.resources}`}>
+                                <PublicResourcesPage/>
+                            </Route>
 
-                path="/admin/config/resource/:resourceID/edit"
-                admin={true}
-                render={(props) => <UpdateResourcePage {...props} />}
-              ></PrivateRoute>
+                            <Route path="/login" render={(props) => <LoginPage onLogIn={this.logIn} {...props}/>}/>
 
-              <PrivateRoute
-                path="/admin/reservations/create"
-                admin={true}
-                render={(props) => <CreateReservationPage {...props} />}
-              ></PrivateRoute>
+                            <PrivateRoute
+                                path={`/admin/${this.state.taxonomy.resources}/create`}
+                                admin={true}
+                                render={(props) => <CreateResourcePage {...props} />}
+                            ></PrivateRoute>
 
-              <PrivateRoute
-                path="/admin/reservations/:reservationID/delete"
-                admin={true}
-                render={(props) => <DeleteReservationPage {...props} />}
-              ></PrivateRoute>
+                            <PrivateRoute
+                                path="/my-reservations/:reservationID"
+                                render={(props) => <ReservationDetailsPage {...props} />}
+                            ></PrivateRoute>
 
-              <PrivateRoute
-                path="/admin/reservations/:reservationID/edit"
-                admin={true}
-                render={(props) => <UpdateReservationPage {...props} />}
-              ></PrivateRoute>
+                            <PrivateRoute
+                                path="/my-reservations"
+                                render={(props) => <MyReservationsPage {...props} />}
+                            />
 
-              <PrivateRoute
-                path="/admin/reservations/:reservationID"
-                admin={true}
-                render={(props) => <ReservationDetailsPage {...props} />}
-              ></PrivateRoute>
-              <PrivateRoute
-                path="/admin/reservations"
-                admin={true}
-                render={(props) => <ListReservationsPage {...props} />}
-              ></PrivateRoute>
+                            <PrivateRoute
+                                path={`/admin/${this.state.taxonomy.resources}/:resourceID/delete`}
+                                admin={true}
+                                render={(props) => <DeleteResourcePage {...props} />}
+                            ></PrivateRoute>
 
-              <PrivateRoute
-                path="/admin/config"
-                admin={true}
-                render={(props) => <ConfigPage {...props} />}
-              ></PrivateRoute>
+                            <PrivateRoute
+                                path={`/admin/${this.state.taxonomy.resources}/:resourceID/edit`}
+                                admin={true}
+                                render={(props) => <UpdateResourcePage {...props} />}
+                            ></PrivateRoute>
 
-            </Switch>
-          </UsersDatabaseContext.Provider>
-        </AuthContext.Provider>
-      </Router>
-    );
-  }
+                            <PrivateRoute
+                                path={`/admin/config/${this.state.taxonomy.resources}`}
+                                admin={true}
+                                render={(props) => <ListResourcesAdminPage {...props} />}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                path="/admin/reservations/create"
+                                admin={true}
+                                render={(props) => <CreateReservationPage {...props} />}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                path="/admin/reservations/:reservationID/delete"
+                                admin={true}
+                                render={(props) => <DeleteReservationPage {...props} />}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                path="/admin/reservations/:reservationID/edit"
+                                admin={true}
+                                render={(props) => <UpdateReservationPage {...props} />}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                path="/admin/reservations/:reservationID"
+                                admin={true}
+                                render={(props) => <ReservationDetailsPage {...props} />}
+                            ></PrivateRoute>
+                            <PrivateRoute
+                                path="/admin/reservations"
+                                admin={true}
+                                render={(props) => <ListReservationsPage {...props} />}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                path= "/admin/config/resources/taxonomy"
+                                admin ={true}
+                                render={(props) => <ResourceTaxonomy taxonomyChange = {this.taxonomyChange}{...props}/>}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                path="/admin/config"
+                                admin={true}
+                                render={(props) => <ConfigPage {...props} />}
+                            ></PrivateRoute>
+
+                        </Switch>
+                    </UsersDatabaseContext.Provider>
+                </AuthContext.Provider>
+                </TaxonomyContext.Provider>
+            </Router>
+        );
+    }
+
 }
 
 let PrivateRoute = ({ render, ...routeProps }) => {
