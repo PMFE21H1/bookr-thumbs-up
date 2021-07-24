@@ -78,12 +78,6 @@ class App extends React.Component {
                 <TaxonomyContext.Provider value ={this.state.taxonomy}>
                 <AuthContext.Provider value={{user: this.state.user}}>
 
-                    {/* <Link to={`/admin/${this.state.taxonomy.resources}`}>{this.state.taxonomy.resources}</Link>
-                    <Link to="/admin/reservations">Reservations</Link>
-                    <Link to="/login">Log In</Link>
-                    <Link to="/registration">Registration</Link>
-                    <Link to={`/${this.state.taxonomy.resources}`}>Public {this.state.taxonomy.resources}</Link>
-                    <Link to="/admin/config/resources/taxonomy">Taxonomy</Link> */}
 
                     <Header/>
 
@@ -94,7 +88,6 @@ class App extends React.Component {
                             <Route path="/registration">
                                 <RegistrationPage onLogIn={this.logIn}/>
                             </Route>
-
 
                             <Route path="/unauthorized">
                                 <UnauthorizedPage />
@@ -117,8 +110,6 @@ class App extends React.Component {
                                 render={(props) => <CreateResourcePage {...props} />}
                             ></PrivateRoute>
 
-
-
                             <PrivateRoute
                                 path="/my-reservations/:reservationID"
                                 render={(props) => <ReservationDetailsPage {...props} />}
@@ -128,7 +119,6 @@ class App extends React.Component {
                                 path="/my-reservations"
                                 render={(props) => <MyReservationsPage {...props} />}
                             />
-
 
                             <PrivateRoute
                                 path={`/admin/${this.state.taxonomy.resources}/:resourceID/delete`}
