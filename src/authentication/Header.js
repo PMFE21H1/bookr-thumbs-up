@@ -43,7 +43,7 @@ export default class Header extends Component {
                     <>
                       <Link to="/my-reservations">Reservations</Link>
                       <Link to={`/${taxonomy.resources}`}>Public {taxonomy.resources}</Link>
-                      <p>User</p>
+                      <p>Hello, {user.name}!</p>
                     </>
 
                     }
