@@ -25,7 +25,7 @@ render(){
             { (taxonomy)=>{
               return  <>
 
-                    <Link to={`/admin/${taxonomy.url}/create`}>Add resource</Link>
+                    <Link to={`/admin/${taxonomy.url}/create`}>Add {taxonomy.resource}</Link>
 
                     <table>
                         <tr>
