@@ -1,4 +1,5 @@
 import React from 'react'
+import {configSlot} from "./reservations"
 
 export default class SlotConfig extends React.Component {
     constructor(props) {
@@ -30,15 +31,13 @@ export default class SlotConfig extends React.Component {
     }
     setSlot=(e)=>{
         e.preventDefault();
+        try{
+            configSlot(this.state.slotConfig.start, this.state.slotConfig.end, this.state.slotConfig.duration)
+        }catch (e){
+            alert(e.message)
+        }
 
-            fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/slotConfig.json", {
-                body: JSON.stringify({
-                    start:this.state.slotConfig.start,
-                    end:this.state.slotConfig.end,
-                    duration:this.state.slotConfig.duration
-                }),
-                method: "PUT"
-            })
+
 
     }
 

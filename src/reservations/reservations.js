@@ -223,3 +223,18 @@ export function listUsersReservations(user) {
 
 }
 
+export function configSlot(start, end, duration){
+    if(start==="")throw new Error("Please enter start time")
+    if(end==="")throw new Error("Please enter end time")
+    if(duration==="")throw new Error("Please enter duration time")
+
+    fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/slotConfig.json", {
+        body: JSON.stringify({
+            start:start,
+            end:end,
+            duration:duration
+        }),
+        method: "PUT"
+    }).then(()=>alert("Successful slot configuration"))
+}
+
