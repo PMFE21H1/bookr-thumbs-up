@@ -1,6 +1,7 @@
 import React from "react"
 import {listReservations} from "./reservations";
 
+
 export default class SlotSelector extends React.Component{
     constructor(props) {
         super(props);
@@ -46,22 +47,8 @@ export default class SlotSelector extends React.Component{
                 reservationsArray.filter(reservation=>
                     reservation.slot.split("T")[0]===this.state.date&&reservation.resource===this.props.resource))
                 //foreach-el végigmegyek az összes generált időponton
-                .then(relevantReservations=>this.state.slotArr.forEach(slot=>{
-                    let reserved=false;
-                    //végigmegyek a releváns foglalásokon
-                    relevantReservations.forEach(reservation=>{
+                .then(this.markReservedSlots)
 
-                        //ha a kigenerált slot megegyezik a foglalás slotjával, akkor reservedként kerül bele
-                        if(slot.split('-')[0]===reservation.slot.split('T')[1]){
-                            this.setState({slotOptions:[...this.state.slotOptions, 'Reserved']})
-                            reserved=true;
-                        }
-
-                    })
-                    if(!reserved){
-                       this.setState({slotOptions:[...this.state.slotOptions, slot]})
-                    }
-                }))
                 .then(()=>this.setState({slotOptionsFinal:[]}))
                 .then(()=>fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/unavailableSlots.json"))
                 .then(response=>response.json())
@@ -103,6 +90,22 @@ export default class SlotSelector extends React.Component{
             this.props.changeSlot(this.state.date,this.state.time)
         }
 
+    }
+    markReservedSlots=( relevantReservations)=>{
+    this.state.slotArr.forEach(slot=>{
+            let foundReserved=false;
+            //végigmegyek a releváns foglalásokon
+            relevantReservations.forEach(reservation=>{
+                let isReserved=slot.split('-')[0]===reservation.slot.split('T')[1]
+                if(isReserved){
+                    this.setState({slotOptions:[...this.state.slotOptions, 'Reserved']})
+                    foundReserved=true;
+                }
+            })
+            if(!foundReserved){
+                this.setState({slotOptions:[...this.state.slotOptions, slot]})
+            }
+        })
     }
 
     updateDate=(e)=>{
