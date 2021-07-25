@@ -146,7 +146,6 @@ export class Reservation {
         this.slot = slot
         this.status = status
 
-
     }
 }
 
