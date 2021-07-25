@@ -7,10 +7,11 @@ export default class SlotSelector extends React.Component{
         this.state={
             date:"",
             time:"",
-            //ez alapján lesznek generálva az option-ok
+
             slotOptions:[],
             //a slotArr-ba megy az összes generált időpont
             slotArr:[],
+            //ez alapján lesznek generálva az option-ok
             slotOptionsFinal:[]
 
         }
