@@ -6,7 +6,9 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
-import { AuthContext, UsersDatabaseContext } from "./context/context";
+
+import {AuthContext, UsersDatabaseContext,TaxonomyContext} from "./context/context"
+
 import CreateResourcePage from "./resources/CreateResourcePage";
 import ListReservationsPage from "./reservations/listReservationsPage";
 import ListResourcesAdminPage from "./resources/ListResourcesAdminPage";
@@ -23,9 +25,16 @@ import RequestReservationPage from "./reservations/RequestReservationPage";
 import PublicResourcesPage from "./resources/PublicResourcesPage";
 import UnauthorizedPage from "./authentication/UnauthorizedPage";
 import MyReservationsPage from "./reservations/MyReservationsPage";
+
+import ResourceTaxonomy from "./resources/ResourceTaxonomy";
 import ConfigPage from "./authentication/ConfigPage";
 import Header from "./authentication/Header";
+
 import { onAuthStateChanged, getAuth } from "firebase/auth";
+
+import SlotConfig from "./reservations/SlotConfig";
+
+
 
 class App extends React.Component {
     constructor(props) {
@@ -33,11 +42,19 @@ class App extends React.Component {
         this.state = {
             user: false,
             usersFromDatabase: [],
-            authChecked: false
+            authChecked: false,
+            taxonomy: {
+                resource: "",
+                resources: "",
+                url: ""
+            }
+
         };
     }
 
+
     logIn = (user, callback) => {
+
         this.setState({
             user: user
         }, callback);
@@ -45,6 +62,7 @@ class App extends React.Component {
 
 
     componentDidMount() {
+
         listUsersFromDatabase()
         .then((users) => {
             this.setState({usersFromDatabase: users});
@@ -52,20 +70,49 @@ class App extends React.Component {
                 getAuth(),
                 user => this.setState({
                     authChecked: true,
-                    user: user
+                    user: users.find((u) =>  u.uid === user?.uid)  //optional chaining operator
                 })
             );
         });
+
+
+
+
+
+        fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/taxonomy.json`).then(response => response.json())
+            .then(
+                taxonomy => this.setState({
+                    taxonomy: {
+                        resource: taxonomy.resource,
+                        resources: taxonomy.resources,
+                        url: taxonomy.url
+                    }
+                })
+            )
+
+        listUsersFromDatabase()
+            .then((users) => this.setState({usersFromDatabase: users}))
+    }
+
+
+    taxonomyChange = (resource, resources, url) => {
+        this.setState(() => ({
+            taxonomy: {resource: resource, resources: resources, url: url}
+        }))
     }
 
     render() {
         if (!this.state.authChecked) return <p>loading...</p>
+
         return (
-
             <Router>
-                <AuthContext.Provider value={{user: this.state.user}}>
+                <TaxonomyContext.Provider value ={this.state.taxonomy}>
+                        <AuthContext.Provider value={{user: this.state.user}}>
 
-                    <Header />
+                            <Header />
+
+
+
 
                     <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
                         <Switch>
@@ -74,27 +121,39 @@ class App extends React.Component {
                                 <RegistrationPage onLogIn={this.logIn}/>
                             </Route>
 
-
                             <Route path="/unauthorized">
                                 <UnauthorizedPage />
                             </Route>
+                           <PrivateRoute
+                                  admin={true}
+                                   path="/admin/config/slot"
+                                   render={(props) => <SlotConfig {...props} />}
+                                        />
+
 
                             <PrivateRoute
                                 path="/resources/:resourceID/request-reservation"
                                 render={(props) => <RequestReservationPage {...props} />}
                             ></PrivateRoute>
 
-                            <Route path="/resources">
+
+
+                            <Route path={`/${this.state.taxonomy.resources}`}>
+
                                 <PublicResourcesPage/>
                             </Route>
 
                             <Route path="/login" render={(props) => <LoginPage onLogIn={this.logIn} {...props}/>}/>
 
                             <PrivateRoute
-                                path="/admin/config/resources/create"
+
+
+                                path={`/admin/${this.state.taxonomy.resources}/create`}
+
                                 admin={true}
                                 render={(props) => <CreateResourcePage {...props} />}
                             ></PrivateRoute>
+
 
 
 
@@ -109,21 +168,23 @@ class App extends React.Component {
                             />
 
                             <PrivateRoute
-                                path="/admin/config/resources"
-                                admin={true}
-                                render={(props) => <ListResourcesAdminPage {...props} />}
-                            ></PrivateRoute>
 
-                            <PrivateRoute
-                                path="/admin/config/resource/:resourceID/delete"
+                                path={`/admin/${this.state.taxonomy.resources}/:resourceID/delete`}
                                 admin={true}
                                 render={(props) => <DeleteResourcePage {...props} />}
                             ></PrivateRoute>
 
                             <PrivateRoute
-                                path="/admin/config/resource/:resourceID/edit"
+                                path={`/admin/${this.state.taxonomy.resources}/:resourceID/edit`}
                                 admin={true}
                                 render={(props) => <UpdateResourcePage {...props} />}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
+                                path={`/admin/config/${this.state.taxonomy.resources}`}
+                                admin={true}
+                                render={(props) => <ListResourcesAdminPage {...props} />}
+
                             ></PrivateRoute>
 
                             <PrivateRoute
@@ -156,18 +217,28 @@ class App extends React.Component {
                             ></PrivateRoute>
 
                             <PrivateRoute
+                                path= "/admin/config/resources/taxonomy"
+                                admin ={true}
+                                render={(props) => <ResourceTaxonomy taxonomyChange = {this.taxonomyChange}{...props}/>}
+                            ></PrivateRoute>
+
+                            <PrivateRoute
                                 path="/admin/config"
                                 admin={true}
-                                render={(props) =>
-                                <ConfigPage {...props} />}
+                                render={(props) => <ConfigPage {...props} />}
+
                             ></PrivateRoute>
 
                         </Switch>
                     </UsersDatabaseContext.Provider>
                 </AuthContext.Provider>
+
+                </TaxonomyContext.Provider>
             </Router>
         );
     }
+
+
 }
 
 let PrivateRoute = ({ render, ...routeProps }) => {

@@ -1,6 +1,6 @@
 import React from "react";
 import {Route, Link} from "react-router-dom";
-import {AuthContext, UsersDatabaseContext} from "../context/context"
+import {AuthContext, TaxonomyContext, UsersDatabaseContext} from "../context/context"
 import {listResources} from "../resources/resources";
 import {listReservations, confirmReservation} from "./reservations";
 
@@ -31,8 +31,9 @@ export default class ListReservationsPage extends React.Component {
     render() {
 
         return (
-
-            <UsersDatabaseContext>
+            <TaxonomyContext.Consumer>
+                { (taxonomy)=>{
+                    return (<UsersDatabaseContext>
                 {users => {
                     return <>
                 <Link to={"/admin/reservations/create"}>Add reservation</Link>
@@ -44,13 +45,12 @@ export default class ListReservationsPage extends React.Component {
                         <th>Reservations customer</th>
                         <th>Reservations id</th>
                         <th>Reservations time</th>
-                        <th>Resource</th>
+                        <th>{taxonomy.resource}</th>
                     </tr>
                     {this.state.confirmed.map(reservation => {
-                        //itt kell majd a userDatabaseConsumer
                                 return (
                                     <tr>
-                                        <td>{users.map(user => {if(reservation.customerUid === user.uid){ return user.name }} )}</td>
+                                        <td>{users.map(user => reservation.customerUid === user.uid ? user.name : "")}</td>
                                         <td>{reservation.id}</td>
                                         <td>{reservation.slot}</td>
                                         <td>{this.state.resources.map(resource => reservation.resource == resource.id ? resource.name : "")}</td>
@@ -85,13 +85,13 @@ export default class ListReservationsPage extends React.Component {
                         <th>Reservations customer</th>
                         <th>Reservations id</th>
                         <th>Reservations time</th>
-                        <th>Resource</th>
+                        <th>{taxonomy.resource}</th>
                     </tr>
                     {
                             this.state.pending.map(reservation => {
                                 return (
                                     <tr>
-                                        <td>{reservation.customerUid}</td>
+                                        <td>{users.map(user => reservation.customerUid === user.uid ? user.name : "")} </td>
                                         <td>{reservation.id}</td>
                                         <td>{reservation.slot}</td>
                                         <td>{this.state.resources.map(resource => reservation.resource == resource.id ? resource.name : "")}</td>
@@ -126,7 +126,11 @@ export default class ListReservationsPage extends React.Component {
                 </table>
         </>
         }}
-        </UsersDatabaseContext>
+        </UsersDatabaseContext>)
+                }
+
+                }
+            </TaxonomyContext.Consumer>
         );
     }
 }

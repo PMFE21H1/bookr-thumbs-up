@@ -56,9 +56,6 @@ export class Resource {
 }
 
 export function deleteResource(resource) {
-  // if (!resource.id) {
-  //     throw new Error("invalid ID")
-  // }
 
   let deleteReservations = [];
 
