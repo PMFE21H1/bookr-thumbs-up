@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { AuthContext, UsersDatabaseContext } from "../context/context";
 import { Link } from "react-router-dom";
 import { getUserByUid } from "./authentication";
+import { onAuthStateChanged, getAuth, signOut} from "firebase/auth";
 
 
 export default class Header extends Component {
@@ -9,6 +10,10 @@ export default class Header extends Component {
     super(props);
 
   }
+
+    signout = () => {
+        signOut(getAuth())
+    }
 
   render() {
     return (
@@ -20,7 +25,7 @@ export default class Header extends Component {
                 <>
                   <Link to="/login">Log In</Link>
                   <Link to="/registration">Registration</Link>
-                  <Link to="/resources">Public Recources</Link>
+                  <Link to="/resources">Public Resources</Link>
                 </>
               );
             } else {
@@ -35,9 +40,10 @@ export default class Header extends Component {
                     :
 
                     <>
-                      <Link to="/my-reservations">Reservations</Link>
+                      <Link to="/my-reservations"> My Reservations</Link>
                       <Link to="/resources">Public Recources</Link>
-                      <p>User</p>
+                        <button onClick={this.signout} > Log out</button>
+                      <p>{user.name}</p>
                     </>
 
                     }
