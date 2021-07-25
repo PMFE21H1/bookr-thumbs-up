@@ -61,6 +61,7 @@ export default class SlotSelector extends React.Component{
                        this.setState({slotOptions:[...this.state.slotOptions, slot]})
                     }
                 }))
+                .then(()=>this.setState({slotOptionsFinal:[]}))
                 .then(()=>fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/unavailableSlots.json"))
                 .then(response=>response.json())
                 .then(unavailableSlotsObj => {
@@ -70,7 +71,7 @@ export default class SlotSelector extends React.Component{
                     });
                 })
 
-
+                
                 .then(unavailableSlots=>
                 //a filter egy olyan tömböt ad vissza, amiben benne lesznek azok a foglalások, amik arra a napra és resource-ra vannak
                 unavailableSlots.filter(unavailableSlot=>
