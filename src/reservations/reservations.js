@@ -277,3 +277,18 @@ export function configSlot(start, end, duration){
     }).then(()=>alert("Successful slot configuration"))
 }
 
+export function unavailableSlot(resourceId, date, time){
+    if(resourceId==="")throw new Error("Please select resource")
+    if(date==="")throw new Error("Please select date")
+    if(time==="")throw new Error("Please select time")
+
+    fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/unavailableSlots.json", {
+        body: JSON.stringify({
+            resourceId:resourceId,
+            slot:`${date}T${time}`
+        }),
+        method: "POST"
+    }).then(()=>alert("Successful save"))
+}
+
+
