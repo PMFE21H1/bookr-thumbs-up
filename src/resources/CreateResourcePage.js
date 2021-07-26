@@ -44,7 +44,7 @@ export default class CreateResourcePage extends React.Component {
                 { (taxonomy)=>{
                     return <>
         <Container>
-          <UploadFile/>
+          
           <Row className="mt-5">
             <Col
               lg={5}
@@ -85,19 +85,18 @@ export default class CreateResourcePage extends React.Component {
                       
                       const barberImgRef = ref(storage, `barbers/${this.state.file.name}`);
                       uploadBytes(barberImgRef, this.state.file)
-                      .then(uploadResult => console.log(uploadResult))
+                      .then(() => getDownloadURL(barberImgRef)
 
-                      getDownloadURL(barberImgRef)
+                      )
                       .then(url => {
-                        this.setState({imgUrl: url},
+                        console.log(url)
                         createResource(
                           new Resource(
-                            this.state.resourceName,
-                            this.state.description,
-                            this.state.imgUrl
-                          )
-                        ))
-                      })
+                           this.state.resourceName,
+                           this.state.description,
+                           url)
+                        )})
+                      
                       .then(() =>
                         this.props.history.push("/admin/config/resources")
                       ).catch(uploadError => console.log(uploadError))

@@ -35,6 +35,7 @@ export default class PublicResourcesPage extends React.Component {
             {this.state.resources.map((resource) => (
               <tr>
                 <td>
+                  <img src={resource.imgUrl} />
                   <Card.Title>{resource.name}</Card.Title>{" "}
                   <p> {resource.description} </p>{" "}
                   <Link to={`/resources/${resource.id}/request-reservation`}>
