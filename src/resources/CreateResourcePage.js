@@ -3,6 +3,14 @@ import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { createResource, Resource } from "./resources";
 import {TaxonomyContext} from "../context/context";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
+import UploadFile from "./UploadFile";
+import { firebaseApp } from "../reservations/reservations";
+import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+
+const storage = getStorage(firebaseApp);
+const barbersRef = ref(storage, 'barbers');
+const barberImgRef = ref(storage, 'barbers/barber.jpg');
+const rootRef = ref(storage)
 
 
 export default class CreateResourcePage extends React.Component {
@@ -11,6 +19,7 @@ export default class CreateResourcePage extends React.Component {
     this.state = {
       resourceName: "",
       description: "",
+      imgUrl: null,
     };
   }
 
@@ -25,12 +34,17 @@ export default class CreateResourcePage extends React.Component {
     });
   };
 
+  fileChanged = (e) => {
+    this.setState({file: e.target.files[0]});
+}
+
   render() {
     return (
       <TaxonomyContext.Consumer>
                 { (taxonomy)=>{
                     return <>
         <Container>
+          <UploadFile/>
           <Row className="mt-5">
             <Col
               lg={5}
@@ -48,6 +62,13 @@ export default class CreateResourcePage extends React.Component {
                   onChange={this.updateName}
                   value={this.state.resourceName}
                 />
+
+                <h6 className="shadow-sm tect-success mt-5 p-3 text-center rounded">
+                  {" "}
+                  {taxonomy.resource} Image{" "}
+                </h6>
+                <input type="file" onChange={this.fileChanged}></input>
+
                 <h6 className="shadow-sm tect-success mt-2 p-3 text-center rounded">
                   {" "}
                   {taxonomy.resource} Description{" "}
@@ -61,14 +82,25 @@ export default class CreateResourcePage extends React.Component {
                   onClick={(e) => {
                     e.preventDefault();
                     try {
-                      createResource(
-                        new Resource(
-                          this.state.resourceName,
-                          this.state.description
-                        )
-                      ).then(() =>
+                      
+                      const barberImgRef = ref(storage, `barbers/${this.state.file.name}`);
+                      uploadBytes(barberImgRef, this.state.file)
+                      .then(uploadResult => console.log(uploadResult))
+
+                      getDownloadURL(barberImgRef)
+                      .then(url => {
+                        this.setState({imgUrl: url},
+                        createResource(
+                          new Resource(
+                            this.state.resourceName,
+                            this.state.description,
+                            this.state.imgUrl
+                          )
+                        ))
+                      })
+                      .then(() =>
                         this.props.history.push("/admin/config/resources")
-                      );
+                      ).catch(uploadError => console.log(uploadError))
                     } catch (e) {
                       alert(e.message);
                     }

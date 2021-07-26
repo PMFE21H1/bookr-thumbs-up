@@ -2,7 +2,7 @@ import {initializeApp} from "firebase/app";
 import { getUserByUid } from "../authentication/authentication";
 import {Resource} from "../resources/resources";
 
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",
     authDomain: "bookr-thumbs-up.firebaseapp.com",
     databaseURL:
@@ -14,7 +14,7 @@ const firebaseConfig = {
     measurementId: "G-CCWPS19RXP",
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
+export const firebaseApp = initializeApp(firebaseConfig);
 
 export function listReservations() {
     return fetch(
