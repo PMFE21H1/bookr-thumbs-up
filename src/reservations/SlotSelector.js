@@ -48,7 +48,6 @@ export default class SlotSelector extends React.Component{
                     reservation.slot.split("T")[0]===this.state.date&&reservation.resource===this.props.resource))
                 //foreach-el végigmegyek az összes generált időponton
                 .then(this.markReservedSlots)
-
                 .then(()=>this.setState({slotOptionsFinal:[]}))
                 .then(()=>fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/unavailableSlots.json"))
                 .then(response=>response.json())
@@ -58,19 +57,12 @@ export default class SlotSelector extends React.Component{
                         return unavailableSlotsObj[key];
                     });
                 })
-
-                
                 .then(unavailableSlots=>
-                //a filter egy olyan tömböt ad vissza, amiben benne lesznek azok a foglalások, amik arra a napra és resource-ra vannak
                 unavailableSlots.filter(unavailableSlot=>
                     unavailableSlot.slot.split("T")[0]===this.state.date&&unavailableSlot.resourceId===this.props.resource))
-                //foreach-el végigmegyek az összes generált időponton
                 .then(relevantUnavailableSlots=>this.state.slotOptions.forEach(slot=>{
                     let unavailable=false;
-                    //végigmegyek a releváns foglalásokon
                     relevantUnavailableSlots.forEach(ruSlot=>{
-
-                        //ha a kigenerált slot megegyezik a foglalás slotjával, akkor reservedként kerül bele
                         if(slot.split('-')[0]===ruSlot.slot.split('T')[1]){
 
                             this.setState({slotOptionsFinal:[...this.state.slotOptionsFinal, 'Unavailable']})
@@ -82,9 +74,7 @@ export default class SlotSelector extends React.Component{
                         this.setState({slotOptionsFinal:[...this.state.slotOptionsFinal, slot]})
                     }
                 }))
-
         }
-
 
         if(prevState.date!==this.state.date||prevState.time!==this.state.time){
             this.props.changeSlot(this.state.date,this.state.time)
