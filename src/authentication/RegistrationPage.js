@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { saveAccountToDatabase } from "./authentication";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 export default class RegistrationPage extends Component {
   constructor(props) {
@@ -26,19 +29,26 @@ export default class RegistrationPage extends Component {
           const user = userCredential.user;
           user.name = this.state.name;
           user.admin = false;
-          console.log(user)
-          saveAccountToDatabase(this.state.name, this.state.email, false, user.uid)
-          this.props.onLogIn(user)
-          this.props.history.push('/user/my-reservations')
+          console.log(user);
+          saveAccountToDatabase(
+            this.state.name,
+            this.state.email,
+            false,
+            user.uid
+          );
+          this.props.onLogIn(user);
+          this.props.history.push("/user/my-reservations");
         })
-        
+
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           // ..
         });
     } else {
-      throw new Error("The password and the confirmation-password didn't match");
+      throw new Error(
+        "The password and the confirmation-password didn't match"
+      );
     }
   };
 
@@ -72,15 +82,20 @@ export default class RegistrationPage extends Component {
           <p>Email</p>
           <input type="email" onChange={(e) => this.handleEmail(e)}></input>
           <p>Password</p>
-          <input type="password" onChange={(e) => this.handlePassword(e)}></input>
+          <input
+            type="password"
+            onChange={(e) => this.handlePassword(e)}
+          ></input>
           <p>Password Confirmation</p>
-          <input type="password" onChange={(e) => this.handleConfirmation(e)}></input>
+          <input
+            type="password"
+            onChange={(e) => this.handleConfirmation(e)}
+          ></input>
         </form>
         <button
           onClick={(e) => {
             e.preventDefault();
-            this.register()
-            
+            this.register();
           }}
         >
           Registration
@@ -88,4 +103,6 @@ export default class RegistrationPage extends Component {
       </div>
     );
   }
+}
+{
 }

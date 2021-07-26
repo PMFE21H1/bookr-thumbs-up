@@ -7,6 +7,7 @@ import SlotSelector from "./SlotSelector";
 import UserSelector from "./UserSelector";
 import {UsersDatabaseContext} from "../App";
 import {TaxonomyContext} from "../context/context";
+import { Col, Container, Row, Form, Button } from "react-bootstrap";
 
 export default class UpdateReservationPage extends React.Component {
     constructor(props) {
@@ -18,7 +19,6 @@ export default class UpdateReservationPage extends React.Component {
             resources: [],
         };
     }
-
     // fetchelunk az url-bol kiolvasott id alapjan egy reservationt
     componentDidMount = () => {
         return fetch(
@@ -52,6 +52,7 @@ export default class UpdateReservationPage extends React.Component {
             });
 
     };
+
     handleName = (newUserUid) => {
         this.setState({
             reservationData: {...this.state.reservationData, customerUid: newUserUid}
@@ -73,63 +74,84 @@ export default class UpdateReservationPage extends React.Component {
     }
 
 
-    render() {
-        return (
-            <TaxonomyContext.Consumer>
+
+  render() {
+    return (
+      <TaxonomyContext.Consumer>
                 {(taxonomy) => {
-                    return <div>
-                        <form>
-                            <h3>Update reservation</h3>
+                    return
+      <div>
+        <Container>
+          <Row className="mt-5">
+            <Col
+              lg={5}
+              md={6}
+              sm={12}
+              className="p-5 m-auto shadow-sm rounded-lg"
+            >
+              <Form>
+                <h3 className="shadow-sm tect-success mt-5 p-3 text-center rounded">
+                  Update reservation
+                </h3>
 
-                            <select onChange={e => this.changeResource(e)} value={this.state.resource}>
-                                <option value={null}>Select a {taxonomy.resource}</option>
+                <select
+                  onChange={(e) => this.changeResource(e)}
+                  value={this.state.resource}
+                >
+                  <option value={null}>Select a {taxonomy.resource}</option>
 
-                                {(this.state.resources !== []) ?
+                  {this.state.resources !== []
+                    ? this.state.resources.map((resource) => (
+                        <option key={resource.id} value={resource.id}>
+                          {resource.name}
+                        </option>
+                      ))
+                    : ""}
+                </select>
 
-                                    this.state.resources.map(resource =>
-                                        <option key={resource.id} value={resource.id}>{resource.name}</option>
-                                    )
+                <p>Update name</p>
+                <UserSelector onHandleName={this.handleName} />
+                <SlotSelector
+                  resource={this.state.resource}
+                  changeSlot={this.changeSlot}
+                ></SlotSelector>
 
-                                    :
-
-                                    ""
-                                }
-
-                            </select>
-
-                            <p>Update name</p>
-                            <UserSelector onHandleName={this.handleName}/>
-                            <SlotSelector resource={this.state.resource} changeSlot={this.changeSlot}></SlotSelector>
-
-                        </form>
-                        <div>
-                            <button
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    try {
-                                        //itt hasznaljuk fel ujbol a reservationID-t amit a statbol olvasunk ki(ez az elso parameter amit a fg. var)
-                                        updateReservation(this.state.reservationID,
-                                            //ez lesz az uj reservation amivel updatelni szeretnenk azt (newData)
-                                            {
-                                                customerUid: this.state.reservationData.customerUid,
-                                                slot: this.state.reservationData.date + 'T' + this.state.reservationData.time,
-                                                resource: this.state.resource
-                                            })
-                                            .then(() => this.props.history.push('/admin/reservations'))
-                                    } catch (e) {
-                                        alert(e.message);
-                                    }
-                                }}
-                            >
-                                Apply
-                            </button>
-                            <Link to='/admin/reservations'>Cancel</Link>
-                        </div>
-                    </div>
-                }
-
-                }
-            </TaxonomyContext.Consumer>
-        );
-    }
+                <div>
+                  <Button
+                    onClick={(e) => {
+                      e.preventDefault();
+                      try {
+                        updateReservation(
+                          this.state.reservationID,
+                          {
+                            customerUid: this.state.reservationData.customerUid,
+                            slot:
+                              this.state.reservationData.date +
+                              "T" +
+                              this.state.reservationData.time,
+                            resource: this.state.resource,
+                          }
+                        ).then(() =>
+                          this.props.history.push("/admin/reservations")
+                        );
+                      } catch (e) {
+                        alert(e.message);
+                      }
+                    }}
+                  >
+                    Apply
+                  </Button>
+                  <Link to="/admin/reservations">
+                    <Button variant="danger">Cancel</Button>
+                  </Link>
+                </div>
+              </Form>
+            </Col>
+          </Row>
+        </Container>
+      </div>
+      }}
+    </TaxonomyContext.Consumer>
+    );
+  }
 }
