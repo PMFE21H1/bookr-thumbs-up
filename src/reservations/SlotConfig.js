@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from "react-router-dom";
 import {configSlot} from "./reservations"
 
 export default class SlotConfig extends React.Component {
@@ -43,6 +44,7 @@ export default class SlotConfig extends React.Component {
 
     render() {
         return (
+            <>
                 <form>
                     <label htmlFor="">Start Time</label>
                     <input type="time" onChange={(e) => this.changeStartTime(e)}/>
@@ -52,6 +54,8 @@ export default class SlotConfig extends React.Component {
                     <input type="number" onChange={(e) => this.changeDuration(e)}/>
                     <button onClick={(e) =>this.setSlot(e)}>Set slot</button>
                 </form>
+                <Link to="/admin/config/slot/availability">Unavailability</Link>
+            </>
         )
     }
 }

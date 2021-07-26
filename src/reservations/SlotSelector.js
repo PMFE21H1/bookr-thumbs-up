@@ -1,14 +1,19 @@
 import React from "react"
 import {listReservations} from "./reservations";
 
+
 export default class SlotSelector extends React.Component{
     constructor(props) {
         super(props);
         this.state={
             date:"",
             time:"",
+
             slotOptions:[],
-            slotArr:[]
+            //a slotArr-ba megy az összes generált időpont
+            slotArr:[],
+            //ez alapján lesznek generálva az option-ok
+            slotOptionsFinal:[]
 
         }
     }
@@ -31,31 +36,66 @@ export default class SlotSelector extends React.Component{
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        //akkor lép be, ha a felhasználó kiválaszt resource-ot vagy dátumot
         if(prevState.date!==this.state.date||prevProps.resource!==this.props.resource){
+            //kiüríti a slotoptiont, hogy újakat tudjon generálni
             this.setState(()=>{return{slotOptions:[]}})
+            //lekéri az összes foglalást
             listReservations().
             then(reservationsArray=>
+                //a filter egy olyan tömböt ad vissza, amiben benne lesznek azok a foglalások, amik arra a napra és resource-ra vannak
                 reservationsArray.filter(reservation=>
                     reservation.slot.split("T")[0]===this.state.date&&reservation.resource===this.props.resource))
-                .then(reservedSlots=>this.state.slotArr.forEach(slot=>{
-                    let reserved=false;
-                    reservedSlots.forEach(reservation=>{
-                        if(slot.split('-')[0]===reservation.slot.split('T')[1]){
-                            this.setState({slotOptions:[...this.state.slotOptions, 'Reserved']})
-                            reserved=true;
+                //foreach-el végigmegyek az összes generált időponton
+                .then(this.markReservedSlots)
+                .then(()=>this.setState({slotOptionsFinal:[]}))
+                .then(()=>fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/unavailableSlots.json"))
+                .then(response=>response.json())
+                .then(unavailableSlotsObj => {
+                    return Object.keys(unavailableSlotsObj).map((key) => {
+                        //unavailableSlots[key].id = key;
+                        return unavailableSlotsObj[key];
+                    });
+                })
+                .then(unavailableSlots=>
+                unavailableSlots.filter(unavailableSlot=>
+                    unavailableSlot.slot.split("T")[0]===this.state.date&&unavailableSlot.resourceId===this.props.resource))
+                .then(relevantUnavailableSlots=>this.state.slotOptions.forEach(slot=>{
+                    let unavailable=false;
+                    relevantUnavailableSlots.forEach(ruSlot=>{
+                        if(slot.split('-')[0]===ruSlot.slot.split('T')[1]){
+
+                            this.setState({slotOptionsFinal:[...this.state.slotOptionsFinal, 'Unavailable']})
+                            unavailable=true;
                         }
 
                     })
-                    if(!reserved){
-                        this.setState({slotOptions:[...this.state.slotOptions, slot]})
+                    if(!unavailable){
+                        this.setState({slotOptionsFinal:[...this.state.slotOptionsFinal, slot]})
                     }
                 }))
-                .then(()=>console.log(this.state.slotOptions))
         }
+
         if(prevState.date!==this.state.date||prevState.time!==this.state.time){
             this.props.changeSlot(this.state.date,this.state.time)
         }
 
+    }
+    markReservedSlots=( relevantReservations)=>{
+    this.state.slotArr.forEach(slot=>{
+            let foundReserved=false;
+            //végigmegyek a releváns foglalásokon
+            relevantReservations.forEach(reservation=>{
+                let isReserved=slot.split('-')[0]===reservation.slot.split('T')[1]
+                if(isReserved){
+                    this.setState({slotOptions:[...this.state.slotOptions, 'Reserved']})
+                    foundReserved=true;
+                }
+            })
+            if(!foundReserved){
+                this.setState({slotOptions:[...this.state.slotOptions, slot]})
+            }
+        })
     }
 
     updateDate=(e)=>{
@@ -70,7 +110,7 @@ export default class SlotSelector extends React.Component{
                     <input onChange={(e)=>this.updateDate(e)} type="date"/>
                     <select onChange={(e)=>this.updateTime(e)} name="Time" id="">
                         <option value="">Select time</option>
-                        {this.state.slotOptions.map(slot=>(slot==="Reserved")? <option   value={slot} disabled>{slot}</option>: <option value={slot}>{slot}</option>)}
+                        {this.state.slotOptionsFinal.map(slot=>(slot==="Reserved"||slot==="Unavailable")? <option   value={slot} disabled>{slot}</option>: <option value={slot}>{slot}</option>)}
                     </select>
                 </div>
         )
