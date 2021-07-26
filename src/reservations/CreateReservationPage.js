@@ -69,12 +69,12 @@ export default class CreateReservationPage extends Component {
           `${this.state.date}T${this.state.time}`,
           "confirmed"
         )
-      )
-      this.changeToDefault()
-        .catch((error) => {
-          alert(error.message);
-        })
-        .then(() => this.props.history.push("/admin/reservations"));
+      ).catch((error) => {
+        alert(error.message);
+      })
+          .then(() => this.props.history.push("/admin/reservations"));
+
+
     } catch (e) {
       alert(e.message);
     }

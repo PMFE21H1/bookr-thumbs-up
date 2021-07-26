@@ -108,10 +108,7 @@ class App extends React.Component {
                 <TaxonomyContext.Provider value ={this.state.taxonomy}>
                         <AuthContext.Provider value={{user: this.state.user}}>
 
-
-                    <UploadFile/>
-                    <Header/>
-
+                            <Header />
 
                     <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
                         <Switch>
@@ -154,7 +151,7 @@ class App extends React.Component {
                             <PrivateRoute
 
 
-                                path={`/admin/${this.state.taxonomy.resources}/create`}
+                                path={`/admin/config/${this.state.taxonomy.resources}/create`}
 
                                 admin={true}
                                 render={(props) => <CreateResourcePage {...props} />}
@@ -175,13 +172,13 @@ class App extends React.Component {
 
                             <PrivateRoute
 
-                                path={`/admin/${this.state.taxonomy.resources}/:resourceID/delete`}
+                                path={`/admin/config/${this.state.taxonomy.resources}/:resourceID/delete`}
                                 admin={true}
                                 render={(props) => <DeleteResourcePage {...props} />}
                             ></PrivateRoute>
 
                             <PrivateRoute
-                                path={`/admin/${this.state.taxonomy.resources}/:resourceID/edit`}
+                                path={`/admin/config/${this.state.taxonomy.resources}/:resourceID/edit`}
                                 admin={true}
                                 render={(props) => <UpdateResourcePage {...props} />}
                             ></PrivateRoute>
