@@ -1,8 +1,10 @@
-import React from 'react'
-import {Link} from "react-router-dom"
-import { UsersDatabaseContext } from '../context/context';
-import {listReservations, deleteReservation} from "./reservations"
-import {TaxonomyContext} from "../context/context";
+import React from "react";
+import { Link } from "react-router-dom";
+import { listReservations, deleteReservation } from "./reservations";
+import Table from "react-bootstrap/Table";
+import { Button } from "react-bootstrap";
+import Card from "react-bootstrap/Card";
+import { UsersDatabaseContext, TaxonomyContext } from "../context/context";
 
 export default class DeleteReservationPage extends React.Component {
     constructor(props) {
@@ -21,40 +23,66 @@ export default class DeleteReservationPage extends React.Component {
     }
 
     render() {
-        return (
-            <TaxonomyContext.Consumer>
-                { (taxonomy)=>{
-           return <div>
-                <p>Are you sure you want to delete the following reservation?</p>
-                <table>
-                    <tr>
-                        <th>Reservations customer</th>
-                        <th>Reservations time</th>
-                        <th>Reservations {taxonomy.resource}-id</th>
-                    </tr>
-                    {this.state.reservation ?
-                        <tr>
-                            <td>{this.context.map(user => this.state.reservation.customerUid === user.uid ? user.name : "")}</td>
-                            <td>{this.state.reservation.slot}</td>
-                            <td>{this.state.reservation.resource}</td>
-
-                        </tr>
-
-
-                        :
-                            <p></p>
-                        }
-                </table>
-
-                <button onClick={() => deleteReservation(this.props.match.params.reservationID) .then(() => this.props.history.push("/admin/reservations"))}>Delete Reservation</button>
-                <button onClick={() => this.props.history.push("/admin/reservations")}> Cancel</button>
-            </div>
-                }
-
-                }
-            </TaxonomyContext.Consumer>
-        )
+      return (
+        <TaxonomyContext.Consumer>
+          { (taxonomy)=>{ 
+          return <div>
+          <Card.Body>
+            <Card.Title>
+              Are you sure you want to delete the following reservation?
+            </Card.Title>
+          </Card.Body>
+          <Table>
+            <thead>
+              <tr>
+                <th>Reservations customer</th>
+                <th>Reservations time</th>
+                <th>Reservations {taxonomy.resource}-id</th>
+              </tr>
+            </thead>
+  
+            {this.state.reservation ? (
+              <tbody>
+                <tr>
+                  <td>
+                    {this.context.map((user) => {
+                      if (this.state.reservation.customerUid === user.uid) {
+                        return user.name;
+                      }
+                    })}
+                  </td>
+  
+                  <td>{this.state.reservation.slot}</td>
+                  <td>{this.state.reservation.resource}</td>
+                </tr>
+              </tbody>
+            ) : (
+              <p></p>
+            )}
+          </Table>
+  
+          <Button
+            onClick={() =>
+              deleteReservation(this.props.match.params.reservationID).then(
+                this.props.history.push("/admin/reservations")
+              )
+            }
+          >
+            Delete Reservation
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => this.props.history.push("/admin/reservations")}
+          >
+            {" "}
+            Cancel
+          </Button>
+        </div>
+            }
+  
+          }
+      </TaxonomyContext.Consumer>
+      );
     }
-}
-
-DeleteReservationPage.contextType = UsersDatabaseContext
+  }
+  DeleteReservationPage.contextType = UsersDatabaseContext;
