@@ -210,7 +210,10 @@ export default class ListReservationsPage extends React.Component {
                               <td>
                                 <Button
                                   onClick={() =>
+                                    {
                                     confirmReservation(reservation.id)
+                                    .then(window.location.reload())
+                                  }
                                   }
                                 >
                                   CONFIRM
