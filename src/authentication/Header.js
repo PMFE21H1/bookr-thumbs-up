@@ -93,8 +93,9 @@ export default class Header extends Component {
                                 Logged in as Admin
                               </Nav.Link>
                             </Nav.Item>
+                            <Button size="sm" onClick={this.signout}> Log out</Button>
                           </Nav>
-                          <Button onClick={this.signout}> Log out</Button>
+                          
                         </>
                       ) : (
                         <>
