@@ -29,6 +29,7 @@ import MyReservationsPage from "./reservations/MyReservationsPage";
 import ResourceTaxonomy from "./resources/ResourceTaxonomy";
 import ConfigPage from "./authentication/ConfigPage";
 import Header from "./authentication/Header";
+import UploadFile from "./resources/UploadFile";
 
 
 class App extends React.Component {
@@ -93,7 +94,7 @@ class App extends React.Component {
                 <TaxonomyContext.Provider value ={this.state.taxonomy}>
                 <AuthContext.Provider value={{user: this.state.user}}>
 
-
+                    <UploadFile/>
                     <Header/>
 
 

@@ -3,6 +3,7 @@ import { getStorage, ref, uploadBytes } from "firebase/storage";
 
 const storage = getStorage();
 const barbersRef = ref(storage, 'barbers');
+const barberImgRef = ref(storage, 'barbers/barber.jpg');
 
 export default class UploadFile extends React.Component {
     
