@@ -63,7 +63,7 @@ export class UpdateResourcePage extends React.Component {
     return (
       <>
         {this.state.oldResourceName ? (
-          <div>
+          <div style={{width:"500px", marginLeft: "auto", marginRight: "auto", marginTop: "70px" } }>
             <InputGroup size="lg" className="mb-3">
               <InputGroup.Text id="inputGroup-sizing-lg">
                 {this.context.resource} Name
@@ -93,7 +93,7 @@ export class UpdateResourcePage extends React.Component {
                 as="textarea"
               />
             </InputGroup>
-            <Nav>
+            <Nav className="justify-content-center">
               <Nav className="mr-2 ml-2">
                 <Button onClick={this.handleApply}>Apply</Button>
               </Nav>
