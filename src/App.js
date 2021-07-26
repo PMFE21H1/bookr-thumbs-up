@@ -31,6 +31,12 @@ import ConfigPage from "./authentication/ConfigPage";
 import Header from "./authentication/Header";
 import UploadFile from "./resources/UploadFile";
 
+import { onAuthStateChanged, getAuth } from "firebase/auth";
+
+import SlotConfig from "./reservations/SlotConfig";
+import UnavailableSlots from "./reservations/UnavailableSlots";
+
+
 
 class App extends React.Component {
     constructor(props) {
@@ -38,25 +44,19 @@ class App extends React.Component {
         this.state = {
             user: false,
             usersFromDatabase: [],
+            authChecked: false,
             taxonomy: {
                 resource: "",
                 resources: "",
                 url: ""
             }
+
         };
     }
 
-    logIn = (user, callback) => {
-        this.setState(
-            {
-                user: user,
-            },
-            callback
-        );
-    };
-
 
     logIn = (user, callback) => {
+
         this.setState({
             user: user
         }, callback);
@@ -64,6 +64,22 @@ class App extends React.Component {
 
 
     componentDidMount() {
+
+        listUsersFromDatabase()
+        .then((users) => {
+            this.setState({usersFromDatabase: users});
+            onAuthStateChanged(
+                getAuth(),
+                user => this.setState({
+                    authChecked: true,
+                    user: users.find((u) =>  u.uid === user?.uid)  //optional chaining operator
+                })
+            );
+        });
+
+
+
+
 
         fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/taxonomy.json`).then(response => response.json())
             .then(
@@ -88,11 +104,14 @@ class App extends React.Component {
     }
 
     render() {
-        return (
+        if (!this.state.authChecked) return <p>loading...</p>
 
+        return (
             <Router>
                 <TaxonomyContext.Provider value ={this.state.taxonomy}>
-                <AuthContext.Provider value={{user: this.state.user}}>
+                        <AuthContext.Provider value={{user: this.state.user}}>
+
+                            <Header />
 
                     <UploadFile/>
                     <Header/>
@@ -110,21 +129,43 @@ class App extends React.Component {
                             </Route>
 
                             <PrivateRoute
+                                admin={true}
+                                path="/admin/config/slot/availability"
+                                render={(props) => <UnavailableSlots {...props} />}
+                            />
+
+                           <PrivateRoute
+                                  admin={true}
+                                   path="/admin/config/slot"
+                                   render={(props) => <SlotConfig {...props} />}
+                                        />
+
+
+                            <PrivateRoute
                                 path="/resources/:resourceID/request-reservation"
                                 render={(props) => <RequestReservationPage {...props} />}
                             ></PrivateRoute>
 
+
+
                             <Route path={`/${this.state.taxonomy.resources}`}>
+
                                 <PublicResourcesPage/>
                             </Route>
 
                             <Route path="/login" render={(props) => <LoginPage onLogIn={this.logIn} {...props}/>}/>
 
                             <PrivateRoute
+
+
                                 path={`/admin/${this.state.taxonomy.resources}/create`}
+
                                 admin={true}
                                 render={(props) => <CreateResourcePage {...props} />}
                             ></PrivateRoute>
+
+
+
 
                             <PrivateRoute
                                 path="/my-reservations/:reservationID"
@@ -137,6 +178,7 @@ class App extends React.Component {
                             />
 
                             <PrivateRoute
+
                                 path={`/admin/${this.state.taxonomy.resources}/:resourceID/delete`}
                                 admin={true}
                                 render={(props) => <DeleteResourcePage {...props} />}
@@ -152,6 +194,7 @@ class App extends React.Component {
                                 path={`/admin/config/${this.state.taxonomy.resources}`}
                                 admin={true}
                                 render={(props) => <ListResourcesAdminPage {...props} />}
+
                             ></PrivateRoute>
 
                             <PrivateRoute
@@ -193,15 +236,18 @@ class App extends React.Component {
                                 path="/admin/config"
                                 admin={true}
                                 render={(props) => <ConfigPage {...props} />}
+
                             ></PrivateRoute>
 
                         </Switch>
                     </UsersDatabaseContext.Provider>
                 </AuthContext.Provider>
+
                 </TaxonomyContext.Provider>
             </Router>
         );
     }
+
 
 }
 

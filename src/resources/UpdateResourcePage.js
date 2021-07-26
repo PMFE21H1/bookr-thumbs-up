@@ -3,6 +3,10 @@ import {Link} from "react-router-dom";
 import {updateResource} from "./resources";
 import {TaxonomyContext} from "../context/context";
 import DeleteResourcePage from "./DeleteResourcePage";
+import InputGroup from "react-bootstrap/InputGroup";
+import { FormControl, Button } from "react-bootstrap";
+import Form from "react-bootstrap/Form";
+
 
 export class UpdateResourcePage extends React.Component {
     constructor(props) {
@@ -54,32 +58,53 @@ export class UpdateResourcePage extends React.Component {
         }
     };
 
-    render() {
-        return (
-            <>
-                        {this.state.oldResourceName ? (
-                            <div>
-                                <input
-                                    type="text"
-                                    placeholder={this.state.oldResourceName}
-                                    onChange={this.updateResourceName}
-                                    value={this.state.newResourceName}
-                                />
-                                {/* a descripiton hossza miatt textareat hasznalunk a sima input helyett */}
-                                <textarea
-                                    placeholder={this.state.oldDescription}
-                                    onChange={this.updateDescription}
-                                    value={this.state.newDescription}
-                                />
-                                <button onClick={this.handleApply}>Apply</button>
-                                <Link to={`/admin/${this.context.resources}`}>Cancel</Link>
-                            </div>
-                        ) : (
-                            <p></p>
-                        )}
-                    </>
+  render() {
+    return (
+      <>
+        {this.state.oldResourceName ? (
+          <div>
+            <InputGroup size="sm" className="mb-3">
+              <InputGroup.Text id="inputGroup-sizing-sm">
+                {this.context.resource} Name
+              </InputGroup.Text>
+              <FormControl
+                type="text"
+                onChange={this.updateResourceName}
+                value={this.state.newResourceName}
+                placeholder={this.state.oldResourceName}
+                aria-label="Small"
+                aria-describedby="inputGroup-sizing-sm"
+              />
+            </InputGroup>
 
-        );
-    }
+            <InputGroup
+              controlId="floatingTextarea"
+              label={this.state.oldDescription}
+              className="mb-3"
+            >
+              <InputGroup.Text id="inputGroup-sizing-sm">
+              {this.context.resource} Description
+              </InputGroup.Text>
+              <Form.Control
+                placeholder={this.state.oldDescription}
+                onChange={this.updateDescription}
+                value={this.state.newDescription}
+                as="textarea"
+              />
+            </InputGroup>
+
+            <Button onClick={this.handleApply}>Apply</Button>
+
+            <Link to="/admin/config/resources">
+              <Button variant="danger">Cancel</Button>
+            </Link>
+          </div>
+        ) : (
+          <p></p>
+        )}
+      </>
+    );
+  }
 }
+
 UpdateResourcePage.contextType = TaxonomyContext
