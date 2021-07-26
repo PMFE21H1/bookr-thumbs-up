@@ -102,7 +102,7 @@ export default class ListReservationsPage extends React.Component {
                                 )}
                               </td>
                               <td>{reservation.id}</td>
-                              <td>{reservation.slot}</td>
+                              <td>{reservation.slot.split("T")[0] + " " + reservation.slot.split("T")[1]}</td>
                               <td>
                                 {this.state.resources.map((resource) =>
                                   reservation.resource == resource.id
@@ -169,7 +169,7 @@ export default class ListReservationsPage extends React.Component {
                                 )}{" "}
                               </td>
                               <td>{reservation.id}</td>
-                              <td>{reservation.slot}</td>
+                              <td>{reservation.slot.split("T")[0] + " " + reservation.slot.split("T")[1]}</td>
                               <td>
                                 {this.state.resources.map((resource) =>
                                   reservation.resource == resource.id

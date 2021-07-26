@@ -7,7 +7,7 @@ import SlotSelector from "./SlotSelector";
 import UserSelector from "./UserSelector";
 import {UsersDatabaseContext} from "../App";
 import {TaxonomyContext} from "../context/context";
-import { Col, Container, Row, Form, Button } from "react-bootstrap";
+import { Col, Container, Row, Form, Button, Nav } from "react-bootstrap";
 
 export default class UpdateReservationPage extends React.Component {
     constructor(props) {
@@ -92,8 +92,9 @@ export default class UpdateReservationPage extends React.Component {
                 <h3 className="shadow-sm tect-success mt-5 p-3 text-center rounded">
                   Update reservation
                 </h3>
+                <Nav className="justify-content-center mt-2">
 
-                <select
+                   <select
                   onChange={(e) => this.changeResource(e)}
                   value={this.state.resource}
                 >
@@ -107,16 +108,28 @@ export default class UpdateReservationPage extends React.Component {
                       ))
                     : ""}
                 </select>
-
-                <p>Update name</p>
-                <UserSelector onHandleName={this.handleName} />
-                <SlotSelector
+                </Nav>
+               
+                <Nav className="justify-content-center mt-2">
+                  <p>Update name</p>
+                </Nav>
+                <Nav className="justify-content-center">
+ <UserSelector onHandleName={this.handleName} /></Nav>
+ <Nav className="justify-content-center mt-2">
+    <SlotSelector
                   resource={this.state.resource}
                   changeSlot={this.changeSlot}
                 ></SlotSelector>
+ </Nav>
+               
+
+                
+               
 
                 <div>
-                  <Button
+                <Nav className="justify-content-center mt-2">
+                  <Nav className="mr-2">
+                    <Button
                     onClick={(e) => {
                       e.preventDefault();
                       try {
@@ -140,9 +153,13 @@ export default class UpdateReservationPage extends React.Component {
                   >
                     Apply
                   </Button>
+                  </Nav>
+                  
                   <Link to="/admin/reservations">
                     <Button variant="danger">Cancel</Button>
                   </Link>
+                </Nav>
+                  
                 </div>
               </Form>
             </Col>
