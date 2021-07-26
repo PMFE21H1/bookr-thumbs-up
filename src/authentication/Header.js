@@ -7,7 +7,7 @@ import {
 import { Link } from "react-router-dom";
 import { getUserByUid } from "./authentication";
 import { onAuthStateChanged, getAuth, signOut } from "firebase/auth";
-import { Button } from "react-bootstrap"
+import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "react-bootstrap/Nav";
 
@@ -93,9 +93,11 @@ export default class Header extends Component {
                                 Logged in as Admin
                               </Nav.Link>
                             </Nav.Item>
-                            <Button size="sm" onClick={this.signout}> Log out</Button>
+                            <Button size="sm" onClick={this.signout}>
+                              {" "}
+                              Log out
+                            </Button>
                           </Nav>
-                          
                         </>
                       ) : (
                         <>
@@ -118,8 +120,8 @@ export default class Header extends Component {
                                 Hello, {user.name}!
                               </Nav.Link>
                             </Nav.Item>
+                            <Button onClick={this.signout}> Log out</Button>
                           </Nav>
-                          <Button onClick={this.signout}> Log out</Button>
                         </>
                       );
                     }
