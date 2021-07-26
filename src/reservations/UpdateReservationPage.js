@@ -79,8 +79,7 @@ export default class UpdateReservationPage extends React.Component {
     return (
       <TaxonomyContext.Consumer>
                 {(taxonomy) => {
-                    return
-      <div>
+                    return (<>
         <Container>
           <Row className="mt-5">
             <Col
@@ -149,7 +148,7 @@ export default class UpdateReservationPage extends React.Component {
             </Col>
           </Row>
         </Container>
-      </div>
+      </> )
       }}
     </TaxonomyContext.Consumer>
     );

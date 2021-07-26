@@ -45,7 +45,7 @@ export default class ReservationDetailsPage extends React.Component {
                     return <>
                         <AuthContext.Consumer>
                             {({user}) => {
-                                return 
+                                return (<>
 
                                   <Table>
                                   <thead>
@@ -75,6 +75,7 @@ export default class ReservationDetailsPage extends React.Component {
                                     </tr>
                                   </tbody>
                                 </Table>
+                                </>)
                         
                     }}
                         </AuthContext.Consumer>
