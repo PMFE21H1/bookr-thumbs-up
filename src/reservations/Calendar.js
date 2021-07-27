@@ -37,7 +37,7 @@ export default class Calendar extends React.Component {
 
 
         let days = daydates.map(daydate => ({
-            day: daydate.toISOString(),
+            text: daydate.toISOString(),
             slots: this.props.slotArr.map(slotData => {
                 let slotStart = `${daydate.toISOString().split("T")[0]}T${slotData.split("-")[0]}`
                 console.log(this.props.reservations)
@@ -58,7 +58,7 @@ export default class Calendar extends React.Component {
                 {days.map(day =>
                     <div>
                         <div>
-                            {day.day}
+                            {day.text}
                             <br/>{dayName(day)}
                         </div>
                         {/* itt kell majd átirni hogy ne direkt módon jelenitsük meg a slotot hanem a css classt és szöveget egy objectben kapjuk meg*/}
