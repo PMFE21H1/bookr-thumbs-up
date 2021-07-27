@@ -29,3 +29,11 @@ export function nextDayStart (day){
 export function constructTimestamp(date, time) {
   return `${date}T${time}`;
 }
+
+export function extractDay(date) {
+  return date.toISOString().split("T")[0];
+}
+
+export function extractTime(slotString) {
+return slotString.split("-")[0]
+}

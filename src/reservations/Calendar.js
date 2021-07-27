@@ -2,7 +2,7 @@ import React from "react";
 import timeslotter from "time-slotter"
 import {listReservations} from "./reservations";
 import timeSlotter from "time-slotter";
-import { DAYMILLISEX, nextDayStart, dayName, calcWeekStart, constructTimestamp } from "./dates";
+import { DAYMILLISEX, nextDayStart, dayName, calcWeekStart, constructTimestamp, extractDay, extractTime } from "./dates";
 
 
 export default class Calendar extends React.Component {
@@ -71,9 +71,9 @@ export default class Calendar extends React.Component {
             let weekDays = calcWeekDays(weekStart);
             return weekDays.map(daydate => ({
                 text: daydate.toISOString(),
-                slots: possibleSlots.map(slotData => {
-                    let datePart = daydate.toISOString().split("T")[0];
-                    let timePart = slotData.split("-")[0];
+                slots: possibleSlots.map(slot => {
+                    let datePart = extractDay(daydate);
+                    let timePart = extractTime(slot);
                     let slotStart = constructTimestamp(datePart, timePart);
                     //emlékeztető: a reserved slotokon belül két külön eset a reserved és a pending
     
@@ -82,8 +82,6 @@ export default class Calendar extends React.Component {
                     //idejön majd egy másik if-be az unavailable slot vizsgálat meg a pending
                     return slotStart
                 })
-    
-    
             }))
         }
 
