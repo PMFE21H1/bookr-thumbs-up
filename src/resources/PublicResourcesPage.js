@@ -11,6 +11,9 @@ import {
   Nav,
   Card,
 } from "react-bootstrap";
+import "./publicResource.css"
+
+
 export default class PublicResourcesPage extends React.Component {
   constructor(props) {
     super(props);
@@ -29,16 +32,15 @@ export default class PublicResourcesPage extends React.Component {
 
   render() {
     return (
-      <div style={{width:'20rem', marginLeft: 'auto', marginRight:'auto'}}>
-        <Table borderless>
-          <tbody>
+      <div className="public-res-cont" style={{width:"100%", marginLeft: 'auto', marginRight:'auto'}}>
+
+
             {this.state.resources.map((resource) => (
-              <tr>
-                <td>
+
                   <Card style={{textAlign: 'center', width: '18rem', padding: '0px 0px 10px 0px' }}>
                     
                     <Card.Img variant="top" src={resource.imgUrl ? resource.imgUrl : 'defaultBarber.jpg'} />
-                    <Card.Title>{resource.name}</Card.Title>{" "}
+                    <Card.Title className="res-name">{resource.name}</Card.Title>{" "}
                     <Card.Text> {resource.description} </Card.Text>{" "}
                     <Card.Link>
                     <Link to={`/resources/${resource.id}/request-reservation`}>
@@ -47,11 +49,10 @@ export default class PublicResourcesPage extends React.Component {
                     </Link>{" "}
                     </Card.Link>
                   </Card>
-                </td>
-              </tr>
+
             ))}
-          </tbody>
-        </Table>
+
+
       </div>
     );
   }
