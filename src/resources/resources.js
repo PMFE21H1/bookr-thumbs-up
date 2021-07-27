@@ -12,8 +12,6 @@ const firebaseConfig = {
   measurementId: "G-CCWPS19RXP",
 };
 
-// const firebaseApp = initializeApp(firebaseConfig);
-
 export function createResource(resource) {
   if (resource instanceof Resource) {
     if (!resource.id) {
@@ -47,10 +45,11 @@ export function createResource(resource) {
 
 export class Resource {
   //a resource classt kiegeszitettuk egy bemeno parameterrel
-  constructor(name, description, id) {
+  constructor(name, description, imgUrl, id) {
     if (!name) throw new Error("Name can not be empty");
     this.name = name;
     this.id = id;
+    this.imgUrl = imgUrl;
     this.description = description;
   }
 }

@@ -29,24 +29,30 @@ export default class PublicResourcesPage extends React.Component {
 
   render() {
     return (
-      <>
-        <Table>
+      <div style={{width:'20rem', marginLeft: 'auto', marginRight:'auto'}}>
+        <Table borderless>
           <tbody>
             {this.state.resources.map((resource) => (
               <tr>
                 <td>
-                  <Card.Title>{resource.name}</Card.Title>{" "}
-                  <p> {resource.description} </p>{" "}
-                  <Link to={`/resources/${resource.id}/request-reservation`}>
-                    {" "}
-                    Request Reservation{" "}
-                  </Link>{" "}
+                  <Card style={{textAlign: 'center', width: '18rem', padding: '0px 0px 10px 0px' }}>
+                    
+                    <Card.Img variant="top" src={resource.imgUrl ? resource.imgUrl : 'defaultBarber.jpg'} />
+                    <Card.Title>{resource.name}</Card.Title>{" "}
+                    <Card.Text> {resource.description} </Card.Text>{" "}
+                    <Card.Link>
+                    <Link to={`/resources/${resource.id}/request-reservation`}>
+                      {" "}
+                      Request Reservation{" "}
+                    </Link>{" "}
+                    </Card.Link>
+                  </Card>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
-      </>
+      </div>
     );
   }
 }

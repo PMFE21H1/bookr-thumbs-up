@@ -25,13 +25,11 @@ import RequestReservationPage from "./reservations/RequestReservationPage";
 import PublicResourcesPage from "./resources/PublicResourcesPage";
 import UnauthorizedPage from "./authentication/UnauthorizedPage";
 import MyReservationsPage from "./reservations/MyReservationsPage";
-
 import ResourceTaxonomy from "./resources/ResourceTaxonomy";
 import ConfigPage from "./authentication/ConfigPage";
 import Header from "./authentication/Header";
-
+import UploadFile from "./resources/UploadFile";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
-
 import SlotConfig from "./reservations/SlotConfig";
 import UnavailableSlots from "./reservations/UnavailableSlots";
 import HomePage from "./authentication/HomePage";
