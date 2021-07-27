@@ -1,0 +1,12 @@
+.calendar-container {
+  display: flex;
+}
+
+.calendar-container button {
+  flex-grow: 0;
+}
+
+.slots-container {
+  flex-grow: 1;
+  display: flex;
+}
