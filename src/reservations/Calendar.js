@@ -29,14 +29,16 @@ export default class Calendar extends React.Component {
 
 
     render() {
+        let from = this.props.slotStart;
+        let until = this.props.slotEnd;
+        let duration = parseInt(this.props.slotDuration);
 
-        
+        let possibleSlots = calcPossibleSlots(from, until, duration)
 
         let weekStart = this.state.startDay
+        let reservations = this.props.reservations;
         let weekDays = calcWeekDays(weekStart);
-
-        let possibleSlots = calcPossibleSlots(this.props.slotStart, this.props.slotEnd, parseInt(this.props.slotDuration))
-        let slots = calcActualSlots(this.props.reservations, possibleSlots, weekDays);
+        let slots = calcActualSlots(reservations, possibleSlots, weekDays);
 
 
 
