@@ -10,6 +10,7 @@ import { onAuthStateChanged, getAuth, signOut } from "firebase/auth";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "react-bootstrap/Nav";
+import "./header.css"
 
 export default class Header extends Component {
   constructor(props) {
@@ -33,10 +34,15 @@ export default class Header extends Component {
                     if (!user) {
                       return (
                         <>
+
                           <Nav
-                            className="justify-content-center"
+                            className="justify-content-start align-items-center mt-2 nav-cont"
                             activeKey="/home"
                           >
+
+                            <Nav.Item className="navbar-img-cont">
+                              <img src="https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/thumbsup2.png?alt=media&token=5239d2d5-9788-4dd1-880c-17ed64ab4697"/>
+                            </Nav.Item>
                             <Nav.Item>
                               <Nav.Link as={Link} to="/login">
                                 Log In
@@ -59,9 +65,13 @@ export default class Header extends Component {
                       return user.admin ? (
                         <>
                           <Nav
-                            className="justify-content-center"
-                            activeKey="/home"
+                              className="justify-content-start align-items-center mt-2 nav-cont-admin"
+                              activeKey="/home"
                           >
+
+                            <Nav.Item className="navbar-img-cont">
+                              <img src="https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/thumbsup2.png?alt=media&token=5239d2d5-9788-4dd1-880c-17ed64ab4697"/>
+                            </Nav.Item>
                             <Nav.Item>
                               <Nav.Link
                                 as={Link}
@@ -81,14 +91,6 @@ export default class Header extends Component {
                               </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                              <Nav.Link
-                                as={Link}
-                                to="/admin/config/resources/taxonomy"
-                              >
-                                Taxonomy
-                              </Nav.Link>
-                            </Nav.Item>
-                            <Nav.Item>
                               <Nav.Link eventKey="disabled" disabled>
                                 Logged in as Admin
                               </Nav.Link>
@@ -102,9 +104,13 @@ export default class Header extends Component {
                       ) : (
                         <>
                           <Nav
-                            className="justify-content-center"
-                            activeKey="/home"
+                              className="justify-content-start align-items-center mt-2 nav-cont"
+                              activeKey="/home"
                           >
+
+                            <Nav.Item className="navbar-img-cont">
+                              <img src="https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/thumbsup2.png?alt=media&token=5239d2d5-9788-4dd1-880c-17ed64ab4697"/>
+                            </Nav.Item>
                             <Nav.Item>
                               <Nav.Link as={Link} to="/my-reservations">
                                 Reservations
@@ -120,7 +126,7 @@ export default class Header extends Component {
                                 Hello, {user.name}!
                               </Nav.Link>
                             </Nav.Item>
-                            <Button onClick={this.signout}> Log out</Button>
+                            <Button className="logout-btn" onClick={this.signout}> Log out</Button>
                           </Nav>
                         </>
                       );

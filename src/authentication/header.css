@@ -1,0 +1,27 @@
+.navbar-img-cont img{
+    height: 90px;
+    width: 120px;
+    justify-self: start;
+    margin-left: 1vw;
+}
+
+.nav-cont a {
+    color: black;
+    transition: transform 250ms;
+    font-size: larger;
+}
+
+.nav-cont a:hover {
+    color: darkorange;
+    transform: translateY(-5px);
+
+}
+
+.logout-btn{
+    background-color: #e2a44c;
+    border: #e2a44c;
+}
+
+.logout-btn:hover{
+    background-color: darkorange;
+}

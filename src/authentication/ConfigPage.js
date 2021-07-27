@@ -19,9 +19,16 @@ export class ConfigPage extends Component {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link as={Link} to="/admin/config/site">
-              Site
-            </Nav.Link>
+
+              <Nav.Item>
+                <Nav.Link
+                    as={Link}
+                    to="/admin/config/resources/taxonomy"
+                >
+                  Taxonomy
+                </Nav.Link>
+              </Nav.Item>
+
           </Nav.Item>
         </Nav>
       </div>
