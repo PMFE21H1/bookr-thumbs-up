@@ -8,10 +8,12 @@ import { firebaseApp } from "../reservations/reservations";
 import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
 
+
 const storage = getStorage(firebaseApp);
 const barbersRef = ref(storage, 'barbers');
 const barberImgRef = ref(storage, 'barbers/barber.jpg');
 const rootRef = ref(storage)
+
 
 
 export default class CreateResourcePage extends React.Component {
@@ -20,7 +22,7 @@ export default class CreateResourcePage extends React.Component {
     this.state = {
       resourceName: "",
       description: "",
-      file: "default-barber.png",
+      file: null,
     };
   }
 
@@ -36,6 +38,7 @@ export default class CreateResourcePage extends React.Component {
   };
 
   fileChanged = (e) => {
+    console.log(e.target.files[0])
     this.setState({file: e.target.files[0]});
 }
 

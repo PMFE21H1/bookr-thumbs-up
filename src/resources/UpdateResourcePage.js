@@ -6,6 +6,14 @@ import DeleteResourcePage from "./DeleteResourcePage";
 import InputGroup from "react-bootstrap/InputGroup";
 import { FormControl, Button, Nav } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import { firebaseApp } from "../reservations/reservations";
+import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+
+
+const storage = getStorage(firebaseApp);
+const barbersRef = ref(storage, 'barbers');
+const barberImgRef = ref(storage, 'barbers/barber.jpg');
+const rootRef = ref(storage)
 
 export class UpdateResourcePage extends React.Component {
   constructor(props) {
@@ -33,7 +41,7 @@ export class UpdateResourcePage extends React.Component {
           oldResourceName: resource.name,
           //a fetchelt adatokbol setStateltuk a mar meglevo descriptiont
           oldDescription: resource.description,
-          oldImgUrl: resource.imgUrl
+          file: resource.imgUrl
         })
       );
   }
@@ -43,25 +51,41 @@ export class UpdateResourcePage extends React.Component {
       newResourceName: e.target.value,
     });
   };
-  //az uj description kezelesere csinaltunk egy metodust
+  
   updateDescription = (e) => {
     this.setState({
       newDescription: e.target.value,
     });
   };
-  //kiszerveztuk az onClickben megirt korabbi feladatokat
+  
   handleApply = () => {
     try {
-      updateResource(this.state.resourceID, {
-        name: this.state.newResourceName,
-        description: this.state.newDescription,
-      }).then(() =>
+      const barberImgRef = ref(storage, `barbers/${this.state.file.name}`);
+      uploadBytes(barberImgRef, this.state.file)
+      .then(() => getDownloadURL(barberImgRef)
+      )
+
+      .then(url => {
+    
+        updateResource(this.state.resourceID, {
+          name: this.state.newResourceName,
+          description: this.state.newDescription,
+          imgUrl: url
+        })
+      })
+
+      .then(() =>
         this.props.history.push(`/admin/${this.context.resources}`)
       );
     } catch (e) {
       alert(e.message);
     }
   };
+
+  fileChanged = (e) => {
+    console.log(e.target.files[0])
+    this.setState({file: e.target.files[0]});
+}
 
   render() {
     return (
@@ -81,6 +105,13 @@ export class UpdateResourcePage extends React.Component {
                 aria-describedby="inputGroup-sizing-lg"
               />
             </InputGroup>
+
+            <h6 className="shadow-sm tect-success mt-5 p-3 text-center rounded">
+                  {" "}
+                  Image{" "}
+            </h6>
+
+            <input type="file" onChange={this.fileChanged}></input>
 
             <InputGroup
               controlId="floatingTextarea"

@@ -36,7 +36,8 @@ export default class PublicResourcesPage extends React.Component {
               <tr>
                 <td>
                   <Card style={{textAlign: 'center', width: '18rem', padding: '0px 0px 10px 0px' }}>
-                    <Card.Img variant="top" src={resource.imgUrl} />
+                    
+                    <Card.Img variant="top" src={resource.imgUrl ? resource.imgUrl : 'defaultBarber.jpg'} />
                     <Card.Title>{resource.name}</Card.Title>{" "}
                     <Card.Text> {resource.description} </Card.Text>{" "}
                     <Card.Link>
