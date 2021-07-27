@@ -17,3 +17,34 @@
 .public-res-cont .res-name {
     color: #e2a44c;
 }
+
+.pub-res{
+    width:20vw;
+    height: 20vw;
+    background-size: 20vw;
+    border-radius: 50%;
+    margin: 3vw;
+}
+
+.public-res-container{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap:wrap;
+
+}
+
+.public-res-inner-container{
+    text-align:center;
+    margin-top:2vw;
+    padding: 1vw;
+    display:none;
+
+}
+
+.pub-res:hover .public-res-inner-container{
+    display: block;
+}
+
+.pub-res:hover{
+    background-image: none;
+}
