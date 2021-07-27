@@ -57,3 +57,9 @@ input:-webkit-autofill:active{
 .loginh3{
     color: white;
 }
+
+.log-btn{
+    margin-top: 10px;
+    width: 100%;
+    color: white !important;
+}

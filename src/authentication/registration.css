@@ -13,9 +13,16 @@
 
 .registration-cont button{
     background-color: #e2a44c;
-    border: orange;
+    border-color: orange;
 }
 
 .registration-cont button:hover{
     background-color: orange;
+    border-color: white;
+}
+
+.reg-btn{
+    margin-top: 10px;
+    width: 100%;
+    color: white !important;
 }

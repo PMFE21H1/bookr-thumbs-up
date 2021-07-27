@@ -115,7 +115,7 @@ export default class RegistrationPage extends Component {
           ></Form.Control>
           <Button
               size="lg"
-              className="mt-4 "
+              className="mt-4 reg-btn"
               variant="info btn-block"
               onClick={(e) => {
                 e.preventDefault();

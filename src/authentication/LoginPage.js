@@ -95,7 +95,7 @@ export default class LoginPage extends React.Component {
               value={this.state.password}
             /> */}
                 <Button
-                    className="login-submit-button"
+                    className="login-submit-button log-btn"
                     variant="info btn-block"
                     type="submit"
                     onClick={(e) => {
