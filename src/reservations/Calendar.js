@@ -28,6 +28,7 @@ export default class Calendar extends React.Component {
 
 
     render() {
+
         let weekStart = this.state.startDay
         let daydates = [weekStart]
         for(let i = 1; i <= 6; i++){
@@ -41,10 +42,11 @@ export default class Calendar extends React.Component {
             slots: this.props.slotArr.map(slotData => {
                 let datePart = daydate.toISOString().split("T")[0];
                 let timePart = slotData.split("-")[0];
-                let slotStart = constructTimestamp(datePart, timePart)
-                console.log(this.props.reservations)
+                let slotStart = constructTimestamp(datePart, timePart);
                 //emlékeztető: a reserved slotokon belül két külön eset a reserved és a pending
-                if(this.props.reservations.find(r => r.slot == slotStart))return slotStart + "(reserved)"
+
+                let isReserved = this.props.reservations.find(r => r.slot == slotStart);
+                if(isReserved) return slotStart + "(reserved)"
                 //idejön majd egy másik if-be az unavailable slot vizsgálat meg a pending
                 return slotStart
             })
