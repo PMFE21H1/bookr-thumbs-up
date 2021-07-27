@@ -1,0 +1,21 @@
+.registration-cont{
+    background-color: black;
+    border-radius: 5px;
+    opacity: 90%;
+    color: white;
+}
+
+.registration-super-container{
+    max-width: 100%;
+    margin: 0px;
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/1936586.jpg?alt=media&token=fb13e09e-1fcc-4052-8cea-2afedbad31f9");
+}
+
+.registration-cont button{
+    background-color: #e2a44c;
+    border: orange;
+}
+
+.registration-cont button:hover{
+    background-color: orange;
+}
