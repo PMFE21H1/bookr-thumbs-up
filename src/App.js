@@ -34,6 +34,7 @@ import { onAuthStateChanged, getAuth } from "firebase/auth";
 
 import SlotConfig from "./reservations/SlotConfig";
 import UnavailableSlots from "./reservations/UnavailableSlots";
+import HomePage from "./authentication/HomePage";
 
 
 
@@ -114,6 +115,7 @@ class App extends React.Component {
 
                     <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
                         <Switch>
+
 
                             <Route path="/registration">
                                 <RegistrationPage onLogIn={this.logIn}/>
@@ -233,6 +235,9 @@ class App extends React.Component {
                                 render={(props) => <ConfigPage {...props} />}
 
                             ></PrivateRoute>
+                            <Route path="/">
+                                <HomePage/>
+                            </Route>
 
                         </Switch>
                     </UsersDatabaseContext.Provider>
