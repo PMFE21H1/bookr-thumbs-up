@@ -39,7 +39,7 @@ export default class Calendar extends React.Component {
                     })
         }
 
-        function calcDays(reservations, slotArr) {
+        function calcDays(reservations, slotArr, daydates) {
             return daydates.map(daydate => ({
                 text: daydate.toISOString(),
                 slots: slotArr.map(slotData => {
@@ -58,15 +58,20 @@ export default class Calendar extends React.Component {
             }))
         }
 
-        let weekStart = this.state.startDay
-        let daydates = [weekStart]
-        for(let i = 1; i <= 6; i++){
-            let nextDay = nextDayStart(daydates[i-1])
-            daydates.push(nextDay)
+        function calcWeekDays(from) {
+            let days = [from];
+            for(let i = 1; i <= 6; i++){
+                let next = nextDayStart(days[i-1])
+                days.push(next)
+            }
+            return days;
         }
 
+        let weekStart = this.state.startDay
+        let daydates = calcWeekDays(weekStart);
+
         let slots = generateSlots(this.props.slotStart, this.props.slotEnd, parseInt(this.props.slotDuration))
-        let days = calcDays(this.props.reservations, slots);
+        let days = calcDays(this.props.reservations, slots, daydates);
 
 
 
