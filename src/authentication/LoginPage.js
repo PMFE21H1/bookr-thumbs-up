@@ -62,7 +62,7 @@ export default class LoginPage extends React.Component {
             >
               <div className="login-container"> <Form>
                 <Form.Group controlId="FormBasicEmail">
-                  <Form.Label>Email address</Form.Label>
+                  <Form.Label>Email Address</Form.Label>
                   <Form.Control
                       type="email"
                       placeholder="Enter email"
