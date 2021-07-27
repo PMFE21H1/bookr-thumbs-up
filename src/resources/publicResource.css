@@ -35,16 +35,24 @@
 
 .public-res-inner-container{
     text-align:center;
-    margin-top:2vw;
+    margin-top:-25%;
     padding: 1vw;
     display:none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    ;
+
 
 }
 
-.pub-res:hover .public-res-inner-container{
+
+.public-resource-display-container{
+    position: relative;
+}
+
+.public-resource-display-container:hover .public-res-inner-container{
     display: block;
-}
 
-.pub-res:hover{
-    background-image: none;
 }

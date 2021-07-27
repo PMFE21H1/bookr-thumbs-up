@@ -117,7 +117,7 @@ export default class Header extends Component {
                               </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                              <Nav.Link as={Link} to={`/${taxonomy.resources}`}>
+                              <Nav.Link as={Link} to={`/${taxonomy.url}`}>
                                 Public {taxonomy.resources}
                               </Nav.Link>
                             </Nav.Item>
