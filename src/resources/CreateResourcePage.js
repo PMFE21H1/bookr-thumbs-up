@@ -7,6 +7,7 @@ import UploadFile from "./UploadFile";
 import { firebaseApp } from "../reservations/reservations";
 import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
 
+
 const storage = getStorage(firebaseApp);
 const barbersRef = ref(storage, 'barbers');
 const barberImgRef = ref(storage, 'barbers/barber.jpg');
@@ -19,7 +20,7 @@ export default class CreateResourcePage extends React.Component {
     this.state = {
       resourceName: "",
       description: "",
-      imgUrl: null,
+      file: "default-barber.png",
     };
   }
 
@@ -85,11 +86,12 @@ export default class CreateResourcePage extends React.Component {
                       
                       const barberImgRef = ref(storage, `barbers/${this.state.file.name}`);
                       uploadBytes(barberImgRef, this.state.file)
+                      
                       .then(() => getDownloadURL(barberImgRef)
-
                       )
+
                       .then(url => {
-                        console.log(url)
+                    
                         createResource(
                           new Resource(
                            this.state.resourceName,

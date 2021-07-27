@@ -17,6 +17,9 @@ export class UpdateResourcePage extends React.Component {
       // felvettuk a descriptionokat a statbe, hasonlo mintara mint a resourcok amik mar benne voltak
       oldDescription: "",
       newDescription: "",
+      oldImgUrl:null,
+      newImgUrl: null,
+
     };
   }
 
@@ -30,6 +33,7 @@ export class UpdateResourcePage extends React.Component {
           oldResourceName: resource.name,
           //a fetchelt adatokbol setStateltuk a mar meglevo descriptiont
           oldDescription: resource.description,
+          oldImgUrl: resource.imgUrl
         })
       );
   }
