@@ -1,6 +1,4 @@
 import React from "react";
-import timeslotter from "time-slotter"
-import {listReservations} from "./reservations";
 import timeSlotter from "time-slotter";
 import { DAYMILLISEX, nextDayStart, dayName, calcWeekStart, constructTimestamp, extractDay, extractTime } from "./dates";
 
