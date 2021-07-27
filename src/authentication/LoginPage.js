@@ -50,7 +50,7 @@ export default class LoginPage extends React.Component {
       <>
         <Container className="login-super-container">
 
-          <h3 className="shadow-sm tect-success mt-5 p-3 text-center rounded loginh3">
+          <h3 className="shadow-sm tect-success mt-3 p-3 text-center rounded loginh3">
             Log In
           </h3>
           <Row className="mt-5">
