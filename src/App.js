@@ -33,7 +33,7 @@ import { onAuthStateChanged, getAuth } from "firebase/auth";
 import SlotConfig from "./reservations/SlotConfig";
 import UnavailableSlots from "./reservations/UnavailableSlots";
 import HomePage from "./authentication/HomePage";
-import Calendar from "./reservations/Calendar";
+import CalendarPage from "./reservations/CalendarPage";
 
 
 
@@ -115,7 +115,7 @@ class App extends React.Component {
                     <UsersDatabaseContext.Provider value={this.state.usersFromDatabase}>
                         <Switch>
 
-
+                        <Route path ="/calendar"><CalendarPage /></Route>
                             <Route path="/registration">
                                 <RegistrationPage onLogIn={this.logIn}/>
                             </Route>
@@ -234,11 +234,10 @@ class App extends React.Component {
                                 render={(props) => <ConfigPage {...props} />}
 
                             ></PrivateRoute>
-                            <Route path="/">
+                            <Route path="/" exact>
                                 <HomePage/>
                             </Route>
 
-                            <Route path ="/calendar"><Calendar resourceId ="-Mf730Rkc7khOjLlePci"  /></Route>
 
                         </Switch>
                     </UsersDatabaseContext.Provider>
