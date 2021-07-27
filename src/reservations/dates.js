@@ -25,3 +25,7 @@ export function nextDayStart (day){
     return new Date(day.getTime()+DAYMILLISEX)
   
 }
+
+export function constructTimestamp(date, time) {
+  return `${date}T${time}`;
+}

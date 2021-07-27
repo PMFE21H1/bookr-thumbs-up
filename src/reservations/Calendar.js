@@ -1,7 +1,7 @@
 import React from "react";
 import timeslotter from "time-slotter"
 import {listReservations} from "./reservations";
-import { DAYMILLISEX, nextDayStart, dayName, calcWeekStart } from "./dates";
+import { DAYMILLISEX, nextDayStart, dayName, calcWeekStart, constructTimestamp } from "./dates";
 
 
 export default class Calendar extends React.Component {
@@ -39,7 +39,9 @@ export default class Calendar extends React.Component {
         let days = daydates.map(daydate => ({
             text: daydate.toISOString(),
             slots: this.props.slotArr.map(slotData => {
-                let slotStart = `${daydate.toISOString().split("T")[0]}T${slotData.split("-")[0]}`
+                let datePart = daydate.toISOString().split("T")[0];
+                let timePart = slotData.split("-")[0];
+                let slotStart = constructTimestamp(datePart, timePart)
                 console.log(this.props.reservations)
                 //emlékeztető: a reserved slotokon belül két külön eset a reserved és a pending
                 if(this.props.reservations.find(r => r.slot == slotStart))return slotStart + "(reserved)"
