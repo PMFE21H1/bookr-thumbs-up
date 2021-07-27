@@ -2,6 +2,7 @@ import React from "react";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { listUsersFromDatabase, getUserByUid } from "./authentication";
 import { tsImportEqualsDeclaration } from "@babel/types";
+import "./login.css"
 
 import {Col, Container, Row, Form, Button, Image} from "react-bootstrap";
 
