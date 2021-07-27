@@ -30,7 +30,7 @@ export default class Calendar extends React.Component {
 
     render() {
 
-        function generateSlots(from, until, steps) {
+        function calcPossibleSlots(from, until, steps) {
             return timeSlotter(from, until, steps)
                     .map(slotArr=>{
                         let slot=`${slotArr[0]}-${slotArr[1]}`
@@ -39,7 +39,7 @@ export default class Calendar extends React.Component {
                     })
         }
 
-        function calcDays(reservations, slotArr, daydates) {
+        function calcActualSlots(reservations, slotArr, daydates) {
             return daydates.map(daydate => ({
                 text: daydate.toISOString(),
                 slots: slotArr.map(slotData => {
@@ -68,17 +68,17 @@ export default class Calendar extends React.Component {
         }
 
         let weekStart = this.state.startDay
-        let daydates = calcWeekDays(weekStart);
+        let weekDays = calcWeekDays(weekStart);
 
-        let slots = generateSlots(this.props.slotStart, this.props.slotEnd, parseInt(this.props.slotDuration))
-        let days = calcDays(this.props.reservations, slots, daydates);
+        let possibleSlots = calcPossibleSlots(this.props.slotStart, this.props.slotEnd, parseInt(this.props.slotDuration))
+        let slots = calcActualSlots(this.props.reservations, possibleSlots, weekDays);
 
 
 
         return (
             //a next gomb hasonló módon függ működni csak nem kivonjuk hanem hozzáadjuk a heti millisexet
             <>  <button onClick={this.previousWeek}>Previous</button>
-                {days.map(day =>
+                {slots.map(day =>
                     <div>
                         <div>
                             {day.text}
