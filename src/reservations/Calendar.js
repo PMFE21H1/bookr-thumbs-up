@@ -30,6 +30,32 @@ export default class Calendar extends React.Component {
 
     render() {
 
+        
+
+        let weekStart = this.state.startDay
+        let weekDays = calcWeekDays(weekStart);
+
+        let possibleSlots = calcPossibleSlots(this.props.slotStart, this.props.slotEnd, parseInt(this.props.slotDuration))
+        let slots = calcActualSlots(this.props.reservations, possibleSlots, weekDays);
+
+
+
+        return (
+            //a next gomb hasonló módon függ működni csak nem kivonjuk hanem hozzáadjuk a heti millisexet
+            <>  <button onClick={this.previousWeek}>Previous</button>
+                {slots.map(day =>
+                    <div>
+                        <div>
+                            {day.text}
+                            <br/>{dayName(day)}
+                        </div>
+                        {/* itt kell majd átirni hogy ne direkt módon jelenitsük meg a slotot hanem a css classt és szöveget egy objectben kapjuk meg*/}
+                        {day.slots.map(slot => <div>{slot}</div>)}
+                    </div>)
+                }
+            </>
+        )
+
         function calcPossibleSlots(from, until, steps) {
             return timeSlotter(from, until, steps)
                     .map(slotArr=>{
@@ -66,30 +92,6 @@ export default class Calendar extends React.Component {
             }
             return days;
         }
-
-        let weekStart = this.state.startDay
-        let weekDays = calcWeekDays(weekStart);
-
-        let possibleSlots = calcPossibleSlots(this.props.slotStart, this.props.slotEnd, parseInt(this.props.slotDuration))
-        let slots = calcActualSlots(this.props.reservations, possibleSlots, weekDays);
-
-
-
-        return (
-            //a next gomb hasonló módon függ működni csak nem kivonjuk hanem hozzáadjuk a heti millisexet
-            <>  <button onClick={this.previousWeek}>Previous</button>
-                {slots.map(day =>
-                    <div>
-                        <div>
-                            {day.text}
-                            <br/>{dayName(day)}
-                        </div>
-                        {/* itt kell majd átirni hogy ne direkt módon jelenitsük meg a slotot hanem a css classt és szöveget egy objectben kapjuk meg*/}
-                        {day.slots.map(slot => <div>{slot}</div>)}
-                    </div>)
-                }
-            </>
-        )
     }
 
 }
