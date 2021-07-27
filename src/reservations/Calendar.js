@@ -30,6 +30,15 @@ export default class Calendar extends React.Component {
 
     render() {
 
+        function generateSlots(from, until, steps) {
+            return timeSlotter(from, until, steps)
+                    .map(slotArr=>{
+                        let slot=`${slotArr[0]}-${slotArr[1]}`
+                        console.log(slotArr[0])
+                        return slotArr[0];
+                    })
+        }
+
         function calcDays(reservations, slotArr) {
             return daydates.map(daydate => ({
                 text: daydate.toISOString(),
@@ -56,12 +65,7 @@ export default class Calendar extends React.Component {
             daydates.push(nextDay)
         }
 
-        let slots = timeSlotter(this.props.slotStart, this.props.slotEnd, parseInt(this.props.slotDuration))
-            .map(slotArr=>{
-                let slot=`${slotArr[0]}-${slotArr[1]}`
-                console.log(slotArr[0])
-                return slotArr[0];
-            })
+        let slots = generateSlots(this.props.slotStart, this.props.slotEnd, parseInt(this.props.slotDuration))
         let days = calcDays(this.props.reservations, slots);
 
 
