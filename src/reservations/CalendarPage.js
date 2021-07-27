@@ -9,25 +9,29 @@ export default class CalendarPage extends React.Component {
     super(props);
     this.state ={
         startDay: calcWeekStart(),
-        slotArr: []
+        slotArr: [],
+        slotConfig: null
     }
   }
   
   componentDidMount() {
     fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/slotConfig.json")
             .then(response=>response.json())
-            .then(slotConfig=>{
+            .then(slotConfig => {
                 listReservations().then(reservations => reservations.filter(r => r.resource == this.props.resourceId) )
                     .then(filteredReservations => {
                         let generatedSlotArr=[];
                         let timeSlotter = require('time-slotter');
                         timeSlotter(slotConfig.start, slotConfig.end, parseInt(slotConfig.duration))
                             .forEach(slotArr=>{
-                                let slot=`${slotArr[0]}-${slotArr[1]}`
-                                generatedSlotArr.push(slot);
-                                console.log(slotArr[0])
+                                // FIGYELEM:
+                                // csak a kezdő időpontot pusholjuk, hogy egységes lehessen a calendar prop api
+                                // - a calendaron belülre került a timeslotteres kiegészítés másik fele
+                                // - így a többi csapat timeslotter nélkül is fel tudja használni a komponenst, mivel a
+                                //   bemenő adatok nem timeslotterspecifikus formátumban vannak
+                                generatedSlotArr.push(slotArr[0]);
                             })
-                        this.setState({slotArr:generatedSlotArr , reservations: filteredReservations })
+                        this.setState({slotArr:generatedSlotArr , reservations: filteredReservations, slotConfig: slotConfig })
                     })
 
                 }
@@ -35,6 +39,8 @@ export default class CalendarPage extends React.Component {
   }
   
   render() {
-    return <Calendar slotArr={this.state.slotArr} reservations={this.state.reservations} resourceId ="-Mf730Rkc7khOjLlePci"  />
+    // amíg nincs slotConfig, nem tudjuk megjeleníteni a calendart
+    if (!this.state.slotConfig) return null;
+    return <Calendar slotArr={this.state.slotArr} reservations={this.state.reservations} resourceId ="-Mf730Rkc7khOjLlePci" slotStart={this.state.slotConfig.start} slotEnd={this.state.slotConfig.end} slotDuration={this.state.slotConfig.duration} />
   }
 }

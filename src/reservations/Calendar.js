@@ -1,6 +1,7 @@
 import React from "react";
 import timeslotter from "time-slotter"
 import {listReservations} from "./reservations";
+import timeSlotter from "time-slotter";
 import { DAYMILLISEX, nextDayStart, dayName, calcWeekStart, constructTimestamp } from "./dates";
 
 
@@ -55,7 +56,13 @@ export default class Calendar extends React.Component {
             daydates.push(nextDay)
         }
 
-        let days = calcDays(this.props.reservations, this.props.slotArr);
+        let slots = timeSlotter(this.props.slotStart, this.props.slotEnd, parseInt(this.props.slotDuration))
+            .map(slotArr=>{
+                let slot=`${slotArr[0]}-${slotArr[1]}`
+                console.log(slotArr[0])
+                return slotArr[0];
+            })
+        let days = calcDays(this.props.reservations, slots);
 
 
 
