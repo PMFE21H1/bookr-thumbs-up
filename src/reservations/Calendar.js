@@ -63,7 +63,7 @@ export default class Calendar extends React.Component {
                     .map(slotArr=>{
                         let slot=`${slotArr[0]}-${slotArr[1]}`
                         console.log(slotArr[0])
-                        return slotArr[0];
+                        return slot;
                     })
         }
 
