@@ -1,6 +1,7 @@
 import React from "react";
 import timeSlotter from "time-slotter";
-import { DAYMILLISEX, nextDayStart, dayName, calcWeekStart, constructTimestamp, extractDay, extractTime } from "./dates";
+import { DAYMILLISEX, nextDayStart, dayName, calcWeekStart, constructTimestamp, extractDay, extractTime } from "../dates";
+import "./calendar.css"
 
 
 export default class Calendar extends React.Component {
@@ -42,18 +43,22 @@ export default class Calendar extends React.Component {
 
         return (
             //a next gomb hasonló módon függ működni csak nem kivonjuk hanem hozzáadjuk a heti millisexet
-            <>  <button onClick={this.previousWeek}>Previous</button>
-                {slots.map(day =>
-                    <div>
+            <div className="calendar-container">
+                <button onClick={this.previousWeek}>Previous</button>
+                <div className="slots-container">
+                    {slots.map(day =>
                         <div>
-                            {day.text}
-                            <br/>{dayName(day)}
-                        </div>
-                        {/* itt kell majd átirni hogy ne direkt módon jelenitsük meg a slotot hanem a css classt és szöveget egy objectben kapjuk meg*/}
-                        {day.slots.map(slot => <div>{slot}</div>)}
-                    </div>)
-                }
-            </>
+                            <div>
+                                {day.text}
+                                <br/>{dayName(day)}
+                            </div>
+                            {/* itt kell majd átirni hogy ne direkt módon jelenitsük meg a slotot hanem a css classt és szöveget egy objectben kapjuk meg*/}
+                            {day.slots.map(slot => <div>{slot}</div>)}
+                        </div>)
+                    }
+                </div>
+                <button onClick={this.previousWeek}>Next</button>
+            </div>
         )
 
         function calcPossibleSlots(from, until, steps) {
