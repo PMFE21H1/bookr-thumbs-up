@@ -63,3 +63,11 @@ input:-webkit-autofill:active{
     width: 100%;
     color: white !important;
 }
+.reg-click{
+    text-align: center;
+    font-size: larger;
+    margin-top: 15px;
+}
+.reg-click a{
+    color: orange;
+}
