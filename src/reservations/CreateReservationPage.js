@@ -128,6 +128,7 @@ export default class CreateReservationPage extends Component {
 
                     <Button
                       variant="primary btn-block"
+                      style={{marginTop: "1vw", marginRight: "1vw"}}
                       type="submit"
                       onClick={(e) => {
                         console.log(user);
@@ -138,6 +139,7 @@ export default class CreateReservationPage extends Component {
                     </Button>
 
                     <Button
+                        style={{marginTop: "1vw"}}
                       variant="danger btn-block"
                       type="submit"
                       onClick={() =>
