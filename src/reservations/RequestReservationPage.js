@@ -1,35 +1,34 @@
 import React, { Component } from "react";
 import SlotSelector from "./SlotSelector";
-import {
-  createReservation,
-  listReservations,
-  Reservation,
-} from "./reservations";
-import { AuthContext, UsersDatabaseContext } from "../context/context";
-import { Link } from "react-router-dom";
+import {createReservation, listReservations, Reservation} from "./reservations";
+import {AuthContext, UsersDatabaseContext} from "../context/context"
+import {Link} from "react-router-dom";
+import Swal from 'sweetalert2';
 import { Form, Container, Row, Col, Nav, Button } from "react-bootstrap";
 import "./requestReservationPage.css"
-export default class RequestReservationPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      reservations: [],
-    };
-  }
 
-  componentDidMount() {
-    listReservations().then((reservations) =>
-      this.setState({
-        reservations: reservations,
-      })
-    );
-  }
-  changeSlot = (date, time) => {
-    this.setState({
-      date: date,
-      time: time,
-    });
-  };
+export default class RequestReservationPage extends Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            reservations: []
+        }
+    }
+
+    componentDidMount() {
+        listReservations()
+            .then((reservations) => this.setState({
+                    reservations: reservations
+                })
+            )
+    }
+    changeSlot=(date, time) => {
+        this.setState({
+            date: date,
+            time: time
+        })
+    }
+
 
   render() {
     return (
@@ -68,13 +67,23 @@ export default class RequestReservationPage extends Component {
                                   "pending"
                                 )
                               )
-                                .catch((e) => alert(e.message))
-                                .then(() =>
-                                  this.props.history.push("/my-reservations")
-                                );
-                            } catch (error) {
-                              alert(error);
-                            }
+                              .then(() => this.props.history.push("/my-reservations"))
+                              .catch((e) => {
+                              console.log(e)
+                              Swal.fire({
+                                title: "Failed to create a reservation!",
+                                text: `${e.message}`,
+                                icon: "error",
+                                confirmButtonText:"OK"})
+                            })
+          
+                        } catch(error) {
+                            console.log(e)
+                            Swal.fire({
+                            title: "Failed to create a reservation!",
+                            text: `${error.message}`,
+                            icon: "error",
+                            confirmButtonText:"OK"})}
                           }}
                         >
                           {" "}

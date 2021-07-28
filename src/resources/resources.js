@@ -1,4 +1,5 @@
-import {initializeApp} from "firebase/app";
+import { initializeApp } from "firebase/app";
+import Swal from "sweetalert2";
 import {deleteReservation} from "../reservations/reservations"
 
 const firebaseConfig = {
@@ -14,21 +15,29 @@ const firebaseConfig = {
 };
 
 export function createResource(resource) {
-    if (resource instanceof Resource) {
-        if (!resource.id) {
-            return fetch(
-                "https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources.json",
-                {
-                    body: JSON.stringify(resource),
-                    method: "POST",
-                }
-            )
-                .then((response) => {
-                    if (response.status === 200) {
-                        alert("Successful resource creation!");
-                    } else {
-                        alert("Unsuccessful!");
-                    }
+  if (resource instanceof Resource) {
+    if (!resource.id) {
+      return fetch(
+        "https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources.json",
+        {
+          body: JSON.stringify(resource),
+          method: "POST",
+        }
+      )
+        .then((response) => {
+          if (response.status === 200) {
+            Swal.fire({
+              title: "Successful resource creation!",
+              text: "You have created a resource.",
+              icon: "success",
+              confirmButtonText:"OK"})
+          } else {
+            Swal.fire({
+              title: "Failed to create a resource!",
+              text: `Check if you have filled all required fields!`,
+              icon: "error",
+              confirmButtonText:"OK"});
+          }
 
                     return response.json();
                 })
@@ -45,7 +54,6 @@ export function createResource(resource) {
 }
 
 export class Resource {
-    //a resource classt kiegeszitettuk egy bemeno parameterrel
     constructor(name, description, imgUrl, id) {
         if (!name) throw new Error("Name can not be empty");
         this.name = name;
@@ -127,15 +135,15 @@ export function updateResource(id, patch) {
                 )
                     .then((response) => response.json())
 
-
-                    .then((patchedObject) => {
-                        alert("Resource succesfully changed : " + patchedObject.name)
-                        console.log(patchedObject)
-                        return patchedObject
-                    })
-            }
-        }
-        ;
-    });
-
+          .then((patchedObject) => {
+            Swal.fire({
+              title: "Success!",
+              text: "Resource succesfully changed : " + patchedObject.name,
+              icon: "success",
+              confirmButtonText:"OK"})
+            return patchedObject
+          })
+      }
+    };
+  });
 }

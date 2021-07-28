@@ -1,8 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import { configSlot } from "./reservations";
+import React from 'react'
+import {Link} from "react-router-dom";
+import {configSlot} from "./reservations"
+import Swal from 'sweetalert2';
 import { Form, Container, Row, Col, Nav, Button } from "react-bootstrap";
 import "./slotConfig.css";
+
 export default class SlotConfig extends React.Component {
   constructor(props) {
     super(props);
@@ -39,7 +41,11 @@ export default class SlotConfig extends React.Component {
         this.state.slotConfig.duration
       );
     } catch (e) {
-      alert(e.message);
+        Swal.fire({
+            title: "Failed to config the slot!",
+            text: `${e.message}`,
+            icon: "error",
+            confirmButtonText:"OK"})
     }
   };
 

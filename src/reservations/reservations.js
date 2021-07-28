@@ -1,6 +1,8 @@
 import {initializeApp} from "firebase/app";
 import { getUserByUid } from "../authentication/authentication";
 import {Resource} from "../resources/resources";
+import Swal from 'sweetalert2';
+import { UsersDatabaseContext } from "../context/context";
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",
@@ -35,7 +37,6 @@ export function createReservation(reservation) {
 
     if (!(reservation instanceof Reservation)) throw new Error('reservation is not instanceof Reservation')
 
-    //reservation-ok lekérése, annak leellenőrzése, hogy van e már erre az időpontra és resource-ra foglalás
     return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json")
         .then(response => response.json())
         .then(reservations => {
@@ -47,9 +48,8 @@ export function createReservation(reservation) {
                     throw new Error("No available slot for this spot!")
                 }
             }
-            //új reservation létrehozása
+
             if (!exists) {
-                //posttal elküldjük az adatokat a firebasre
                 return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json", {
                     body: JSON.stringify({
                         customerUid: reservation.customerUid,
@@ -59,31 +59,33 @@ export function createReservation(reservation) {
                     }),
                     method: "POST"
                 }).then(response => {
-                    //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
+
                     if (response.status === 200) {
-                        alert("Successful reservation creation!")
+                        Swal.fire({
+                            title: "Successful reservation!",
+                            icon: "success",
+                            confirmButtonText:"OK"})
                     } else {
-                        alert("Unsuccessful!")
+                        Swal.fire({
+                            title: "Failed to made a reservation!",
+                            text: `Check if you have filled all required fields!`,
+                            icon: "error",
+                            confirmButtonText:"OK"})
                     }
 
                     return response.json()
                 })
-                    //user reservation tömbbe belerakjuk az új reservation ID-t
+
                     .then(data => {
-                            //fetcheljük a user reservations kulcson lévő adatait
                         return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`)
 
                             .then(response => response.json())
                             .then(data2 => {
-                                //ha null, akkor létrehozzuk a tömbböt és beleírjuk a reservation id-t
                                 if (data2 === null) {
                                     data2 = [data.name]
-                                    //ha már létezik a kulcs és azon a tömb, akkor belepusholjuk az új reservation id-t
                                 } else {
                                     data2.push(data.name);
-
                                 }
-                                //beletesszük fetchel az új reservation id-t
                                 return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`,
                                     {
                                         body: JSON.stringify(data2),
@@ -98,6 +100,7 @@ export function createReservation(reservation) {
 
 
 export function updateReservation(id, newData) {
+     
     if (!newData.customerUid) {
         throw new Error('Customer can not be empty')
     }
@@ -112,22 +115,34 @@ export function updateReservation(id, newData) {
         throw new Error("Update is invalid")
     }
 
+
     for (let k in newData) {
         if (k !== "slot" && k !== "customerUid" && k !== "resource") {
             throw new Error("Partial update is invalid")
         }
     }
 
+
+
     return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${id}.json`, {
         body: JSON.stringify(newData),
         method: "PATCH"
-    }).then(response => response.json()).then(() =>
+    }).then(response => response.json())
+    .then(() =>
         fetch(
             `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${id}.json`, {
                 method: "GET"
-            }).then(
-            response => response.json()).then(updatedObject => alert('successful update: ' + updatedObject.customerUid)))
-
+            })
+            .then(response => response.json())
+            .then(() => {
+  
+            Swal.fire({
+                title: "Successful update!",
+                icon: "success",
+                confirmButtonText:"OK"})
+            }
+                ))
+                
 
 }
 
@@ -185,7 +200,11 @@ return fetch (`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabas
     .then(() => {
         console.log(id)
         return deleteReservationFromDatabase(id)})
-    .catch((e)=> alert(e.message))
+    .catch((e)=> Swal.fire({
+        title: "Failed to delete reservation!",
+        text: `${e.message}`,
+        icon: "error",
+        confirmButtonText:"OK"}))
 }
 
 function UpdateUsersReservationsArray(uid, array){
@@ -273,7 +292,12 @@ export function configSlot(start, end, duration){
             duration:duration
         }),
         method: "PUT"
-    }).then(()=>alert("Successful slot configuration"))
+    }).then(()=> Swal.fire({
+        title: "Success!",
+        text: "Successful slot configuration",
+        icon: "success",
+        confirmButtonText:"OK"})
+    )
 }
 
 export function unavailableSlot(resourceId, date, time){
@@ -287,7 +311,13 @@ export function unavailableSlot(resourceId, date, time){
             slot:`${date}T${time}`
         }),
         method: "POST"
-    }).then(()=>alert("Successful save"))
+    }).then(() => Swal.fire({
+        title: "Success!",
+        text: "Successful save",
+        icon: "success",
+        confirmButtonText:"OK"})
+    
+    )
 }
 
 

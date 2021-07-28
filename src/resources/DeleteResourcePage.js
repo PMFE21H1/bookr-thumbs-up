@@ -7,6 +7,7 @@ import { UpdateResourcePage } from "./UpdateResourcePage";
 import Table from "react-bootstrap/Table";
 import { Button, ListGroup, Nav } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
+import Swal from "sweetalert2";
 
 export default class DeleteResourcePage extends React.Component {
   constructor(props) {
@@ -18,7 +19,6 @@ export default class DeleteResourcePage extends React.Component {
   }
 
   componentDidMount() {
-    //lekérem az összes reservation adatát, hogy ki tudjam írni a relevánsakat
     listReservations().then((reservations) =>
       this.setState({
         reservations: reservations,
@@ -43,7 +43,11 @@ export default class DeleteResourcePage extends React.Component {
         this.props.history.push(`/admin/config/${this.context.url}`)
       });
     } catch (e) {
-      alert(e.message);
+      Swal.fire({
+        title: "Failed to delete the resource!",
+        text: `${e.message}`,
+        icon: "error",
+        confirmButtonText:"OK"})
     }
   };
 

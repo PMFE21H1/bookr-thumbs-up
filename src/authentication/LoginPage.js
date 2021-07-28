@@ -4,6 +4,7 @@ import { listUsersFromDatabase, getUserByUid } from "./authentication";
 import { tsImportEqualsDeclaration } from "@babel/types";
 import "./login.css";
 import { Link } from "react-router-dom"
+import Swal from 'sweetalert2'
 
 import { Col, Container, Row, Form, Button, Image } from "react-bootstrap";
 
@@ -43,6 +44,11 @@ export default class LoginPage extends React.Component {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        Swal.fire({
+          title: "Wrong login details!",
+          text: `${errorMessage}`,
+          icon: "error",
+          confirmButtonText:"OK"})
       });
   };
 
@@ -50,6 +56,13 @@ export default class LoginPage extends React.Component {
     return (
       <>
         <Container className="login-super-container">
+
+          <h3 className="shadow-sm tect-success mt-3 p-3 text-center rounded loginh3">
+            Log In
+          </h3>
+
+          
+
           <Row className="mt-5">
             <Col
               lg={5}
@@ -57,12 +70,11 @@ export default class LoginPage extends React.Component {
               sm={12}
               className="p-5 m-auto shadow-sm rounded-lg "
             >
-              <div className="login-container">
-                {" "}
-                <Form>
-                  <Form.Group controlId="FormBasicEmail">
-                    <Form.Label>Email Address</Form.Label>
-                    <Form.Control
+              <div className="login-container"> <Form>
+                
+                <Form.Group controlId="FormBasicEmail">
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
                       type="email"
                       placeholder="Enter email"
                       onChange={(e) => this.setEmail(e)}
@@ -81,18 +93,7 @@ export default class LoginPage extends React.Component {
                       className="login-input"
                     ></Form.Control>
                   </Form.Group>
-                  {/* <span>E-mail</span>
-            <input
-              type="email"
-              onChange={(e) => this.setEmail(e)}
-              value={this.state.email}
-            />
-            <span>Password</span>
-            <input
-              type="password"
-              onChange={(e) => this.setPassword(e)}
-              value={this.state.password}
-            /> */}
+
                   <Button
                     className="login-submit-button log-btn"
                     variant="info btn-block"

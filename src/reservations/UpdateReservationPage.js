@@ -8,18 +8,18 @@ import UserSelector from "./UserSelector";
 import {UsersDatabaseContext} from "../App";
 import {TaxonomyContext} from "../context/context";
 import { Col, Container, Row, Form, Button, Nav } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 export default class UpdateReservationPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //itt olvassuk ki az id-t az url-bol
             reservationID: this.props.match.params.reservationID,
             reservationData: {},
             resources: [],
         };
     }
-    // fetchelunk az url-bol kiolvasott id alapjan egy reservationt
+
     componentDidMount = () => {
         return fetch(
             `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${this.state.reservationID}.json`,
@@ -29,13 +29,10 @@ export default class UpdateReservationPage extends React.Component {
         )
             .then((response) => response.json())
             .then((reservation) => {
-                console.log(reservation)
-                //a lekert reservation adatait setStateljuk es beleirjuk a reservationDatankba.
                 this.setState({
                     reservationData: {
                         customerUid: reservation.customerUid,
                         resource: reservation.resource,
-                        //mivel a slot magaba foglalja a datet es a timeot ezert a split hasznalataval szetszedtuk azokat
                         date: reservation.slot.split("T")[0],
                         time: reservation.slot.split("T")[1],
                     },
@@ -50,7 +47,6 @@ export default class UpdateReservationPage extends React.Component {
                     }
                 ))
             });
-
     };
 
     handleName = (newUserUid) => {
@@ -66,17 +62,14 @@ export default class UpdateReservationPage extends React.Component {
                 this.setState({resource: resource.id})
             }
         })
-        console.log(this.state)
     }
+
     changeSlot = (date, time) => {
         this.setState({reservationData: {...this.state.reservationData, date: date, time: time}})
-        console.log(this.state)
+        
     }
 
-
-
   render() {
-        console.log(this.state.reservationData)
     return (
       <TaxonomyContext.Consumer>
                 {(taxonomy) => {
@@ -116,17 +109,13 @@ export default class UpdateReservationPage extends React.Component {
                   <p>Update name</p>
                 </Nav>
                 <Nav className="justify-content-center">
- <UserSelector onHandleName={this.handleName} /></Nav>
- <Nav className="justify-content-center mt-2">
-    <SlotSelector
+                <UserSelector onHandleName={this.handleName} /></Nav>
+                <Nav className="justify-content-center mt-2">
+                    <SlotSelector
                   resource={this.state.resource}
                   changeSlot={this.changeSlot}
                 ></SlotSelector>
- </Nav>
-               
-
-                
-               
+                  </Nav>
 
                 <div>
                 <Nav className="justify-content-center mt-2">
@@ -151,7 +140,11 @@ export default class UpdateReservationPage extends React.Component {
                           this.props.history.push("/admin/reservations")
                         );
                       } catch (e) {
-                        alert(e.message);
+                        Swal.fire({
+                          title: "Failed to update the reservation!",
+                          text: `${e.message}`,
+                          icon: "error",
+                          confirmButtonText:"OK"});
                       }
                     }}
                   >

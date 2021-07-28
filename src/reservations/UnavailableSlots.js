@@ -1,7 +1,8 @@
-import React from "react";
-import { listResources } from "../resources/resources";
-import { unavailableSlot } from "./reservations";
-import SlotSelector from "./SlotSelector";
+import React from "react"
+import {listResources} from "../resources/resources";
+import {unavailableSlot} from "./reservations";
+import SlotSelector from "./SlotSelector"
+import Swal from "sweetalert2";
 import "./unavailableSlots.css";
 import {
   Form,
@@ -12,6 +13,7 @@ import {
   Button,
   Dropdown,
 } from "react-bootstrap";
+
 export default class UnavailableSlots extends React.Component {
   constructor(props) {
     super(props);
@@ -45,18 +47,19 @@ export default class UnavailableSlots extends React.Component {
     });
   };
 
-  sendData = (e) => {
+  sendData=(e)=>{
     e.preventDefault();
-    try {
-      unavailableSlot(
-        this.state.selectedResource,
-        this.state.date,
-        this.state.time
-      );
-    } catch (e) {
-      alert(e.message);
+    try
+    {
+        unavailableSlot(this.state.selectedResource, this.state.date, this.state.time)
+    }catch (e){
+        Swal.fire({
+            title: "Failed to send data to database!",
+            text: `${e.message}`,
+            icon: "error",
+            confirmButtonText:"OK"})
+        }
     }
-  };
 
   render() {
     return (

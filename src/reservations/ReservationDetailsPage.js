@@ -3,6 +3,8 @@ import { AuthContext, TaxonomyContext, UsersDatabaseContext } from "../context/c
 import { confirmReservation } from "./reservations";
 import Table from "react-bootstrap/Table";
 import { Button } from "react-bootstrap";
+import Swal from 'sweetalert2';
+
 export default class ReservationDetailsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -29,7 +31,13 @@ export default class ReservationDetailsPage extends React.Component {
 
     onConfirm = () => {
         confirmReservation(this.props.match.params.reservationID)
-            .catch(e => alert(e.message))
+            .catch(e => Swal.fire({
+                            title: "Failed to create a reservation!",
+                            text: `${e.message}`,
+                            icon: "error",
+                            confirmButtonText:"OK"})
+            )
+
             .then(() => this.setState({confirmed: true}))
     }
 
@@ -38,11 +46,11 @@ export default class ReservationDetailsPage extends React.Component {
         return (
             <UsersDatabaseContext.Consumer>
                 {(usersFromDatabase) => {
-                    return ( <>
+                    return (<>
 
             <TaxonomyContext.Consumer>
                 {(taxonomy) => {
-                    return <>
+                    return (<>
                         <AuthContext.Consumer>
                             {({user}) => {
                                 return (<>
@@ -81,11 +89,12 @@ export default class ReservationDetailsPage extends React.Component {
                     }}
                         </AuthContext.Consumer>
 
-                    </>
+                    </>)
                     }}
             </TaxonomyContext.Consumer>
-        </>)
-            }}
+        </>
+                    )}
+          }
         </UsersDatabaseContext.Consumer>
         )}
 

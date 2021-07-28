@@ -8,6 +8,7 @@ import { FormControl, Button, Nav } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { firebaseApp } from "../reservations/reservations";
 import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import Swal from "sweetalert2"; 
 
 
 const storage = getStorage(firebaseApp);
@@ -72,14 +73,22 @@ export class UpdateResourcePage extends React.Component {
           imgUrl: url
 
         })
-      }).catch(e=>alert(e.message))
+      }).catch(e => Swal.fire({
+        title: "Failed to update the resouce!",
+        text: `${e.message}`,
+        icon: "error",
+        confirmButtonText:"OK"}))
 
       .then(() =>
         this.props.history.push(`/admin/config/${this.context.url}`)
       );
 
     } catch (e) {
-      alert(e.message);
+      Swal.fire({
+        title: "Failed to update the resouce!",
+        text: `${e.message}`,
+        icon: "error",
+        confirmButtonText:"OK"});
     }
   };
 

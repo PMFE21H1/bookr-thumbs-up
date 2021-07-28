@@ -1,5 +1,7 @@
 import React from "react";
 import { Col, Container, Row, Form, Button, Nav } from "react-bootstrap";
+import Swal from "sweetalert2";
+
 export default class ResourceTaxonomy extends React.Component {
   constructor(props) {
     super(props);
@@ -27,7 +29,15 @@ export default class ResourceTaxonomy extends React.Component {
         this.state.newResourceTextPlural,
         this.state.newUrl
       )
-    );
+    ).then(()=> Swal.fire({
+      title: "You successfully updated the resource name!",
+      icon: "success",
+      confirmButtonText:"OK"})
+      )
+      .catch(error => Swal.fire({
+        title: "You failed to update the resource name!",
+        icon: "error",
+        confirmButtonText:"OK"}))
   };
 
   updateNewResourceTextSingular = (e) => {

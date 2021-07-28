@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Swal from 'sweetalert2'
 
 export class User  {
     constructor(name, email, uid){
@@ -22,16 +23,23 @@ export function saveAccountToDatabase(name, email, admin, uid) {
         body: JSON.stringify({name: name, email: email, admin: admin, uid:uid}),
         method: "PUT"
     }).then(response => {
-        //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
         if (response.status === 200) {
-            alert("Successful user creation!")
+            Swal.fire({
+                title: "Successful account creation!",
+                text: "You have created an account.",
+                icon: "success",
+                confirmButtonText:"OK"})
         } else {
-            alert("Unsuccessful!")
+            Swal.fire({
+                title: "Failed to create an account!",
+                text: `Check if you have filled all required fields!`,
+                icon: "error",
+                confirmButtonText:"OK"})
         }
+    
 
         return response.json()
     })
-        //itt jön létre az új reservation a Reservation class használatával
         .then(data => {
                 console.log(data)
         })

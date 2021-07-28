@@ -6,6 +6,7 @@ import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import UploadFile from "./UploadFile";
 import { firebaseApp } from "../reservations/reservations";
 import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import Swal from "sweetalert2";
 
 
 
@@ -108,7 +109,11 @@ export default class CreateResourcePage extends React.Component {
                         this.props.history.push(`/admin/config/${taxonomy.url}`)
                       ).catch(uploadError => console.log(uploadError))
                     } catch (e) {
-                      alert(e.message);
+                      Swal.fire({
+                        title: "Failed to made a reservation!",
+                        text: `${e.message}`,
+                        icon: "error",
+                        confirmButtonText:"OK"});
                     }
                   }}
                 >
