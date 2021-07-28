@@ -2,6 +2,7 @@ import {initializeApp} from "firebase/app";
 import { getUserByUid } from "../authentication/authentication";
 import {Resource} from "../resources/resources";
 import Swal from 'sweetalert2';
+import { UsersDatabaseContext } from "../context/context";
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",
@@ -100,6 +101,7 @@ export function createReservation(reservation) {
 
 
 export function updateReservation(id, newData) {
+     
     if (!newData.customerUid) {
         throw new Error('Customer can not be empty')
     }
@@ -114,11 +116,14 @@ export function updateReservation(id, newData) {
         throw new Error("Update is invalid")
     }
 
+
     for (let k in newData) {
         if (k !== "slot" && k !== "customerUid" && k !== "resource") {
             throw new Error("Partial update is invalid")
         }
     }
+
+
 
     return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${id}.json`, {
         body: JSON.stringify(newData),
@@ -130,13 +135,15 @@ export function updateReservation(id, newData) {
                 method: "GET"
             })
             .then(response => response.json())
-            .then(updatedObject =>
+            .then(() => {
+  
             Swal.fire({
-                title: "Success!",
-                text: `successful update: ${updatedObject.customerUid}`,
+                title: "Successful update!",
                 icon: "success",
                 confirmButtonText:"OK"})
+            }
                 ))
+                
 
 }
 
