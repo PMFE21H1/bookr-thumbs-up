@@ -42,6 +42,7 @@ export default class LoginPage extends React.Component {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        // this.setState(errorMsg: errorMessage)
       });
   };
 
@@ -53,6 +54,9 @@ export default class LoginPage extends React.Component {
           <h3 className="shadow-sm tect-success mt-3 p-3 text-center rounded loginh3">
             Log In
           </h3>
+
+          
+
           <Row className="mt-5">
             <Col
               lg={5}
@@ -61,6 +65,11 @@ export default class LoginPage extends React.Component {
               className="p-5 m-auto shadow-sm rounded-lg "
             >
               <div className="login-container"> <Form>
+
+                <div class="alert alert-danger">
+                  <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
+                </div>
+                
                 <Form.Group controlId="FormBasicEmail">
                   <Form.Label>Email Address</Form.Label>
                   <Form.Control
