@@ -1,0 +1,17 @@
+.request{
+    height: 700px;
+    max-width: 100%;
+    margin: 0px;
+    padding: 0px;
+    background-repeat: no-repeat;
+    background-size: 100vw;
+    background-image: url("https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/wp3067024.jpeg?alt=media&token=e74c0fbf-e31f-4fdb-ba8a-964614f78723");
+}
+
+.request-background{
+    background-color: black;
+    border-radius: 5px;
+    opacity: 80%;
+    color: white;
+    padding: 2vw;
+}
