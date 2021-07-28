@@ -127,7 +127,7 @@ export class UpdateResourcePage extends React.Component {
             </InputGroup>
             <Nav className="justify-content-center">
               <Nav className="mr-2 ml-2">
-                <Button onClick={this.handleApply}>Apply</Button>
+                <Button onClick={this.handleApply}   style ={{marginRight: "1vw" }} >Apply</Button>
               </Nav>
               <Link to={`/admin/config/${this.context.url}`}>
                 <Button variant="danger">Cancel</Button>

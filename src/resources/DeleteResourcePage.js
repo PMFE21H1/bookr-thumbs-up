@@ -88,7 +88,7 @@ export default class DeleteResourcePage extends React.Component {
               })}
               <Nav className="justify-content-center mt-2">
                 <Nav className="mr-2">
-                  <Button onClick={this.handleDelete}>Delete</Button>
+                  <Button style ={{marginRight: "1vw" }} onClick={this.handleDelete}>Delete</Button>
                 </Nav>
 
                 <Nav>
