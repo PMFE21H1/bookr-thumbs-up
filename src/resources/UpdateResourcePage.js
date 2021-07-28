@@ -65,18 +65,16 @@ export class UpdateResourcePage extends React.Component {
       uploadBytes(barberImgRef, this.state.file)
       .then(() => getDownloadURL(barberImgRef)
       )
-
       .then(url => {
-    
         updateResource(this.state.resourceID, {
           name: this.state.newResourceName,
           description: this.state.newDescription,
           imgUrl: url
         })
-      })
+      }).catch(e=>alert(e.message))
 
       .then(() =>
-        this.props.history.push(`/admin/${this.context.resources}`)
+        this.props.history.push(`/admin/config/${this.context.url}`)
       );
     } catch (e) {
       Swal.fire({
@@ -88,7 +86,6 @@ export class UpdateResourcePage extends React.Component {
   };
 
   fileChanged = (e) => {
-    console.log(e.target.files[0])
     this.setState({file: e.target.files[0]});
 }
 
@@ -137,7 +134,7 @@ export class UpdateResourcePage extends React.Component {
               <Nav className="mr-2 ml-2">
                 <Button onClick={this.handleApply}>Apply</Button>
               </Nav>
-              <Link to="/admin/config/resources">
+              <Link to={`/admin/config/${this.context.url}`}>
                 <Button variant="danger">Cancel</Button>
               </Link>
             </Nav>

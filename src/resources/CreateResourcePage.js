@@ -103,7 +103,7 @@ export default class CreateResourcePage extends React.Component {
                         )})
                       
                       .then(() =>
-                        this.props.history.push("/admin/config/resources")
+                        this.props.history.push(`/admin/config/${taxonomy.url}`)
                       ).catch(uploadError => console.log(uploadError))
                     } catch (e) {
                       Swal.fire({
