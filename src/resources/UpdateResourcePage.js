@@ -8,6 +8,7 @@ import { FormControl, Button, Nav } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import { firebaseApp } from "../reservations/reservations";
 import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import Swal from "sweetalert2"; 
 
 
 const storage = getStorage(firebaseApp);
@@ -78,7 +79,11 @@ export class UpdateResourcePage extends React.Component {
         this.props.history.push(`/admin/${this.context.resources}`)
       );
     } catch (e) {
-      alert(e.message);
+      Swal.fire({
+        title: "Failed to made a reservation!",
+        text: `${e.message}`,
+        icon: "error",
+        confirmButtonText:"OK"});
     }
   };
 

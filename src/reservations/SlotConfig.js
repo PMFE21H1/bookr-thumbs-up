@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from "react-router-dom";
 import {configSlot} from "./reservations"
+import Swal from 'sweetalert2';
 
 export default class SlotConfig extends React.Component {
     constructor(props) {
@@ -35,7 +36,11 @@ export default class SlotConfig extends React.Component {
         try{
             configSlot(this.state.slotConfig.start, this.state.slotConfig.end, this.state.slotConfig.duration)
         }catch (e){
-            alert(e.message)
+            Swal.fire({
+                title: "Failed to made a reservation!",
+                text: `${e.message}`,
+                icon: "error",
+                confirmButtonText:"OK"})
         }
 
 

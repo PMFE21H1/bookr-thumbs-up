@@ -6,6 +6,7 @@ import { AuthContext, UsersDatabaseContext } from "../context/context";
 import UserSelector from "./UserSelector";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Col, Container, Row, Form, Button } from "react-bootstrap";
+import Swal from 'sweetalert2';
 
 export default class CreateReservationPage extends Component {
   constructor(props) {
@@ -70,13 +71,21 @@ export default class CreateReservationPage extends Component {
           "confirmed"
         )
       ).catch((error) => {
-        alert(error.message);
+        Swal.fire({
+          title: "Failed to create an account!",
+          text: `${error.message}`,
+          icon: "error",
+          confirmButtonText:"OK"})
       })
           .then(() => this.props.history.push("/admin/reservations"));
 
 
     } catch (e) {
-      alert(e.message);
+      Swal.fire({
+        title: "Failed to create an account!",
+        text: `${e.message}`,
+        icon: "error",
+        confirmButtonText:"OK"})
     }
   }
 

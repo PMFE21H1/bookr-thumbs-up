@@ -147,7 +147,11 @@ export default class UpdateReservationPage extends React.Component {
                           this.props.history.push("/admin/reservations")
                         );
                       } catch (e) {
-                        alert(e.message);
+                        Swal.fire({
+                          title: "Failed to made a reservation!",
+                          text: `${e.message}`,
+                          icon: "error",
+                          confirmButtonText:"OK"});
                       }
                     }}
                   >

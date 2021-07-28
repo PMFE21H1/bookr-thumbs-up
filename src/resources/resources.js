@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import Swal from "sweetalert2";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",
@@ -24,9 +25,17 @@ export function createResource(resource) {
       )
         .then((response) => {
           if (response.status === 200) {
-            alert("Successful resource creation!");
+            Swal.fire({
+              title: "Successful resource creation!",
+              text: "You have created an account.",
+              icon: "success",
+              confirmButtonText:"OK"})
           } else {
-            alert("Unsuccessful!");
+            Swal.fire({
+              title: "Failed to create a resource!",
+              text: `Check if you have filled all required fields!`,
+              icon: "error",
+              confirmButtonText:"OK"});
           }
 
           return response.json();
@@ -131,8 +140,11 @@ export function updateResource(id, patch) {
           .then((response) => response.json())
 
           .then((patchedObject) => {
-            alert("Resource succesfully changed : " + patchedObject.name)
-            console.log(patchedObject)
+            Swal.fire({
+              title: "Success!",
+              text: "Resource succesfully changed : " + patchedObject.name,
+              icon: "success",
+              confirmButtonText:"OK"})
             return patchedObject
           })
       }

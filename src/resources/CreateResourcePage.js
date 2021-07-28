@@ -106,7 +106,11 @@ export default class CreateResourcePage extends React.Component {
                         this.props.history.push("/admin/config/resources")
                       ).catch(uploadError => console.log(uploadError))
                     } catch (e) {
-                      alert(e.message);
+                      Swal.fire({
+                        title: "Failed to made a reservation!",
+                        text: `${e.message}`,
+                        icon: "error",
+                        confirmButtonText:"OK"});
                     }
                   }}
                 >

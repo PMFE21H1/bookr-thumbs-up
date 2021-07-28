@@ -11,6 +11,8 @@ import {
   Nav,
   Card,
 } from "react-bootstrap";
+import Swal from 'sweetalert2';
+
 export default class PublicResourcesPage extends React.Component {
   constructor(props) {
     super(props);

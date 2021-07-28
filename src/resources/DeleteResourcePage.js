@@ -7,6 +7,7 @@ import { UpdateResourcePage } from "./UpdateResourcePage";
 import Table from "react-bootstrap/Table";
 import { Button, ListGroup, Nav } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
+import Swal from "sweetalert2";
 
 export default class DeleteResourcePage extends React.Component {
   constructor(props) {
@@ -42,7 +43,11 @@ export default class DeleteResourcePage extends React.Component {
         this.props.history.push(`/admin/${this.context.resources}`)
       );
     } catch (e) {
-      alert(e.message);
+      Swal.fire({
+        title: "Failed to made a reservation!",
+        text: `${e.message}`,
+        icon: "error",
+        confirmButtonText:"OK"})
     }
   };
 

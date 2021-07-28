@@ -1,6 +1,7 @@
 import {initializeApp} from "firebase/app";
 import { getUserByUid } from "../authentication/authentication";
 import {Resource} from "../resources/resources";
+import Swal from 'sweetalert2';
 
 export const firebaseConfig = {
     apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",
@@ -61,9 +62,17 @@ export function createReservation(reservation) {
                 }).then(response => {
                     //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
                     if (response.status === 200) {
-                        alert("Successful reservation creation!")
+                        Swal.fire({
+                            title: "You have made a reservation!",
+                            text: `You can see the details of your reservation under My reservations`,
+                            icon: "success",
+                            confirmButtonText:"OK"})
                     } else {
-                        alert("Unsuccessful!")
+                        Swal.fire({
+                            title: "Failed to made a reservation!",
+                            text: `Check if you have filled all required fields!`,
+                            icon: "error",
+                            confirmButtonText:"OK"})
                     }
 
                     return response.json()
@@ -121,13 +130,20 @@ export function updateReservation(id, newData) {
     return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${id}.json`, {
         body: JSON.stringify(newData),
         method: "PATCH"
-    }).then(response => response.json()).then(() =>
+    }).then(response => response.json())
+    .then(() =>
         fetch(
             `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${id}.json`, {
                 method: "GET"
-            }).then(
-            response => response.json()).then(updatedObject => alert('successful update: ' + updatedObject.customerUid)))
-
+            })
+            .then(response => response.json())
+            .then(updatedObject =>
+            Swal.fire({
+                title: "Success!",
+                text: `successful update: ${updatedObject.customerUid}`,
+                icon: "success",
+                confirmButtonText:"OK"})
+                ))
 
 }
 
@@ -185,7 +201,11 @@ return fetch (`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabas
     .then(() => {
         console.log(id)
         return deleteReservationFromDatabase(id)})
-    .catch((e)=> alert(e.message))
+    .catch((e)=> Swal.fire({
+        title: "Failed to delete reservation!",
+        text: `${e.message}`,
+        icon: "error",
+        confirmButtonText:"OK"}))
 }
 
 function UpdateUsersReservationsArray(uid, array){
@@ -273,7 +293,12 @@ export function configSlot(start, end, duration){
             duration:duration
         }),
         method: "PUT"
-    }).then(()=>alert("Successful slot configuration"))
+    }).then(()=> Swal.fire({
+        title: "Success!",
+        text: "Successful slot configuration",
+        icon: "success",
+        confirmButtonText:"OK"})
+    )
 }
 
 export function unavailableSlot(resourceId, date, time){
@@ -287,7 +312,13 @@ export function unavailableSlot(resourceId, date, time){
             slot:`${date}T${time}`
         }),
         method: "POST"
-    }).then(()=>alert("Successful save"))
+    }).then(() => Swal.fire({
+        title: "Success!",
+        text: "Successful save",
+        icon: "success",
+        confirmButtonText:"OK"})
+    
+    )
 }
 
 

@@ -4,6 +4,7 @@ import { listUsersFromDatabase, getUserByUid } from "./authentication";
 import { tsImportEqualsDeclaration } from "@babel/types";
 import "./login.css";
 import { Link } from "react-router-dom"
+import Swal from 'sweetalert2'
 
 import { Col, Container, Row, Form, Button, Image } from "react-bootstrap";
 
@@ -43,7 +44,11 @@ export default class LoginPage extends React.Component {
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        // this.setState(errorMsg: errorMessage)
+        Swal.fire({
+          title: "Wrong login details!",
+          text: `${errorMessage}`,
+          icon: "error",
+          confirmButtonText:"OK"})
       });
   };
 
@@ -66,10 +71,6 @@ export default class LoginPage extends React.Component {
               className="p-5 m-auto shadow-sm rounded-lg "
             >
               <div className="login-container"> <Form>
-
-                <div class="alert alert-danger">
-                  <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
-                </div>
                 
                 <Form.Group controlId="FormBasicEmail">
                   <Form.Label>Email Address</Form.Label>
