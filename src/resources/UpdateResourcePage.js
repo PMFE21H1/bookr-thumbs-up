@@ -71,7 +71,11 @@ export class UpdateResourcePage extends React.Component {
           description: this.state.newDescription,
           imgUrl: url
         })
-      }).catch(e=>alert(e.message))
+      }).catch(e => Swal.fire({
+        title: "Failed to create an account!",
+        text: `${e.message}`,
+        icon: "error",
+        confirmButtonText:"OK"}))
 
       .then(() =>
         this.props.history.push(`/admin/config/${this.context.url}`)

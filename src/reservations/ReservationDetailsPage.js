@@ -36,6 +36,7 @@ export default class ReservationDetailsPage extends React.Component {
                             text: `${e.message}`,
                             icon: "error",
                             confirmButtonText:"OK"})
+            )
 
             .then(() => this.setState({confirmed: true}))
     }

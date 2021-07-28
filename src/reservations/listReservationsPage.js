@@ -10,6 +10,7 @@ import { listReservations, confirmReservation } from "./reservations";
 import Table from "react-bootstrap/Table";
 import { Button, Nav } from "react-bootstrap";
 
+
 export default class ListReservationsPage extends React.Component {
   constructor(props) {
     super(props);

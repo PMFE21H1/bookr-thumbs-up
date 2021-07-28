@@ -8,6 +8,7 @@ import UserSelector from "./UserSelector";
 import {UsersDatabaseContext} from "../App";
 import {TaxonomyContext} from "../context/context";
 import { Col, Container, Row, Form, Button, Nav } from "react-bootstrap";
+import Swal from "sweetalert2";
 
 export default class UpdateReservationPage extends React.Component {
     constructor(props) {

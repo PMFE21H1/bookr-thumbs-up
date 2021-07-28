@@ -2,6 +2,7 @@ import React from "react"
 import {listResources} from "../resources/resources";
 import {unavailableSlot} from "./reservations";
 import SlotSelector from "./SlotSelector"
+import Swal from "sweetalert2";
 
 export default class UnavailableSlots extends React.Component {
     constructor(props) {

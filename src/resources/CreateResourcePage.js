@@ -6,6 +6,7 @@ import { Col, Container, Row, Form, Button } from "react-bootstrap";
 import UploadFile from "./UploadFile";
 import { firebaseApp } from "../reservations/reservations";
 import { getStorage, ref, uploadBytes, listAll, getDownloadURL } from "firebase/storage";
+import Swal from "sweetalert2";
 
 
 
