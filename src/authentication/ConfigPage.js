@@ -14,7 +14,7 @@ export class ConfigPage extends Component {
             </Nav.Link>
           </Nav.Item>
           <Nav.Item>
-            <Nav.Link as={Link} to={`/admin/config/${this.context.resources}`}>
+            <Nav.Link as={Link} to={`/admin/config/${this.context.url}`}>
               {this.context.resources}
             </Nav.Link>
           </Nav.Item>
