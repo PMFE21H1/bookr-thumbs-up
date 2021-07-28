@@ -62,8 +62,7 @@ export class UpdateResourcePage extends React.Component {
     try {
       const barberImgRef = ref(storage, `barbers/${this.state.file.name}`);
       uploadBytes(barberImgRef, this.state.file)
-      .then(() => getDownloadURL(barberImgRef)
-      )
+      .then(() => getDownloadURL(barberImgRef))
 
       .then(url => {
     
@@ -71,12 +70,12 @@ export class UpdateResourcePage extends React.Component {
           name: this.state.newResourceName,
           description: this.state.newDescription,
           imgUrl: url
-        })
+        }).then(() =>
+            this.props.history.push(`/admin/config/${this.context.resources}`)
+        ).catch((e)=> {
+          alert(e)
+        });
       })
-
-      .then(() =>
-        this.props.history.push(`/admin/${this.context.resources}`)
-      );
     } catch (e) {
       alert(e.message);
     }
@@ -130,9 +129,11 @@ export class UpdateResourcePage extends React.Component {
             </InputGroup>
             <Nav className="justify-content-center">
               <Nav className="mr-2 ml-2">
+                {/*<Link to={`/admin/config/${this.context.url}`}>*/}
                 <Button onClick={this.handleApply}>Apply</Button>
+                {/*</Link>*/}
               </Nav>
-              <Link to="/admin/config/resources">
+              <Link to={`/admin/config/${this.context.url}`}>
                 <Button variant="danger">Cancel</Button>
               </Link>
             </Nav>

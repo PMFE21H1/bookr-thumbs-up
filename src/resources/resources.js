@@ -58,11 +58,10 @@ export function deleteResource(resource) {
 
   let deleteReservations = [];
 
-  return fetch(
-    `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json`
-  )
+  return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json`)
     .then((response) => response.json())
     .then((reservations) => {
+        console.log("1")
       Object.keys(reservations).forEach((reservation) => {
         if (reservations[reservation].resource === resource.id) {
           reservations[reservation].id = reservation;
@@ -74,24 +73,28 @@ export function deleteResource(resource) {
       });
     })
     .then(() => console.log(deleteReservations))
-    .then(() => {
+    .then(async () => {
+        console.log("2")
+        let promises= []
       for (let i = 0; i < deleteReservations.length; i++) {
-        fetch(
-          `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${deleteReservations[i].id}.json`,
-          {
-            method: "DELETE",
-          }
-        );
+       promises.push(fetch(
+           `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${deleteReservations[i].id}.json`,
+           {
+               method: "DELETE",
+           }
+       ))
       }
+      return Promise.all(promises)
     })
-    .then(() =>
-      fetch(
-        `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${resource.id}.json`,
-        {
-          method: "DELETE",
-        }
-      )
-    )
+    .then(async () => {
+        console.log("3")
+       return await fetch(
+            `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/resources/${resource.id}.json`,
+            {
+                method: "DELETE",
+            }
+        ).then(()=>console.log("42"))
+    })
     .then((response) => {
       return true;
     });
@@ -136,6 +139,6 @@ export function updateResource(id, patch) {
             return patchedObject
           })
       }
-    };
+    }alert("itt");
   });
 }
