@@ -14,13 +14,12 @@ export default class UpdateReservationPage extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //itt olvassuk ki az id-t az url-bol
             reservationID: this.props.match.params.reservationID,
             reservationData: {},
             resources: [],
         };
     }
-    // fetchelunk az url-bol kiolvasott id alapjan egy reservationt
+
     componentDidMount = () => {
         return fetch(
             `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${this.state.reservationID}.json`,
@@ -30,13 +29,10 @@ export default class UpdateReservationPage extends React.Component {
         )
             .then((response) => response.json())
             .then((reservation) => {
-                console.log(reservation)
-                //a lekert reservation adatait setStateljuk es beleirjuk a reservationDatankba.
                 this.setState({
                     reservationData: {
                         customerUid: reservation.customerUid,
                         resource: reservation.resource,
-                        //mivel a slot magaba foglalja a datet es a timeot ezert a split hasznalataval szetszedtuk azokat
                         date: reservation.slot.split("T")[0],
                         time: reservation.slot.split("T")[1],
                     },
@@ -51,7 +47,6 @@ export default class UpdateReservationPage extends React.Component {
                     }
                 ))
             });
-
     };
 
     handleName = (newUserUid) => {
@@ -67,14 +62,12 @@ export default class UpdateReservationPage extends React.Component {
                 this.setState({resource: resource.id})
             }
         })
-        console.log(this.state)
     }
+
     changeSlot = (date, time) => {
         this.setState({reservationData: {...this.state.reservationData, date: date, time: time}})
-        console.log(this.state)
+        
     }
-
-
 
   render() {
     return (
@@ -96,6 +89,7 @@ export default class UpdateReservationPage extends React.Component {
                 <Nav className="justify-content-center mt-2">
 
                    <select
+
                   onChange={(e) => this.changeResource(e)}
                   value={this.state.resource}
                 >
@@ -103,7 +97,7 @@ export default class UpdateReservationPage extends React.Component {
 
                   {this.state.resources !== []
                     ? this.state.resources.map((resource) => (
-                        <option key={resource.id} value={resource.id}>
+                        <option key={resource.id}  value={resource.id}  >
                           {resource.name}
                         </option>
                       ))

@@ -120,7 +120,7 @@ export default class CreateResourcePage extends React.Component {
                 </Button>
                 <Button
                   variant="danger"
-                  onClick={() => this.props.history.push("/admin/config/resources")}
+                  onClick={() => this.props.history.push(`/admin/config/${taxonomy.url}`)}
                 >
                   {" "}
                   Cancel
