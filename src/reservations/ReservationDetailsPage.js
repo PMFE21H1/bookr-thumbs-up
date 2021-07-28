@@ -68,6 +68,7 @@ export default class ReservationDetailsPage extends React.Component {
                                         variant="secondary" size="lg"
                                           disabled={this.state.confirmed}
                                           onClick={this.onConfirm}
+                                        style= {{color: "black"}}
                                         >
                                           {this.state.confirmed ? "Confirmed" : "Confirm"}
                                         </Button>
