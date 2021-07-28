@@ -143,7 +143,7 @@ class App extends React.Component {
 
 
 
-                            <Route path={`/${this.state.taxonomy.resources}`}>
+                            <Route path={`/${this.state.taxonomy.url}`}>
 
                                 <PublicResourcesPage/>
                             </Route>
