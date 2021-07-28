@@ -89,9 +89,13 @@ export default class DeleteResourcePage extends React.Component {
               })}
               <Nav className="justify-content-center mt-2">
                 <Nav className="mr-2">
+
                   {/*<Link to={`/admin/config/${this.context.url}`}>*/}
-                  <Button onClick={this.handleDelete}>Delete</Button>
+                  <Button 
+                  style ={{marginRight: "1vw" }}
+                  onClick={this.handleDelete}>Delete</Button>
                   {/*</Link>*/}
+
                 </Nav>
 
                 <Nav>

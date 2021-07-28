@@ -1,0 +1,19 @@
+.public-res-cont{
+    margin-top: 4vw;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+
+}
+
+.public-res-cont div{
+    border-radius: 50%;
+    margin: 2vw;
+    background-color: black;
+    margin: 1vw;
+    color: white;
+}
+
+.public-res-cont .res-name {
+    color: #e2a44c;
+}
