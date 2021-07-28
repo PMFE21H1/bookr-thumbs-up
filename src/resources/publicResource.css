@@ -19,10 +19,12 @@
 }
 
 .pub-res{
+    min-width: 300px;
+    min-height: 300px;
     width:20vw;
     height: 20vw;
-    background-size: 20vw;
-    border-radius: 50%;
+    background-size: 100%;
+    border-radius: 30%;
     margin: 3vw;
 }
 
@@ -55,4 +57,13 @@
 .public-resource-display-container:hover .public-res-inner-container{
     display: block;
 
+}
+
+.pub-resource-btn{
+    background-color:#e2a44c;
+    border-color:#e2a44c ;
+}
+.pub-resource-btn:hover{
+    background-color:darkorange;
+    border-color:darkorange ;
 }
