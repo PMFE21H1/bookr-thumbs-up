@@ -59,6 +59,7 @@ export function deleteResource(resource) {
 
     let deleteReservations = [];
 
+
     return fetch(
         `https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json`
     )
@@ -91,6 +92,7 @@ export function deleteResource(resource) {
         .then((response) => {
             return true;
         });
+
 }
 
 export function listResources() {
@@ -125,6 +127,7 @@ export function updateResource(id, patch) {
                 )
                     .then((response) => response.json())
 
+
                     .then((patchedObject) => {
                         alert("Resource succesfully changed : " + patchedObject.name)
                         console.log(patchedObject)
@@ -134,4 +137,5 @@ export function updateResource(id, patch) {
         }
         ;
     });
+
 }
