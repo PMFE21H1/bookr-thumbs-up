@@ -63,6 +63,7 @@ export default class RequestReservationPage extends Component {
                                   "pending"
                                 )
                               )
+                              .then(() => this.props.history.push("/my-reservations"))
                               .catch((e) => {
                               console.log(e)
                               Swal.fire({

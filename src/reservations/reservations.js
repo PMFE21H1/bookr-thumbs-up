@@ -62,8 +62,7 @@ export function createReservation(reservation) {
 
                     if (response.status === 200) {
                         Swal.fire({
-                            title: "You have made a reservation!",
-                            text: `You can see the details of your reservation by clicking on Details`,
+                            title: "Successful reservation!",
                             icon: "success",
                             confirmButtonText:"OK"})
                     } else {
