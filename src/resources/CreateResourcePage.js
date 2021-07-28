@@ -79,11 +79,13 @@ export default class CreateResourcePage extends React.Component {
                   {taxonomy.resource} Description{" "}
                 </h6>
                 <textarea
+
                   onChange={this.updateDescription}
                   value={this.state.description}
                 />
 
                 <Button
+                    style={{marginTop: "8vw", marginRight: "1vw"}}
                   onClick={(e) => {
                     e.preventDefault();
                     try {
@@ -118,7 +120,7 @@ export default class CreateResourcePage extends React.Component {
                   {" "}
                   Create
                 </Button>
-                <Button
+                <Button style={{marginTop: "8vw"}}
                   variant="danger"
                   onClick={() => this.props.history.push(`/admin/config/${taxonomy.url}`)}
                 >
