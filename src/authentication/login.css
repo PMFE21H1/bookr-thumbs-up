@@ -57,3 +57,17 @@ input:-webkit-autofill:active{
 .loginh3{
     color: white;
 }
+
+.log-btn{
+    margin-top: 10px;
+    width: 100%;
+    color: white !important;
+}
+.reg-click{
+    text-align: center;
+    font-size: larger;
+    margin-top: 15px;
+}
+.reg-click a{
+    color: orange;
+}

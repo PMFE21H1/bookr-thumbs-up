@@ -1,0 +1,21 @@
+.res-btn{
+    border-color: orange;
+    background-color: #e2a44c;
+    color: white;
+    position: absolute;
+    bottom: 75%;
+    left: 40%;
+    right: 40%;
+    width: 20vw;
+    height: 3vw;
+    opacity: 80%;
+    font-size: x-large;
+    text-align: center;
+    padding: 0.2vw;
+}
+
+.res-btn:hover{
+    border-color: white;
+    background-color: orange;
+    opacity: 100%;
+}

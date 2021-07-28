@@ -41,7 +41,7 @@ export default class Header extends Component {
                           >
 
                             <Nav.Item className="navbar-img-cont">
-                              <img src="https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/thumbsup2.png?alt=media&token=5239d2d5-9788-4dd1-880c-17ed64ab4697"/>
+                              <Link to="/"><img src="https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/thumbsup2.png?alt=media&token=5239d2d5-9788-4dd1-880c-17ed64ab4697"/></Link>
                             </Nav.Item>
                             <Nav.Item>
                               <Nav.Link as={Link} to="/login">
@@ -54,8 +54,8 @@ export default class Header extends Component {
                               </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
-                              <Nav.Link as={Link} to={`/${taxonomy.resources}`}>
-                                Public {taxonomy.resources}
+                              <Nav.Link as={Link} to={`/${taxonomy.url}`}>
+                                Our {taxonomy.resources}
                               </Nav.Link>
                             </Nav.Item>
                           </Nav>
@@ -70,12 +70,12 @@ export default class Header extends Component {
                           >
 
                             <Nav.Item className="navbar-img-cont">
-                              <img src="https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/thumbsup2.png?alt=media&token=5239d2d5-9788-4dd1-880c-17ed64ab4697"/>
+                            <Link to="/"><img src="https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/thumbsup2.png?alt=media&token=5239d2d5-9788-4dd1-880c-17ed64ab4697"/></Link>
                             </Nav.Item>
                             <Nav.Item>
                               <Nav.Link
                                 as={Link}
-                                to={`/admin/config/${taxonomy.resources}`}
+                                to={`/admin/config/${taxonomy.url}`}
                               >
                                 {taxonomy.resources}
                               </Nav.Link>
@@ -109,7 +109,7 @@ export default class Header extends Component {
                           >
 
                             <Nav.Item className="navbar-img-cont">
-                              <img src="https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/thumbsup2.png?alt=media&token=5239d2d5-9788-4dd1-880c-17ed64ab4697"/>
+                            <Link to="/"><img src="https://firebasestorage.googleapis.com/v0/b/bookr-thumbs-up.appspot.com/o/thumbsup2.png?alt=media&token=5239d2d5-9788-4dd1-880c-17ed64ab4697"/></Link>
                             </Nav.Item>
                             <Nav.Item>
                               <Nav.Link as={Link} to="/my-reservations">
@@ -118,7 +118,7 @@ export default class Header extends Component {
                             </Nav.Item>
                             <Nav.Item>
                               <Nav.Link as={Link} to={`/${taxonomy.url}`}>
-                                Public {taxonomy.resources}
+                                Our {taxonomy.resources}
                               </Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
