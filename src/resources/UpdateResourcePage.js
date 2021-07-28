@@ -66,7 +66,7 @@ export class UpdateResourcePage extends React.Component {
       )
 
       .then(url => {
-        updateResource(this.state.resourceID, {
+       return updateResource(this.state.resourceID, {
           name: this.state.newResourceName,
           description: this.state.newDescription,
           imgUrl: url
