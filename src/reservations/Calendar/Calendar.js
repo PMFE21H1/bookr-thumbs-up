@@ -79,7 +79,7 @@ export default class Calendar extends React.Component {
                     let timePart = extractTime(slot);
                     let slotStart = constructTimestamp(datePart, timePart);
                     //emlékeztető: a reserved slotokon belül két külön eset a reserved és a pending
-    
+
                     let isReserved = reservations.find(r => r.slot == slotStart);
                     if(isReserved) return slotStart + "(reserved)"
                     //idejön majd egy másik if-be az unavailable slot vizsgálat meg a pending
