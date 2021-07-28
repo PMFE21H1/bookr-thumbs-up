@@ -36,7 +36,6 @@ export function createReservation(reservation) {
 
     if (!(reservation instanceof Reservation)) throw new Error('reservation is not instanceof Reservation')
 
-    //reservation-ok lekérése, annak leellenőrzése, hogy van e már erre az időpontra és resource-ra foglalás
     return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json")
         .then(response => response.json())
         .then(reservations => {
@@ -48,9 +47,8 @@ export function createReservation(reservation) {
                     throw new Error("No available slot for this spot!")
                 }
             }
-            //új reservation létrehozása
+
             if (!exists) {
-                //posttal elküldjük az adatokat a firebasre
                 return fetch("https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations.json", {
                     body: JSON.stringify({
                         customerUid: reservation.customerUid,
@@ -60,11 +58,11 @@ export function createReservation(reservation) {
                     }),
                     method: "POST"
                 }).then(response => {
-                    //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
+
                     if (response.status === 200) {
                         Swal.fire({
                             title: "You have made a reservation!",
-                            text: `You can see the details of your reservation under My reservations`,
+                            text: `You can see the details of your reservation by clicking on Details`,
                             icon: "success",
                             confirmButtonText:"OK"})
                     } else {
@@ -77,22 +75,17 @@ export function createReservation(reservation) {
 
                     return response.json()
                 })
-                    //user reservation tömbbe belerakjuk az új reservation ID-t
+
                     .then(data => {
-                            //fetcheljük a user reservations kulcson lévő adatait
                         return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`)
 
                             .then(response => response.json())
                             .then(data2 => {
-                                //ha null, akkor létrehozzuk a tömbböt és beleírjuk a reservation id-t
                                 if (data2 === null) {
                                     data2 = [data.name]
-                                    //ha már létezik a kulcs és azon a tömb, akkor belepusholjuk az új reservation id-t
                                 } else {
                                     data2.push(data.name);
-
                                 }
-                                //beletesszük fetchel az új reservation id-t
                                 return fetch(`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/users/${reservation.customerUid}/reservations.json`,
                                     {
                                         body: JSON.stringify(data2),

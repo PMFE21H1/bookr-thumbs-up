@@ -42,7 +42,7 @@ export default class SlotConfig extends React.Component {
       );
     } catch (e) {
         Swal.fire({
-            title: "Failed to made a reservation!",
+            title: "Failed to config the slot!",
             text: `${e.message}`,
             icon: "error",
             confirmButtonText:"OK"})

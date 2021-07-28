@@ -19,7 +19,6 @@ export default class DeleteResourcePage extends React.Component {
   }
 
   componentDidMount() {
-    //lekérem az összes reservation adatát, hogy ki tudjam írni a relevánsakat
     listReservations().then((reservations) =>
       this.setState({
         reservations: reservations,
@@ -44,7 +43,7 @@ export default class DeleteResourcePage extends React.Component {
       );
     } catch (e) {
       Swal.fire({
-        title: "Failed to made a reservation!",
+        title: "Failed to delete the resource!",
         text: `${e.message}`,
         icon: "error",
         confirmButtonText:"OK"})

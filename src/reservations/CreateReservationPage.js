@@ -72,7 +72,7 @@ export default class CreateReservationPage extends Component {
         )
       ).catch((error) => {
         Swal.fire({
-          title: "Failed to create an account!",
+          title: "Failed to create a reservation!",
           text: `${error.message}`,
           icon: "error",
           confirmButtonText:"OK"})
@@ -82,7 +82,7 @@ export default class CreateReservationPage extends Component {
 
     } catch (e) {
       Swal.fire({
-        title: "Failed to create an account!",
+        title: "Failed to create a reservation!",
         text: `${e.message}`,
         icon: "error",
         confirmButtonText:"OK"})

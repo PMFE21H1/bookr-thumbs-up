@@ -109,17 +109,13 @@ export default class UpdateReservationPage extends React.Component {
                   <p>Update name</p>
                 </Nav>
                 <Nav className="justify-content-center">
- <UserSelector onHandleName={this.handleName} /></Nav>
- <Nav className="justify-content-center mt-2">
-    <SlotSelector
+                <UserSelector onHandleName={this.handleName} /></Nav>
+                <Nav className="justify-content-center mt-2">
+                    <SlotSelector
                   resource={this.state.resource}
                   changeSlot={this.changeSlot}
                 ></SlotSelector>
- </Nav>
-               
-
-                
-               
+                  </Nav>
 
                 <div>
                 <Nav className="justify-content-center mt-2">
@@ -143,7 +139,7 @@ export default class UpdateReservationPage extends React.Component {
                         );
                       } catch (e) {
                         Swal.fire({
-                          title: "Failed to made a reservation!",
+                          title: "Failed to update the reservation!",
                           text: `${e.message}`,
                           icon: "error",
                           confirmButtonText:"OK"});

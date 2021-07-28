@@ -23,10 +23,9 @@ export function saveAccountToDatabase(name, email, admin, uid) {
         body: JSON.stringify({name: name, email: email, admin: admin, uid:uid}),
         method: "PUT"
     }).then(response => {
-        //response-ból kiolvassuk a státuszkódot, és az alapján adunk vissza alert message-et
         if (response.status === 200) {
             Swal.fire({
-                title: "Successful user creation!",
+                title: "Successful account creation!",
                 text: "You have created an account.",
                 icon: "success",
                 confirmButtonText:"OK"})
@@ -41,7 +40,6 @@ export function saveAccountToDatabase(name, email, admin, uid) {
 
         return response.json()
     })
-        //itt jön létre az új reservation a Reservation class használatával
         .then(data => {
                 console.log(data)
         })

@@ -32,7 +32,7 @@ export default class ReservationDetailsPage extends React.Component {
     onConfirm = () => {
         confirmReservation(this.props.match.params.reservationID)
             .catch(e => Swal.fire({
-                            title: "Failed to create an account!",
+                            title: "Failed to create a reservation!",
                             text: `${e.message}`,
                             icon: "error",
                             confirmButtonText:"OK"})

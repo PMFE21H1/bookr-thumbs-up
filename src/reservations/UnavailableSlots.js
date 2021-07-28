@@ -54,7 +54,7 @@ export default class UnavailableSlots extends React.Component {
         unavailableSlot(this.state.selectedResource, this.state.date, this.state.time)
     }catch (e){
         Swal.fire({
-            title: "Failed to made a reservation!",
+            title: "Failed to send data to database!",
             text: `${e.message}`,
             icon: "error",
             confirmButtonText:"OK"})

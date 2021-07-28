@@ -44,13 +44,13 @@ export default class RequestReservationPage extends Component {
                         
                         .then(()=>this.props.history.push('/my-reservations'))
                         .catch((e) => Swal.fire({
-                            title: "Failed to create an account!",
+                            title: "Failed to create a reservation!",
                             text: `${e.message}`,
                             icon: "error",
                             confirmButtonText:"OK"}))
       
                     } catch(error) {Swal.fire({
-                        title: "Failed to create an account!",
+                        title: "Failed to create a reservation!",
                         text: `${error.message}`,
                         icon: "error",
                         confirmButtonText:"OK"})}

@@ -72,7 +72,7 @@ export class UpdateResourcePage extends React.Component {
           imgUrl: url
         })
       }).catch(e => Swal.fire({
-        title: "Failed to create an account!",
+        title: "Failed to update the resouce!",
         text: `${e.message}`,
         icon: "error",
         confirmButtonText:"OK"}))
@@ -82,7 +82,7 @@ export class UpdateResourcePage extends React.Component {
       );
     } catch (e) {
       Swal.fire({
-        title: "Failed to made a reservation!",
+        title: "Failed to update the resouce!",
         text: `${e.message}`,
         icon: "error",
         confirmButtonText:"OK"});
