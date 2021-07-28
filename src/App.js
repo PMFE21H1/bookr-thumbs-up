@@ -186,7 +186,7 @@ class App extends React.Component {
                             ></PrivateRoute>
 
                             <PrivateRoute
-                                path={`/admin/config/${this.state.taxonomy.resources}`}
+                                path={`/admin/config/${this.state.taxonomy.resources}`} exact
                                 admin={true}
                                 render={(props) => <ListResourcesAdminPage {...props} />}
 
