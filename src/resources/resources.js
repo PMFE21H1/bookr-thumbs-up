@@ -1,10 +1,6 @@
-<<<<<<< HEAD
 import { initializeApp } from "firebase/app";
 import Swal from "sweetalert2";
-=======
-import {initializeApp} from "firebase/app";
 import {deleteReservation} from "../reservations/reservations"
->>>>>>> develop
 
 const firebaseConfig = {
     apiKey: "AIzaSyAwb3sJwSz3XL1SJP2okwE49g_Q4oHmeS4",

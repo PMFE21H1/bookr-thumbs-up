@@ -45,11 +45,11 @@ export default class ReservationDetailsPage extends React.Component {
         return (
             <UsersDatabaseContext.Consumer>
                 {(usersFromDatabase) => {
-                    return ( <>
+                    return (<>
 
             <TaxonomyContext.Consumer>
                 {(taxonomy) => {
-                    return <>
+                    return (<>
                         <AuthContext.Consumer>
                             {({user}) => {
                                 return (<>
@@ -88,11 +88,12 @@ export default class ReservationDetailsPage extends React.Component {
                     }}
                         </AuthContext.Consumer>
 
-                    </>
+                    </>)
                     }}
             </TaxonomyContext.Consumer>
-        </>)
-            }}
+        </>
+                    )}
+          }
         </UsersDatabaseContext.Consumer>
         )}
 
