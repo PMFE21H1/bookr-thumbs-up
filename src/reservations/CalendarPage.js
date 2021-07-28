@@ -24,6 +24,6 @@ export default class CalendarPage extends React.Component {
   render() {
     // amíg nincs slotConfig, nem tudjuk megjeleníteni a calendart
     if (!this.state.slotConfig) return null;
-    return <Calendar reservations={this.state.reservations} resourceId ="-Mf730Rkc7khOjLlePci" slotStart={this.state.slotConfig.start} slotEnd={this.state.slotConfig.end} slotDuration={this.state.slotConfig.duration} />
+    return <Calendar reservations={this.state.reservations} slotStart={this.state.slotConfig.start} slotEnd={this.state.slotConfig.end} slotDuration={this.state.slotConfig.duration} />
   }
 }
