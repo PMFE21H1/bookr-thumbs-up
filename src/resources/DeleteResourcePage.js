@@ -38,9 +38,10 @@ export default class DeleteResourcePage extends React.Component {
   }
   handleDelete = () => {
     try {
-      deleteResource(this.state.resource).then(() =>
-        this.props.history.push(`/admin/${this.context.resources}`)
-      );
+      deleteResource(this.state.resource).then(() => {
+        console.log("k.a.")
+        this.props.history.push(`/admin/config/${this.context.url}`)
+      });
     } catch (e) {
       Swal.fire({
         title: "Failed to delete the resource!",
@@ -92,13 +93,20 @@ export default class DeleteResourcePage extends React.Component {
               })}
               <Nav className="justify-content-center mt-2">
                 <Nav className="mr-2">
-                  <Button onClick={this.handleDelete}>Delete</Button>
+
+                  {/*<Link to={`/admin/config/${this.context.url}`}>*/}
+                  <Button 
+                  style ={{marginRight: "1vw" }}
+                  onClick={this.handleDelete}>Delete</Button>
+                  {/*</Link>*/}
+
                 </Nav>
 
                 <Nav>
-                  <Link to={`/admin/config/${this.context.resources}`}>
+                  <Link to={`/admin/config/${this.context.url}`}>
                     <Button variant="danger">Cancel</Button>
                   </Link>
+
                 </Nav>
               </Nav>
             </>

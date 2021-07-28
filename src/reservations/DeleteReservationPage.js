@@ -68,7 +68,8 @@ export default class DeleteReservationPage extends React.Component {
               <Nav className="justify-content-center mt-2">
                 <Nav className="mr-2">
                   <Button
-                  onClick={() =>
+                      style ={{marginRight: "1vw" }}
+                      onClick={() =>
                     deleteReservation(
                       this.props.match.params.reservationID
                     ).then(this.props.history.push("/admin/reservations"))

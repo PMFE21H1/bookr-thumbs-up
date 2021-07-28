@@ -121,7 +121,9 @@ export default class UpdateReservationPage extends React.Component {
                 <Nav className="justify-content-center mt-2">
                   <Nav className="mr-2">
                     <Button
-                    onClick={(e) => {
+
+                        style ={{marginRight: "1vw" }}
+                        onClick={(e) => {
                       e.preventDefault();
                       try {
                         updateReservation(

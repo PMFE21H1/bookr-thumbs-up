@@ -15,12 +15,17 @@ class listResourceAdminPage extends React.Component{
     }
 
     getResources = () => {
-        listResources().then( resources => this.setState({resources: resources}))
+        console.log("itt getresources")
+        listResources().then( resources =>{
+            console.log("a.f.")
+            this.setState({resources: resources})})
     }
 
     componentDidMount(){
         this.getResources()
     }
+
+
 
     render() {
       return (

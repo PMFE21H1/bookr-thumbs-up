@@ -63,13 +63,15 @@ export class UpdateResourcePage extends React.Component {
     try {
       const barberImgRef = ref(storage, `barbers/${this.state.file.name}`);
       uploadBytes(barberImgRef, this.state.file)
-      .then(() => getDownloadURL(barberImgRef)
+        .then(() => getDownloadURL(barberImgRef)
       )
+
       .then(url => {
-        updateResource(this.state.resourceID, {
+       return updateResource(this.state.resourceID, {
           name: this.state.newResourceName,
           description: this.state.newDescription,
           imgUrl: url
+
         })
       }).catch(e => Swal.fire({
         title: "Failed to update the resouce!",
@@ -80,6 +82,7 @@ export class UpdateResourcePage extends React.Component {
       .then(() =>
         this.props.history.push(`/admin/config/${this.context.url}`)
       );
+
     } catch (e) {
       Swal.fire({
         title: "Failed to update the resouce!",
@@ -136,7 +139,9 @@ export class UpdateResourcePage extends React.Component {
             </InputGroup>
             <Nav className="justify-content-center">
               <Nav className="mr-2 ml-2">
-                <Button onClick={this.handleApply}>Apply</Button>
+
+                <Button onClick={this.handleApply}   style ={{marginRight: "1vw" }} >Apply</Button>
+
               </Nav>
               <Link to={`/admin/config/${this.context.url}`}>
                 <Button variant="danger">Cancel</Button>

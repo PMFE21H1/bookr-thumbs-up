@@ -5,7 +5,7 @@ import {AuthContext, UsersDatabaseContext} from "../context/context"
 import {Link} from "react-router-dom";
 import Swal from 'sweetalert2';
 import { Form, Container, Row, Col, Nav, Button } from "react-bootstrap";
-
+import "./requestReservationPage.css"
 
 export default class RequestReservationPage extends Component {
     constructor(props) {
@@ -33,7 +33,7 @@ export default class RequestReservationPage extends Component {
   render() {
     return (
       <>
-        <Container>
+        <Container className="request">
           <Row className="mt-5">
             <Col
               lg={5}
@@ -44,14 +44,18 @@ export default class RequestReservationPage extends Component {
               <AuthContext.Consumer>
                 {({ user, ...rest }) => {
                   return (
-                    <Form>
+                  <div className="request-background">
+ <Form>
+                        <h3 style={{fontWeight: "bold"}} className="shadow-sm mt-3 p-3 text-center rounded">
+                      Request Reservation
+                    </h3>
                       <SlotSelector
                         resource={this.props.match.params.resourceID}
                         changeSlot={this.changeSlot}
                       />
                       <Nav className="justify-content-center">
                         <Button
-                        style={{ marginTop: "1vw", marginRight: "1vw" }}
+                        style={{ marginTop: "1vw", marginRight: "1vw", backgroundColor: "#e2a44c", borderColor: "orange", opacity: "90%" }}
                           onClick={(e) => {
                             e.preventDefault();
                             try {
@@ -85,11 +89,13 @@ export default class RequestReservationPage extends Component {
                           {" "}
                           Create{" "}
                         </Button>
-                        <Button style={{ marginTop: "1vw" }} className="cancel-btn" variant="danger">
+                        <Button style={{ marginTop: "1vw", opacity: "90%" }} className="cancel-btn" variant="danger">
                           <Link style={{ textDecoration: "none", color: "white" }} to="/resources"> Cancel </Link>
                         </Button>
                       </Nav>
                     </Form>
+                  </div>
+                   
                   );
                 }}
               </AuthContext.Consumer>
