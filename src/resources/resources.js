@@ -28,7 +28,7 @@ export function createResource(resource) {
           if (response.status === 200) {
             Swal.fire({
               title: "Successful resource creation!",
-              text: "You have created an account.",
+              text: "You have created a resource.",
               icon: "success",
               confirmButtonText:"OK"})
           } else {
