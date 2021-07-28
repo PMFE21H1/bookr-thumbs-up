@@ -5,7 +5,7 @@ import SlotSelector from "./SlotSelector";
 import { AuthContext, UsersDatabaseContext } from "../context/context";
 import UserSelector from "./UserSelector";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Col, Container, Row, Form, Button } from "react-bootstrap";
+import { Col, Container, Row, Form, Button, Nav } from "react-bootstrap";
 import Swal from 'sweetalert2';
 
 export default class CreateReservationPage extends Component {
@@ -87,7 +87,7 @@ export default class CreateReservationPage extends Component {
         icon: "error",
         confirmButtonText:"OK"})
     }
-  }
+  };
 
   render() {
     return (
@@ -103,11 +103,27 @@ export default class CreateReservationPage extends Component {
                   className="p-5 m-auto shadow-sm rounded-lg"
                 >
                   <Form>
-                    <h3 className="shadow-sm tect-success mt-5 p-3 text-center rounded">
+                    <h3 className="shadow-sm mt-3 p-3 text-center rounded">
                       Create Reservation
                     </h3>
+                    <Nav className="mt-2">
 
-                    <div>
+                   
+                    <Form.Select
+                      onChange={(e) => this.changeResource(e)}
+                      value={this.state.resource}
+                    >
+                      <option value={null}>Select a resource</option>
+                      {this.state.resources !== []
+                        ? this.state.resources.map((resource) => (
+                            <option key={resource.id} value={resource.id}>
+                              {resource.name}
+                            </option>
+                          ))
+                        : ""}
+                    </Form.Select> </Nav>
+
+                    {/* <div>
                       <label>Resource:</label>
                       <select
                         onChange={(e) => this.changeResource(e)}
@@ -123,10 +139,9 @@ export default class CreateReservationPage extends Component {
                             ))
                           : ""}
                       </select>
-                    </div>
+                    </div> */}
 
                     <div>
-                      <label>Customer:</label>
                       <UserSelector onHandleName={this.changeCustomer} />
                     </div>
 
@@ -134,30 +149,31 @@ export default class CreateReservationPage extends Component {
                       resource={this.state.resource}
                       changeSlot={this.changeSlot}
                     ></SlotSelector>
+                    <Nav className="justify-content-center">
+                      <Button
+                        variant="primary btn-block"
+                        style={{ marginTop: "1vw", marginRight: "1vw" }}
+                        type="submit"
+                        onClick={(e) => {
+                          console.log(user);
+                          this.onClickCreateReservation(e, user);
+                        }}
+                      >
+                        Create
+                      </Button>
 
-                    <Button
-                      variant="primary btn-block"
-                      style={{marginTop: "1vw", marginRight: "1vw"}}
-                      type="submit"
-                      onClick={(e) => {
-                        console.log(user);
-                        this.onClickCreateReservation(e, user);
-                      }}
-                    >
-                      Create
-                    </Button>
-
-                    <Button
-                        style={{marginTop: "1vw"}}
-                      variant="danger btn-block"
-                      type="submit"
-                      onClick={() =>
-                        this.props.history.push("/admin/reservations")
-                      }
-                    >
-                      {" "}
-                      Cancel
-                    </Button>
+                      <Button
+                        style={{ marginTop: "1vw" }}
+                        variant="danger btn-block"
+                        type="submit"
+                        onClick={() =>
+                          this.props.history.push("/admin/reservations")
+                        }
+                      >
+                        {" "}
+                        Cancel
+                      </Button>
+                    </Nav>
                   </Form>
                 </Col>
               </Row>
