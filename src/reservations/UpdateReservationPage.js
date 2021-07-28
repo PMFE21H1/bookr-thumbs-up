@@ -76,6 +76,7 @@ export default class UpdateReservationPage extends React.Component {
 
 
   render() {
+        console.log(this.state.reservationData)
     return (
       <TaxonomyContext.Consumer>
                 {(taxonomy) => {
@@ -95,6 +96,7 @@ export default class UpdateReservationPage extends React.Component {
                 <Nav className="justify-content-center mt-2">
 
                    <select
+
                   onChange={(e) => this.changeResource(e)}
                   value={this.state.resource}
                 >
@@ -102,7 +104,7 @@ export default class UpdateReservationPage extends React.Component {
 
                   {this.state.resources !== []
                     ? this.state.resources.map((resource) => (
-                        <option key={resource.id} value={resource.id}>
+                        <option key={resource.id}  value={resource.id}  >
                           {resource.name}
                         </option>
                       ))
