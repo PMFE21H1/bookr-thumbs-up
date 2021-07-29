@@ -15,8 +15,8 @@
 }
 
 .img-container{
-    height: auto;
-    width: 10vw;
+    height: 16vw;
+    width: 12vw;
     background-size: contain;
     background-repeat: no-repeat;
 }
