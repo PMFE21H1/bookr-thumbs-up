@@ -123,24 +123,6 @@ export default class CreateReservationPage extends Component {
                         : ""}
                     </Form.Select> </Nav>
 
-                    {/* <div>
-                      <label>Resource:</label>
-                      <select
-                        onChange={(e) => this.changeResource(e)}
-                        value={this.state.resource}
-                      >
-                        <option value={null}>Select a resource</option>
-
-                        {this.state.resources !== []
-                          ? this.state.resources.map((resource) => (
-                              <option key={resource.id} value={resource.id}>
-                                {resource.name}
-                              </option>
-                            ))
-                          : ""}
-                      </select>
-                    </div> */}
-
                     <div>
                       <UserSelector onHandleName={this.changeCustomer} />
                     </div>
