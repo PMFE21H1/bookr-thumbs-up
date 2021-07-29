@@ -15,8 +15,8 @@
 }
 
 .img-container{
-    flex-grow: 1;
+    height: auto;
+    width: 10vw;
     background-size: contain;
     background-repeat: no-repeat;
-   
 }
