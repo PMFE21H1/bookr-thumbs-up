@@ -177,28 +177,22 @@ export function deleteReservation(id){
 return fetch (`https://bookr-thumbs-up-default-rtdb.europe-west1.firebasedatabase.app/reservations/${id}.json`)
     .then(resp => resp.json())
     .then(reservation => {
-        console.log(reservation)
-        //reservaton: {customerUid: "a7HopzvmBQdb9ITF8S4Nh3JRsm93", resource: "-Mf2gShmbf3-lVHzgA5d", slot: "2021-07-16T14:00", status: "confirmed"}
         return reservationToDelete=reservation
-        //bekerült
     })
     .then(reservationToDelete => getUsersReservationsByUid(reservationToDelete.customerUid))
     .then(reservations => {
         return usersReservations = reservations
     })
     .then(reservations => {
-        console.log(usersReservations)
         let idx = usersReservations.indexOf(id)
         if (idx > -1){
             usersReservations.splice(idx, 1)
-            console.log(usersReservations)
             return UpdateUsersReservationsArray(reservationToDelete.customerUid, usersReservations)
         } else {
             throw new Error('The reservation cannot be found')
         }
     })
     .then(() => {
-        console.log(id)
         return deleteReservationFromDatabase(id)})
     .catch((e)=> Swal.fire({
         title: "Failed to delete reservation!",
@@ -224,9 +218,7 @@ function deleteReservationFromDatabase(id) {
         }
     )
         .then((response) => response.json())
-        .then((deletedReservation) =>
-            console.log(deletedReservation)
-        );
+        
 }
 
 function getUsersReservationsByUid(uid){

@@ -1,0 +1,22 @@
+.table-img-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-content: stretch;
+    align-items: stretch;
+    padding-top: 4vh;
+}
+
+.table-container{
+    width: 60vw;
+    margin-left: 10vw;
+    margin-right: 2vw;
+}
+
+.img-container{
+    flex-grow: 1;
+    background-size: contain;
+    background-repeat: no-repeat;
+   
+}

@@ -4,6 +4,7 @@ import { listUsersReservations } from "./reservations";
 import { listResources } from "../resources/resources";
 import { Link } from "react-router-dom";
 import Table from "react-bootstrap/Table";
+import './myReservation.css'
 
 export default class MyReservationsPage extends React.Component {
   constructor(props) {
@@ -11,6 +12,7 @@ export default class MyReservationsPage extends React.Component {
     this.state = {
       reservations: [],
       resources: [],
+      displayImg: false,
     };
   }
 
@@ -32,41 +34,46 @@ export default class MyReservationsPage extends React.Component {
           return(
       <>
         {this.state.reservations !== [] ? (
-          <div style={{width: "70vw", marginLeft:"auto", marginRight:"auto", marginTop:"4vw"}}>
-          <Table  striped bordered hover variant="dark">
+          <div className="table-img-container">
+            <div className="table-container" >
 
-          <thead>
+            <Table  striped bordered hover variant="dark">
 
-            <tr style={{color: "orange"}}> 
-              <th>{taxonomy.resource}</th>
-              <th>Time</th>
-              <th>Reservation status</th>
-              <th>Links</th>
-            </tr>
+            <thead>
+              <tr style={{color: "orange"}}> 
+                <th>{taxonomy.resource}</th>
+                <th>Time</th>
+                <th>Reservation status</th>
+                <th>Links</th>
+              </tr>
+            </thead>
 
-          </thead>
+              {this.state.reservations.map((reservation) => {
+                return (
+                  <tbody>
+                    <tr onMouseOver={()=> this. setState({displayImg: true, imgUrl: this.state.resources.find((resource) => resource.id === reservation.resource).imgUrl})}>
+                      {this.state.resources.map((resource) => {
+                        if (resource.id === reservation.resource) {
+                          return <td>{resource.name}</td>;
+                        }
+                      })}
+                      <td>{reservation.slot.split("T")[0] + " " + reservation.slot.split("T")[1]}</td>
+                      <td>{reservation.status}</td>
+                      <td>
+                        <Link to={`/my-reservations/${reservation.id}`}>
+                          Details
+                        </Link>
+                      </td>
+                    </tr>{" "}
+                  </tbody>
+                );
+              })}
+            </Table>
+            </div>
 
-            {this.state.reservations.map((reservation) => {
-              return (
-                <tbody>
-                  <tr>
-                    {this.state.resources.map((resource) => {
-                      if (resource.id === reservation.resource) {
-                        return <td>{resource.name}</td>;
-                      }
-                    })}
-                    <td>{reservation.slot.split("T")[0] + " " + reservation.slot.split("T")[1]}</td>
-                    <td>{reservation.status}</td>
-                    <td>
-                      <Link to={`/my-reservations/${reservation.id}`}>
-                        Details
-                      </Link>
-                    </td>
-                  </tr>{" "}
-                </tbody>
-              );
-            })}
-          </Table>
+            <div className="img-container" style={{display:this.state.displayImg, backgroundImage: `url('${this.state.imgUrl}')`}}>
+
+            </div>
           </div>
         ) : (
           <h1>You have no reservations yet</h1>
