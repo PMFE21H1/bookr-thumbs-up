@@ -12,18 +12,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "react-bootstrap/Nav";
 import "./header.css"
 
-export default class Header extends Component {
-  constructor(props) {
-    super(props);
+export default function Header() {
+
+  function signout() {
+    signOut(getAuth());
   }
 
-  signout = () => {
-    signOut(getAuth());
-  };
-
-  render() {
-    return (
-      <div>
+  return (
+    <div>
         <TaxonomyContext.Consumer>
           {(taxonomy) => {
             return (
@@ -95,7 +91,7 @@ export default class Header extends Component {
                                 Logged in as Admin
                               </Nav.Link>
                             </Nav.Item>
-                            <Button size="sm" onClick={this.signout}>
+                            <Button size="sm" onClick={signout}>
                               {" "}
                               Log out
                             </Button>
@@ -126,7 +122,7 @@ export default class Header extends Component {
                                 Hello, {user.name}!
                               </Nav.Link>
                             </Nav.Item>
-                            <Button className="logout-btn" onClick={this.signout}> Log out</Button>
+                            <Button className="logout-btn" onClick={signout}> Log out</Button>
                           </Nav>
                         </>
                       );
@@ -138,6 +134,5 @@ export default class Header extends Component {
           }}
         </TaxonomyContext.Consumer>
       </div>
-    );
-  }
+  );
 }
