@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useContext } from "react";
 import {
   AuthContext,
   TaxonomyContext,
@@ -18,11 +18,10 @@ export default function Header() {
     signOut(getAuth());
   }
 
+  const taxonomy = useContext(TaxonomyContext);
+  console.log(taxonomy);
+
   return (
-    <div>
-        <TaxonomyContext.Consumer>
-          {(taxonomy) => {
-            return (
               <>
                 <AuthContext.Consumer>
                   {({ user }) => {
@@ -130,9 +129,5 @@ export default function Header() {
                   }}
                 </AuthContext.Consumer>
               </>
-            );
-          }}
-        </TaxonomyContext.Consumer>
-      </div>
   );
 }
