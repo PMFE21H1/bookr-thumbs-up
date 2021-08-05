@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Link } from "react-router-dom";
 import {
   AuthContext,
@@ -13,6 +13,31 @@ import { Button, Nav } from "react-bootstrap";
 export default function ListReservationsPage() {
   const taxonomy = useContext(TaxonomyContext);
   const users = useContext(UsersDatabaseContext);
+
+  const [resources, setResources] = useState([]);
+  const [confirmed, setConfirmed] = useState([]);
+  const [pending, setPending] = useState([]);
+
+  useEffect(() => {
+    listResources().then((resources) => {
+      setResources(resources);
+    });
+    let confirmed = [];
+    let pending = [];
+    listReservations()
+      .then((reservations) => {
+        reservations.forEach((reservation) =>
+          reservation.status === "confirmed"
+            ? confirmed.push(reservation)
+            : pending.push(reservation)
+        );
+      })
+      .then(() => {
+        setPending(pending);
+        setConfirmed(confirmed);
+      });
+  }, []);
+
   return (
 
       
@@ -47,7 +72,7 @@ export default function ListReservationsPage() {
                         </tr>
                       </thead>
 
-                      {this.state.confirmed.map((reservation) => {
+                      {confirmed.map((reservation) => {
                         return (
                           <tbody>
                             <tr>
@@ -61,7 +86,7 @@ export default function ListReservationsPage() {
                               <td>{reservation.id}</td>
                               <td>{reservation.slot.split("T")[0] + " " + reservation.slot.split("T")[1]}</td>
                               <td>
-                                {this.state.resources.map((resource) =>
+                                {resources.map((resource) =>
                                   reservation.resource == resource.id
                                     ? resource.name
                                     : ""
@@ -114,7 +139,7 @@ export default function ListReservationsPage() {
                         </tr>
                       </thead>
 
-                      {this.state.pending.map((reservation) => {
+                      {pending.map((reservation) => {
                         return (
                           <tbody>
                             <tr>
@@ -128,7 +153,7 @@ export default function ListReservationsPage() {
                               <td>{reservation.id}</td>
                               <td>{reservation.slot.split("T")[0] + " " + reservation.slot.split("T")[1]}</td>
                               <td>
-                                {this.state.resources.map((resource) =>
+                                {resources.map((resource) =>
                                   reservation.resource == resource.id
                                     ? resource.name
                                     : ""
@@ -169,7 +194,7 @@ export default function ListReservationsPage() {
                                   onClick={() =>
                                     {
                                     confirmReservation(reservation.id)
-                                    .then(window.location.reload())
+                                    .then(() => window.location.reload())
                                   }
                                   }
                                 >
