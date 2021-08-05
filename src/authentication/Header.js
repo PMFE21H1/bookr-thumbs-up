@@ -6,7 +6,7 @@ import {
 } from "../context/context";
 import { Link } from "react-router-dom";
 import { getUserByUid } from "./authentication";
-import { onAuthStateChanged, getAuth, signOut } from "firebase/auth";
+import { onAuthStateChanged, getAuth, signOut, AuthCredential } from "firebase/auth";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Nav from "react-bootstrap/Nav";
@@ -21,15 +21,11 @@ export default function Header() {
   const taxonomy = useContext(TaxonomyContext);
   console.log(taxonomy);
 
-  return (
-              <>
-                <AuthContext.Consumer>
-                  {({ user }) => {
-                    console.log(user);
-                    if (!user) {
-                      return (
-                        <>
+  const {user} = useContext(AuthContext);
 
+  return (
+    user == null?
+                        <>      
                           <Nav
                             className="justify-content-start align-items-center mt-2 nav-cont"
                             activeKey="/home"
@@ -55,9 +51,8 @@ export default function Header() {
                             </Nav.Item>
                           </Nav>
                         </>
-                      );
-                    } else {
-                      return user.admin ? (
+                      :
+                      user.admin ?
                         <>
                           <Nav
                               className="justify-content-start align-items-center mt-2 nav-cont-admin"
@@ -96,7 +91,7 @@ export default function Header() {
                             </Button>
                           </Nav>
                         </>
-                      ) : (
+                       : 
                         <>
                           <Nav
                               className="justify-content-start align-items-center mt-2 nav-cont"
@@ -124,10 +119,5 @@ export default function Header() {
                             <Button className="logout-btn" onClick={signout}> Log out</Button>
                           </Nav>
                         </>
-                      );
-                    }
-                  }}
-                </AuthContext.Consumer>
-              </>
   );
 }
