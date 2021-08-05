@@ -46,14 +46,14 @@ export default function SlotSelector(props) {
         let isReserved = slot.split("-")[0] === reservation.slot.split("T")[1];
         console.log(slotOptions)
         if (isReserved) {
-          setSlotOptions([...slotOptions, "Reserved"])
+          setSlotOptions(prevSlotOptions => [...prevSlotOptions, "Reserved"])
           
           foundReserved = true;
         }
       });
       if (!foundReserved) {
         console.log(slotOptions)
-        setSlotOptions([...slotOptions, slot]);
+        setSlotOptions(prevSlotOptions => [...prevSlotOptions, slot]);
       }
     });
     console.log(slotOptions);
@@ -97,8 +97,8 @@ export default function SlotSelector(props) {
           let unavailable = false;
           relevantUnavailableSlots.forEach((ruSlot) => {
             if (slot.split("-")[0] === ruSlot.slot.split("T")[1]) {
-              setSlotOptionsFinal([
-                ...slotOptionsFinal,
+              setSlotOptionsFinal(prevSlotOptionsFinal => [
+                ...prevSlotOptionsFinal,
                 "Unavailable",
               ]);
               unavailable = true;
@@ -106,7 +106,7 @@ export default function SlotSelector(props) {
           });
           if (!unavailable) {
             
-              setSlotOptionsFinal([...slotOptionsFinal, slot])
+              setSlotOptionsFinal(prevSlotOptionsFinal => [...prevSlotOptionsFinal, slot])
             
           }
         })
