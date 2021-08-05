@@ -19,7 +19,6 @@ export default function Header() {
   }
 
   const taxonomy = useContext(TaxonomyContext);
-  console.log(taxonomy);
 
   const {user} = useContext(AuthContext);
 
